@@ -40,12 +40,14 @@ from experimentation.statistics import StatisticalAnalyzer
 from experimentation.visualization import ResultsVisualizer
 from experimentation.ast_visualization import ASTVisualizer
 from experimentation.time_tracker import TimeTracker
+from experimentation.execution_logger import ExecutionLogger
 from gaa.generator import AlgorithmGenerator
 from gaa.grammar import Grammar
 from metaheuristic.sa_core import SimulatedAnnealing
 from core.solution import KnapsackSolution
 from data.loader import DatasetLoader
 import numpy as np
+import time
 
 
 def run_detailed_visualization_per_group(instances, algorithm, plots_dir, group_name):
@@ -634,8 +636,22 @@ def main():
     print("=" * 80, flush=True)
     print(flush=True)
 
+    # Tiempo de inicio
+    start_time = time.time()
+
     # Generar timestamp global
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    # Inicializar ExecutionLogger para documentación completa
+    execution_logger = ExecutionLogger(
+        output_dir="output/execution_logs",
+        experiment_name="Multi-Group_Experimentation_OPTIMIZED"
+    )
+
+    print(f"📋 Execution logger initialized", flush=True)
+    print(f"   Log file: {execution_logger.log_file}", flush=True)
+    print(f"   Config file: {execution_logger.config_file}", flush=True)
+    print(flush=True)
 
     # Inicializar TimeTracker global
     global_tracker_dir = "output/time_tracker_global"
@@ -644,85 +660,143 @@ def main():
         output_dir=global_tracker_dir
     )
 
-    with global_tracker.track("Ejecución completa de experimentos multi-grupo"):
+    try:
+        with global_tracker.track("Ejecución completa de experimentos multi-grupo"):
 
-        # 1. Generar algoritmos (UNA SOLA VEZ)
-        with global_tracker.track("Paso 1: Generando algoritmos GAA", num_algorithms=3):
-            print("🧬 Paso 1: Generando algoritmos GAA (compartidos para todos los grupos)...\n", flush=True)
+            # Documentar parámetros de configuración
+            execution_logger.log_parameters(
+                seed=123,
+                grammar_min_depth=2,
+                grammar_max_depth=3,
+                max_time_per_experiment_seconds=5.0,
+                max_evaluations_sa=2000,
+                repetitions_per_instance=1,
+                num_algorithms=3,
+                matplotlib_backend='Agg',
+                optimization_version='v2_with_timeout_5s'
+            )
 
-            grammar = Grammar(min_depth=2, max_depth=3)
-            generator = AlgorithmGenerator(grammar=grammar, seed=123)  # Cambiado de 42 a 123 para generar algoritmos potencialmente más rápidos
+            # 1. Generar algoritmos (UNA SOLA VEZ)
+            with global_tracker.track("Paso 1: Generando algoritmos GAA", num_algorithms=3):
+                print("🧬 Paso 1: Generando algoritmos GAA (compartidos para todos los grupos)...\n", flush=True)
+                execution_logger.log_step("Generating GAA Algorithms", {
+                    'num_algorithms': 3,
+                    'seed': 123,
+                    'min_depth': 2,
+                    'max_depth': 3
+                })
 
-            algorithms = []
-            for i in range(3):
-                ast = generator.generate_with_validation()
-                if ast:
-                    algorithms.append({
-                        'name': f'GAA_Algorithm_{i+1}',
-                        'ast': ast
-                    })
-                    print(f"✅ Algoritmo {i+1} generado", flush=True)
-                    print(f"   Pseudocódigo:", flush=True)
-                    for line in ast.to_pseudocode(indent=2).split('\n'):
-                        print(f"   {line}", flush=True)
-                    print(flush=True)
+                grammar = Grammar(min_depth=2, max_depth=3)
+                generator = AlgorithmGenerator(grammar=grammar, seed=123)
 
-            global_tracker.update_current(algorithms_generated=len(algorithms))
+                algorithms = []
+                for i in range(3):
+                    ast = generator.generate_with_validation()
+                    if ast:
+                        algorithms.append({
+                            'name': f'GAA_Algorithm_{i+1}',
+                            'ast': ast
+                        })
 
-        # Lista para almacenar resultados
-        all_group_results = []
+                        pseudocode = ast.to_pseudocode(indent=2)
 
-        # 2. Procesar grupo LOW-DIMENSIONAL
-        low_dim_result = process_group(
-            group_name="Low-Dimensional",
-            folder_name="low_dimensional",
-            algorithms=algorithms,
-            timestamp=timestamp,
-            global_tracker=global_tracker
-        )
+                        print(f"✅ Algoritmo {i+1} generado", flush=True)
+                        print(f"   Pseudocódigo:", flush=True)
+                        for line in pseudocode.split('\n'):
+                            print(f"   {line}", flush=True)
+                        print(flush=True)
 
-        if low_dim_result:
-            all_group_results.append(low_dim_result)
+                        # Documentar algoritmo en el logger
+                        execution_logger.log_algorithm(
+                            name=f'GAA_Algorithm_{i+1}',
+                            pseudocode=pseudocode
+                        )
 
-        # 3. Procesar grupo LARGE-SCALE
-        large_scale_result = process_group(
-            group_name="Large-Scale",
-            folder_name="large_scale",
-            algorithms=algorithms,
-            timestamp=timestamp,
-            global_tracker=global_tracker
-        )
+                global_tracker.update_current(algorithms_generated=len(algorithms))
 
-        if large_scale_result:
-            all_group_results.append(large_scale_result)
+            # Lista para almacenar resultados
+            all_group_results = []
 
-        # 4. Resumen global final
+            # 2. Procesar grupo LOW-DIMENSIONAL
+            execution_logger.log_step("Processing Low-Dimensional Group")
+            low_dim_result = process_group(
+                group_name="Low-Dimensional",
+                folder_name="low_dimensional",
+                algorithms=algorithms,
+                timestamp=timestamp,
+                global_tracker=global_tracker
+            )
+
+            if low_dim_result:
+                all_group_results.append(low_dim_result)
+                execution_logger.log_result("Low-Dimensional Results", {
+                    'best_algorithm': low_dim_result['best_algorithm'],
+                    'experiments_completed': low_dim_result.get('experiments_completed', 'N/A'),
+                    'json_file': low_dim_result['json_file']
+                })
+
+            # 3. Procesar grupo LARGE-SCALE
+            execution_logger.log_step("Processing Large-Scale Group")
+            large_scale_result = process_group(
+                group_name="Large-Scale",
+                folder_name="large_scale",
+                algorithms=algorithms,
+                timestamp=timestamp,
+                global_tracker=global_tracker
+            )
+
+            if large_scale_result:
+                all_group_results.append(large_scale_result)
+                execution_logger.log_result("Large-Scale Results", {
+                    'best_algorithm': large_scale_result['best_algorithm'],
+                    'experiments_completed': large_scale_result.get('experiments_completed', 'N/A'),
+                    'json_file': large_scale_result['json_file']
+                })
+
+            # 4. Resumen global final
+            print("\n" + "=" * 80, flush=True)
+            print("  RESUMEN GLOBAL DE TODOS LOS GRUPOS", flush=True)
+            print("=" * 80, flush=True)
+            print(flush=True)
+
+            for group_result in all_group_results:
+                print(f"\n📊 {group_result['group_name']}:", flush=True)
+                print(f"   • Mejor algoritmo: {group_result['best_algorithm']}", flush=True)
+                print(f"   • Resultados guardados en: {group_result['json_file']}", flush=True)
+                print(f"   • Visualizaciones en: {group_result['plots_dir']}", flush=True)
+
+            print(f"\n\n✅ TODOS LOS GRUPOS PROCESADOS EXITOSAMENTE", flush=True)
+            print(f"📁 Carpetas de salida generadas:", flush=True)
+            for group_result in all_group_results:
+                print(f"   • {group_result['plots_dir']}", flush=True)
+
+            print(f"\n📊 Time tracking global guardado en: {global_tracker.output_path}", flush=True)
+            print(flush=True)
+
+        # Finalizar tracking global
+        global_tracker.finalize()
+
+        # Finalizar execution logger
+        total_time = time.time() - start_time
+        logger_files = execution_logger.finalize(total_time=total_time, success=True)
+
         print("\n" + "=" * 80, flush=True)
-        print("  RESUMEN GLOBAL DE TODOS LOS GRUPOS", flush=True)
+        print("  EJECUCIÓN COMPLETADA (VERSIÓN OPTIMIZADA)", flush=True)
         print("=" * 80, flush=True)
+        print(f"\n📋 Execution Documentation:", flush=True)
+        print(f"   • Config: {logger_files['config_file']}", flush=True)
+        print(f"   • Log: {logger_files['log_file']}", flush=True)
         print(flush=True)
 
-        for group_result in all_group_results:
-            print(f"\n📊 {group_result['group_name']}:", flush=True)
-            print(f"   • Mejor algoritmo: {group_result['best_algorithm']}", flush=True)
-            print(f"   • Resultados guardados en: {group_result['json_file']}", flush=True)
-            print(f"   • Visualizaciones en: {group_result['plots_dir']}", flush=True)
+    except Exception as e:
+        print(f"\n❌ ERROR durante la ejecución: {e}", flush=True)
+        import traceback
+        traceback.print_exc()
 
-        print(f"\n\n✅ TODOS LOS GRUPOS PROCESADOS EXITOSAMENTE", flush=True)
-        print(f"📁 Carpetas de salida generadas:", flush=True)
-        for group_result in all_group_results:
-            print(f"   • {group_result['plots_dir']}", flush=True)
-
-        print(f"\n📊 Time tracking global guardado en: {global_tracker.output_path}", flush=True)
-        print(flush=True)
-
-    # Finalizar tracking global
-    global_tracker.finalize()
-
-    print("\n" + "=" * 80, flush=True)
-    print("  EJECUCIÓN COMPLETADA (VERSIÓN OPTIMIZADA)", flush=True)
-    print("=" * 80, flush=True)
-    print(flush=True)
+        # Finalizar logger con error
+        total_time = time.time() - start_time
+        execution_logger.finalize(total_time=total_time, success=False)
+        raise
 
 
 if __name__ == '__main__':
