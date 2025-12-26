@@ -361,50 +361,62 @@ class AlgorithmPatternAnalyzer:
             f.write(f"**Algoritmos analizados**: {len(self.pattern_database)}\n\n")
             f.write("---\n\n")
 
+            # Verificar si hay datos
+            if 'error' in correlations:
+                f.write("## ⚠️ Sin Datos\n\n")
+                f.write(f"{correlations['error']}\n\n")
+                return
+
             # Constructores
-            f.write("## 📊 Rendimiento por Constructor\n\n")
-            f.write("| Constructor | Tiempo Promedio | Desv. Estándar | Muestras |\n")
-            f.write("|-------------|-----------------|----------------|----------|\n")
-            for constructor, stats in sorted(correlations['constructors'].items(),
-                                            key=lambda x: x[1]['avg']):
-                f.write(f"| {constructor} | {stats['avg']:.3f}s | {stats['std']:.3f}s | {stats['count']} |\n")
-            f.write("\n")
+            if 'constructors' in correlations and correlations['constructors']:
+                f.write("## 📊 Rendimiento por Constructor\n\n")
+                f.write("| Constructor | Tiempo Promedio | Desv. Estándar | Muestras |\n")
+                f.write("|-------------|-----------------|----------------|----------|\n")
+                for constructor, stats in sorted(correlations['constructors'].items(),
+                                                key=lambda x: x[1]['avg']):
+                    f.write(f"| {constructor} | {stats['avg']:.3f}s | {stats['std']:.3f}s | {stats['count']} |\n")
+                f.write("\n")
 
             # Operadores
-            f.write("## 🔧 Rendimiento por Operador\n\n")
-            f.write("| Operador | Tiempo Promedio | Desv. Estándar | Muestras |\n")
-            f.write("|----------|-----------------|----------------|----------|\n")
-            for operator, stats in sorted(correlations['operators'].items(),
-                                         key=lambda x: x[1]['avg']):
-                f.write(f"| {operator} | {stats['avg']:.3f}s | {stats['std']:.3f}s | {stats['count']} |\n")
-            f.write("\n")
+            if 'operators' in correlations and correlations['operators']:
+                f.write("## 🔧 Rendimiento por Operador\n\n")
+                f.write("| Operador | Tiempo Promedio | Desv. Estándar | Muestras |\n")
+                f.write("|----------|-----------------|----------------|----------|\n")
+                for operator, stats in sorted(correlations['operators'].items(),
+                                             key=lambda x: x[1]['avg']):
+                    f.write(f"| {operator} | {stats['avg']:.3f}s | {stats['std']:.3f}s | {stats['count']} |\n")
+                f.write("\n")
 
             # Criterios de aceptación
-            f.write("## ✅ Rendimiento por Criterio de Aceptación\n\n")
-            f.write("| Criterio | Tiempo Promedio | Desv. Estándar | Muestras |\n")
-            f.write("|----------|-----------------|----------------|----------|\n")
-            for acceptance, stats in sorted(correlations['acceptance'].items(),
-                                           key=lambda x: x[1]['avg']):
-                f.write(f"| {acceptance} | {stats['avg']:.3f}s | {stats['std']:.3f}s | {stats['count']} |\n")
-            f.write("\n")
+            if 'acceptance' in correlations and correlations['acceptance']:
+                f.write("## ✅ Rendimiento por Criterio de Aceptación\n\n")
+                f.write("| Criterio | Tiempo Promedio | Desv. Estándar | Muestras |\n")
+                f.write("|----------|-----------------|----------------|----------|\n")
+                for acceptance, stats in sorted(correlations['acceptance'].items(),
+                                               key=lambda x: x[1]['avg']):
+                    f.write(f"| {acceptance} | {stats['avg']:.3f}s | {stats['std']:.3f}s | {stats['count']} |\n")
+                f.write("\n")
 
             # Recomendaciones
             f.write("## 🎯 Recomendaciones para Algoritmos Rápidos\n\n")
 
             # Mejor constructor
-            best_constructor = min(correlations['constructors'].items(),
-                                  key=lambda x: x[1]['avg'])
-            f.write(f"- **Mejor Constructor**: {best_constructor[0]} ({best_constructor[1]['avg']:.3f}s)\n")
+            if 'constructors' in correlations and correlations['constructors']:
+                best_constructor = min(correlations['constructors'].items(),
+                                      key=lambda x: x[1]['avg'])
+                f.write(f"- **Mejor Constructor**: {best_constructor[0]} ({best_constructor[1]['avg']:.3f}s)\n")
 
             # Mejor operador
-            best_operator = min(correlations['operators'].items(),
-                               key=lambda x: x[1]['avg'])
-            f.write(f"- **Mejor Operador**: {best_operator[0]} ({best_operator[1]['avg']:.3f}s)\n")
+            if 'operators' in correlations and correlations['operators']:
+                best_operator = min(correlations['operators'].items(),
+                                   key=lambda x: x[1]['avg'])
+                f.write(f"- **Mejor Operador**: {best_operator[0]} ({best_operator[1]['avg']:.3f}s)\n")
 
             # Mejor criterio
-            best_acceptance = min(correlations['acceptance'].items(),
-                                 key=lambda x: x[1]['avg'])
-            f.write(f"- **Mejor Criterio**: {best_acceptance[0]} ({best_acceptance[1]['avg']:.3f}s)\n")
+            if 'acceptance' in correlations and correlations['acceptance']:
+                best_acceptance = min(correlations['acceptance'].items(),
+                                     key=lambda x: x[1]['avg'])
+                f.write(f"- **Mejor Criterio**: {best_acceptance[0]} ({best_acceptance[1]['avg']:.3f}s)\n")
 
             f.write("\n---\n\n")
             f.write("**Generado por**: AlgorithmPatternAnalyzer\n")
