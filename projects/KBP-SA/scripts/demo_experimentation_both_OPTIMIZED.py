@@ -324,7 +324,7 @@ def process_group(group_name, folder_name, algorithms, timestamp, global_tracker
                     instances=instance_names,
                     algorithms=algorithms,
                     repetitions=1,
-                    max_time_seconds=60.0,
+                    max_time_seconds=5.0,  # OPTIMIZADO: Timeout agresivo de 5s para evitar algoritmos muy lentos
                     output_dir=f"output/{folder_name}_experiments"
                 )
 
@@ -651,7 +651,7 @@ def main():
             print("🧬 Paso 1: Generando algoritmos GAA (compartidos para todos los grupos)...\n", flush=True)
 
             grammar = Grammar(min_depth=2, max_depth=3)
-            generator = AlgorithmGenerator(grammar=grammar, seed=42)
+            generator = AlgorithmGenerator(grammar=grammar, seed=123)  # Cambiado de 42 a 123 para generar algoritmos potencialmente más rápidos
 
             algorithms = []
             for i in range(3):
