@@ -260,7 +260,7 @@ def main():
     """Función principal"""
 
     # Configuración por defecto del protocolo
-    timeout = 60  # 60 segundos según protocolo
+    timeout = 300  # 300 segundos (5 min) - captura toda la variabilidad
     duration_days = 3.0  # 3 días completos
 
     # Permitir override vía argumentos (para testing)
