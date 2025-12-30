@@ -11,13 +11,23 @@ Metaheurística ILS con estructura:
 import numpy as np
 from typing import Dict, List, Optional, Tuple
 from time import time
-from ..core.problem import GraphColoringProblem
-from ..core.solution import ColoringSolution
-from ..core.evaluation import ColoringEvaluator
-from ..operators.constructive import get_constructive
-from ..operators.local_search import get_local_search
-from ..operators.perturbation import get_perturbation
-from ..operators.repair import get_repair
+
+try:
+    from ..core.problem import GraphColoringProblem
+    from ..core.solution import ColoringSolution
+    from ..core.evaluation import ColoringEvaluator
+    from ..operators.constructive import get_constructive
+    from ..operators.local_search import get_local_search
+    from ..operators.perturbation import get_perturbation
+    from ..operators.repair import get_repair
+except ImportError:
+    from core.problem import GraphColoringProblem
+    from core.solution import ColoringSolution
+    from core.evaluation import ColoringEvaluator
+    from operators.constructive import get_constructive
+    from operators.local_search import get_local_search
+    from operators.perturbation import get_perturbation
+    from operators.repair import get_repair
 
 
 class IteratedLocalSearch:

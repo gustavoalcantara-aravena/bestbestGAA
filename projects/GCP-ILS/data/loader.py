@@ -8,8 +8,13 @@ import os
 import json
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
-from ..data.parser import DIMACParser, validate_dimacs_file
-from ..core.problem import GraphColoringProblem
+
+try:
+    from ..data.parser import DIMACParser, validate_dimacs_file
+    from ..core.problem import GraphColoringProblem
+except ImportError:
+    from data.parser import DIMACParser, validate_dimacs_file
+    from core.problem import GraphColoringProblem
 
 
 class DataLoader:

@@ -9,8 +9,13 @@ Calcula:
 """
 
 from typing import Dict, Optional, Union
-from .solution import ColoringSolution
-from .problem import GraphColoringProblem
+
+try:
+    from .solution import ColoringSolution
+    from .problem import GraphColoringProblem
+except ImportError:
+    from core.solution import ColoringSolution
+    from core.problem import GraphColoringProblem
 
 
 class ColoringEvaluator:

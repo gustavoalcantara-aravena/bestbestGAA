@@ -42,10 +42,10 @@ def run_demo():
     
     # Seleccionar instancias pequeñas para demo
     sample_instances = [
-        'CUL10',
-        'DSJ10', 
-        'LEI10',
-        'REG10'
+        'myciel3',
+        'myciel4', 
+        'myciel5',
+        'le450_5a'
     ]
     
     results = []

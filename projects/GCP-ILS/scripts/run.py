@@ -89,7 +89,19 @@ Examples:
             print(f"Loading instance: {args.instance}")
         
         loader = DataLoader(args.dataset_root)
-        problem = loader.load(args.instance)
+        
+        # Intentar cargar, si no existe mostrar disponibles
+        try:
+            problem = loader.load(args.instance)
+        except FileNotFoundError as fnf_err:
+            print(f"Error: {fnf_err}")
+            print("\nAvailable instances:")
+            available = loader.list_available_instances()
+            for inst in available[:10]:
+                print(f"  - {inst}")
+            if len(available) > 10:
+                print(f"  ... and {len(available) - 10} more")
+            return 1
         
         if args.verbose:
             print(f"Instance loaded: n={problem.n}, m={problem.m}")
@@ -129,9 +141,9 @@ Examples:
         # Validar solución
         conflicts = best_solution.count_conflicts(problem)
         if conflicts == 0:
-            print("✓ Solution is feasible")
+            print("[OK] Solution is feasible")
         else:
-            print(f"✗ Solution has {conflicts} conflicts")
+            print(f"[ERROR] Solution has {conflicts} conflicts")
         
         return 0
         

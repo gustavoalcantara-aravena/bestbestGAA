@@ -11,8 +11,13 @@ Operadores que crean soluciones iniciales:
 
 import numpy as np
 from typing import List, Tuple
-from ..core.solution import ColoringSolution
-from ..core.problem import GraphColoringProblem
+
+try:
+    from ..core.solution import ColoringSolution
+    from ..core.problem import GraphColoringProblem
+except ImportError:
+    from core.solution import ColoringSolution
+    from core.problem import GraphColoringProblem
 
 
 class GreedyDSATUR:

@@ -8,8 +8,13 @@ Operadores que perturbam soluciones para generar diversidad:
 
 import numpy as np
 from typing import Set
-from ..core.solution import ColoringSolution
-from ..core.problem import GraphColoringProblem
+
+try:
+    from ..core.solution import ColoringSolution
+    from ..core.problem import GraphColoringProblem
+except ImportError:
+    from core.solution import ColoringSolution
+    from core.problem import GraphColoringProblem
 
 
 class RandomRecolor:

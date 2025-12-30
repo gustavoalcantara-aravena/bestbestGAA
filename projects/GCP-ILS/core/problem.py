@@ -180,7 +180,10 @@ class GraphColoringProblem:
         Returns:
             Instancia de GraphColoringProblem
         """
-        from .parser import DIMACParser
+        try:
+            from .parser import DIMACParser
+        except ImportError:
+            from data.parser import DIMACParser
         
         n, edges = DIMACParser.parse(filepath)
         

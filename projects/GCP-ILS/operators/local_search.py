@@ -10,8 +10,13 @@ Operadores que mejoran soluciones existentes:
 
 import numpy as np
 from typing import List, Set, Tuple, Optional
-from ..core.solution import ColoringSolution
-from ..core.problem import GraphColoringProblem
+
+try:
+    from ..core.solution import ColoringSolution
+    from ..core.problem import GraphColoringProblem
+except ImportError:
+    from core.solution import ColoringSolution
+    from core.problem import GraphColoringProblem
 
 
 class KempeChain:
