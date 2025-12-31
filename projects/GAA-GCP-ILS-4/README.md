@@ -1,13 +1,36 @@
-# Graph Coloring Problem con Iterated Local Search
+# Graph Coloring Problem con Generación Automática de Algoritmos
 
-**Proyecto**: GCP-ILS  
+**Proyecto**: GAA-GCP-ILS-4  
 **Problema**: Graph Coloring Problem (Problema NP-Completo)  
 **Metaheurística**: Iterated Local Search (ILS)  
-**Estado**: Documentación completa, arquitectura definida, tests listos para implementación
+**Novedad**: Módulo GAA para evolucionar algoritmos automáticamente  
+**Estado**: ✅ COMPLETAMENTE IMPLEMENTADO Y FUNCIONAL
 
 ---
 
 ## 📚 Documentación
+
+### 🎯 MÓDULO GAA (Generación Automática de Algoritmos)
+
+**⭐ PUNTO DE ENTRADA**: [INDICE_VALIDACION_GAA.md](INDICE_VALIDACION_GAA.md) - Índice completo y guía de navegación
+
+**Documentos de Validación**:
+- **[VALIDACION_FINAL_RESUMEN_EJECUTIVO.md](VALIDACION_FINAL_RESUMEN_EJECUTIVO.md)** ⭐⭐ **LEER PRIMERO** - Resumen final de validación (31 Dic 2025)
+- **[INTEGRACION_GAA_EN_EJECUCIONES.md](INTEGRACION_GAA_EN_EJECUCIONES.md)** 🔧 **TÉCNICO** - Cómo GAA se integra en la cadena de ejecución
+- **[CHECKLIST_VALIDACION_FINAL.md](CHECKLIST_VALIDACION_FINAL.md)** ✅ **VALIDACIÓN** - Checklist completo de 36 items
+- **[RESUMEN_EJECUTIVO_INTEGRACION_GAA.md](RESUMEN_EJECUTIVO_INTEGRACION_GAA.md)** - Resumen de estado de integración
+- **[ANALISIS_INTEGRACION_GAA.md](ANALISIS_INTEGRACION_GAA.md)** - Análisis técnico de integración con el proyecto
+
+**Documentos de Referencia**:
+- **[gaa/README.md](gaa/README.md)** - Guía completa de uso del módulo GAA
+- **[GAA_IMPLEMENTACION_COMPLETA.md](GAA_IMPLEMENTACION_COMPLETA.md)** - Resumen de implementación
+- **[GAA_STATUS_INTEGRACION.md](GAA_STATUS_INTEGRACION.md)** - Estado de integración técnica (checklist)
+- **[GAA_VALIDACION_SISTEMA.md](GAA_VALIDACION_SISTEMA.md)** - Validación del sistema completo
+
+**Scripts de Validación**:
+- `check_gaa_integration.py` - Validación rápida (30 segundos)
+- `validate_gaa_comprehensive.py` - Validación exhaustiva (2-3 minutos)
+- `GUIA_VALIDACION_GAA.py` - Guía interactiva de validación
 
 ### Documentación Principal
 - **[problema_metaheuristica.md](problema_metaheuristica.md)** - Especificación técnica completa (2560+ líneas)
@@ -15,16 +38,16 @@
   - Parte 2: Metaheurística Seleccionada
   - Parte 3: Datasets (78 instancias DIMACS)
   - Parte 4: Generación y Experimentación
-  - **Parte 5: Testing y Validación Unitaria** ✨ *NUEVO*
+  - Parte 5: Testing y Validación Unitaria
 
 ### Documentación de Testing
 - **[TESTING_SUMMARY.md](TESTING_SUMMARY.md)** - Resumen ejecutivo de la estrategia de testing
 - **[tests/README.md](tests/README.md)** - Guía detallada de tests y ejecución
 - **[scripts/test_quick.py](scripts/test_quick.py)** - Script de validación rápida (~10s)
 
-### Scripts Auxiliares
-- **[run_tests.py](run_tests.py)** - Script para ejecutar tests con opciones
-- **[scripts/test_quick.py](scripts/test_quick.py)** - Validación rápida de componentes
+### Documentación Técnica Adicional
+- **[GAA_EXPLICACION_COMPLETA.md](GAA_EXPLICACION_COMPLETA.md)** - Cómo funciona GAA con ejemplos
+- **[VERIFICACION_GAA_STATUS.md](VERIFICACION_GAA_STATUS.md)** - Análisis de estado previo a implementación
 
 ---
 
@@ -32,22 +55,52 @@
 
 ```
 project/
+├── gaa/                         # ✨ NUEVO: Módulo GAA
+│   ├── __init__.py             # Exportar clases GAA
+│   ├── ast_nodes.py            # Nodos del AST (450+ líneas)
+│   ├── grammar.py              # Gramática BNF (250+ líneas)
+│   ├── generator.py            # Generador de algoritmos (300+ líneas)
+│   ├── interpreter.py          # Intérprete/ejecutor (350+ líneas)
+│   └── README.md               # Documentación del módulo GAA
+│
 ├── core/                        # Componentes fundamentales
 │   ├── problem.py              # GraphColoringProblem
 │   ├── solution.py             # ColoringSolution
 │   └── evaluation.py           # ColoringEvaluator
+│
 ├── operators/                  # Operadores de búsqueda
-│   ├── constructive.py         # GreedyDSATUR, GreedyLF, RandomSequential
-│   ├── improvement.py          # KempeChain, OneVertexMove, TabuCol
-│   └── perturbation.py         # RandomRecolor, PartialDestroy
+│   ├── constructive.py         # GreedyDSATUR, GreedyLF, RandomSequential, SL
+│   ├── improvement.py          # KempeChain, OneVertexMove, TabuCol, SwapColors
+│   └── perturbation.py         # RandomRecolor, PartialDestroy, ColorClassMerge
+│
 ├── metaheuristic/              # Algoritmos
 │   └── ils_core.py            # IteratedLocalSearch
-├── tests/                      # Suite de tests
-│   ├── test_core.py           # 15+ tests de Core
-│   ├── test_operators.py      # 20+ tests de Operadores
-│   ├── test_ils.py            # 10+ tests de ILS
-│   ├── conftest.py            # Fixtures compartidas
-│   └── README.md              # Guía de tests
+│
+├── visualization/              # ✨ Módulo de visualización
+│   ├── convergence.py          # Gráficas de convergencia
+│   ├── robustness.py           # Análisis de robustez
+│   ├── scalability.py          # Análisis de escalabilidad
+│   ├── heatmap.py              # Matrices de conflictos
+│   ├── time_quality.py         # Trade-off tiempo-calidad
+│   ├── plotter.py              # Orquestador PlotManager
+│   └── README.md               # Guía de visualización
+│
+├── scripts/
+│   ├── gaa_quick_demo.py       # ✨ NUEVO: Demo rápida GAA
+│   ├── gaa_experiment.py       # ✨ NUEVO: Experimento GAA completo
+│   └── ... (otros scripts)
+│
+├── tests/
+│   ├── test_gaa.py             # ✨ NUEVO: Tests para GAA (15+ tests)
+│   ├── test_core.py            # Tests de Core
+│   ├── test_operators.py       # Tests de Operadores
+│   ├── test_ils.py             # Tests de ILS
+│   └── conftest.py             # Fixtures compartidas
+│
+├── datasets/                   # 78 instancias DIMACS
+├── config/                     # Configuración
+└── ... (archivos de configuración y documentación)
+```
 ├── scripts/                    # Scripts utilitarios
 │   ├── test_quick.py          # Validación rápida
 │   └── run_tests.py           # Ejecutor de tests

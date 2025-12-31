@@ -1,0 +1,195 @@
+# NEW-GCP-ILS-OK Configuration File
+# Configuracion centralizada para ILS y operadores
+
+# ===================================================================
+# METAHEURISTIC CONFIGURATION
+# ===================================================================
+metaheuristic:
+  # Tipo de metaheuristica
+  algorithm: "IteratedLocalSearch"  # Options: IteratedLocalSearch, HybridILS
+  
+  # Parametros de iteracion
+  max_iterations: 500
+  max_no_improve: 150
+  
+  # Seed para reproducibilidad
+  seed: 42
+  
+  # Verbosidad
+  verbose: false
+
+# ===================================================================
+# LOCAL SEARCH CONFIGURATION
+# ===================================================================
+local_search:
+  # Operador de busqueda local
+  operator: "OneVertexMove"  # Options: OneVertexMove, KempeChainMove
+  
+  # Parametros
+  max_iterations: 100
+  tabu_tenure: 10  # Solo para TabuColMove
+
+# ===================================================================
+# CONSTRUCTIVE OPERATOR CONFIGURATION
+# ===================================================================
+constructive:
+  # Operador constructivo
+  operator: "GreedyDSATUR"  # Options: GreedyDSATUR, GreedyLargestFirst, RandomSequential
+  
+  # Numero de soluciones iniciales a generar
+  num_initial_solutions: 1
+
+# ===================================================================
+# PERTURBATION CONFIGURATION
+# ===================================================================
+perturbation:
+  # Tipo de perturbacion
+  operator: "RandomRecolor"  # Options: RandomRecolor, PartialDestroy, ColorClassMerge
+  
+  # Intensidad de perturbacion
+  strength: 0.15
+  
+  # Usar perturbacion adaptativa
+  use_adaptive: true
+  
+  # Parametros adaptativos
+  min_strength: 0.01
+  max_strength: 0.5
+  increase_factor: 1.1
+  decrease_factor: 0.9
+  
+  # Schedule de perturbacion
+  schedule: "Adaptive"  # Options: Constant, LinearDecay, ExponentialDecay, Adaptive
+  initial_strength: 0.3
+  final_strength: 0.01
+  decay_rate: 5.0
+
+# ===================================================================
+# REPAIR CONFIGURATION
+# ===================================================================
+repair:
+  # Operador de reparacion (si es necesario)
+  operator: "GreedyRepair"  # Options: GreedyRepair, ConflictMinimizingRepair
+  
+  # Aplicar reparacion automaticamente
+  auto_repair: true
+  
+  # Numero maximo de intentos de reparacion
+  max_repair_attempts: 3
+
+# ===================================================================
+# EVALUATION CONFIGURATION
+# ===================================================================
+evaluation:
+  # Penalidad por conflicto
+  conflict_penalty: 100
+  
+  # Calcular gap respecto a BKS
+  calculate_gap: true
+  
+  # Archivo con Best Known Solutions
+  bks_file: "datasets/BKS.json"
+
+# ===================================================================
+# DATASET CONFIGURATION
+# ===================================================================
+dataset:
+  # Directorio de datasets
+  base_dir: "datasets"
+  
+  # Subdirectorios
+  instance_dirs:
+    - "CUL"
+    - "DSJ"
+    - "LEI"
+    - "MYC"
+    - "REG"
+    - "SCH"
+    - "SGB"
+  
+  # Archivo de BKS
+  bks_file: "BKS.json"
+
+# ===================================================================
+# EXPERIMENTATION CONFIGURATION
+# ===================================================================
+experimentation:
+  # Numero de runs por instancia
+  num_runs: 5
+  
+  # Limites de tiempo
+  time_limits:
+    small: 10    # segundos para instancias pequenas
+    medium: 30   # segundos para instancias medianas
+    large: 300   # segundos para instancias grandes
+  
+  # Configuraciones a probar
+  configurations:
+    - name: "Fast"
+      max_iterations: 50
+      max_no_improve: 20
+      ls_max_iterations: 10
+      perturbation_strength: 0.2
+      use_adaptive_perturbation: false
+    
+    - name: "Balanced"
+      max_iterations: 100
+      max_no_improve: 40
+      ls_max_iterations: 20
+      perturbation_strength: 0.15
+      use_adaptive_perturbation: true
+    
+    - name: "Thorough"
+      max_iterations: 200
+      max_no_improve: 80
+      ls_max_iterations: 40
+      perturbation_strength: 0.1
+      use_adaptive_perturbation: true
+
+# ===================================================================
+# OUTPUT CONFIGURATION
+# ===================================================================
+output:
+  # Directorio de resultados
+  results_dir: "results"
+  
+  # Formato de salida
+  formats:
+    - "json"    # Resultados completos
+    - "csv"     # Tabla de resultados
+    - "txt"     # Reportes legibles
+  
+  # Guardar soluciones
+  save_solutions: true
+  
+  # Directorio para soluciones
+  solutions_dir: "results/solutions"
+
+# ===================================================================
+# LOGGING CONFIGURATION
+# ===================================================================
+logging:
+  # Nivel de log
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  
+  # Archivo de log
+  file: "logs/gcp_ils.log"
+  
+  # Formato
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# ===================================================================
+# PERFORMANCE TUNING
+# ===================================================================
+performance:
+  # Numero de threads para procesamiento paralelo
+  num_threads: 4
+  
+  # Usar procesamiento paralelo
+  parallel: false
+  
+  # Cache de resultados
+  use_cache: true
+  
+  # Tamano maximo de cache
+  cache_size: 1000

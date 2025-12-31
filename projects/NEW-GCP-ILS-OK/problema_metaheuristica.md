@@ -376,14 +376,641 @@ class ColoringSolution:
 
 ## Evaluation-Criteria
 
+### 3.1 Representación Estándar del Problema
+
+Sea:
+- $G = (V, E)$ un grafo no dirigido
+- $|V| = n$ número de vértices
+- $|E| = m$ número de aristas
+- $k$ número máximo de colores permitidos
+- $c(v) \in \{1, \ldots, k\}$ función de asignación de color a cada vértice
+
+---
+
+### 3.2 Función Fitness Clásica Basada en Conflictos
+
+**Definición canónica** (aceptada por la comunidad GCP-ILS):
+
+$$f(S) = \sum_{(u,v) \in E} I[c(u) = c(v)]$$
+
+Donde:
+- $I[\cdot]$ es la función indicadora definida como:
+  - $I[\text{condición}] = 1$ si la condición es verdadera
+  - $I[\text{condición}] = 0$ en caso contrario
+
+**Interpretación**:
+- $f(S)$ contabiliza el **número total de conflictos** en la coloración
+- Un conflicto es una arista cuyos vértices extremos tienen el mismo color
+- Una solución $S$ es una **coloración válida** si y solo si: $f(S) = 0$
+
+✅ **Esta es la formulación correcta para ILS en GCP** según la literatura canónica (Galinier & Hao, 2006; Porumbel et al., 2010)
+
+---
+
+### 3.3 Fitness Penalizada (Minimización de k)
+
+Cuando se reduce dinámicamente el número de colores $k$:
+
+$$f(S) = \alpha \cdot \text{conflictos}(S) + \beta \cdot k$$
+
+Con:
+- $\alpha \gg \beta$ (típicamente $\alpha = 1000, \beta = 1$)
+- Penaliza fuertemente soluciones inválidas
+- Permite búsqueda en espacio infactible temporal
+
+**Ventajas de este enfoque**:
+- ✔️ Búsqueda en espacio inviable permite transiciones suaves entre valores de $k$
+- ✔️ Si $\alpha$ es suficientemente grande, $f(S) = 0$ se alcanza antes que $k$ sea minimizado
+- ✔️ Proporciona trayectoria de búsqueda más flexible
+
+---
+
+### 3.4 Cálculo Correcto en Iterated Local Search
+
+**Pipeline estándar de ILS para GCP**:
+
+1. **Solución inicial** → Usar operador constructivo (DSATUR, LargestFirst)
+
+2. **Búsqueda local** → Aplicar movimientos:
+   - Move: Recolorear un vértice (OneVertexMove, KempeChain)
+   - Evaluación incremental de conflictos
+
+3. **Perturbación** → Cambiar colores de subconjunto de vértices:
+   - Escala de perturbación controla intensidad
+   - Perturbar tanto soluciones mejores como peores
+
+4. **Aceptación** → Criterio de aceptación:
+   - Mejor fitness global
+   - O criterio probabilístico (simulated annealing, umbrales)
+
+5. **Iterar** → Repetir hasta criterio de parada
+
+**Observación crítica**: 
+> ✔️ El fitness $f(S)$ **no cambia** durante ILS, lo que cambia es la **trayectoria** de búsqueda explorada.
+
+---
+
 ### Metricas de Calidad
 
-**Motrica principal**: numero de colores utilizados (k)  
-**Criterio de comparacion**: Menor es mejor  
+**Métrica principal**: número de colores utilizados ($k$)  
+**Criterio de comparación**: Menor es mejor  
 **Manejo de infactibilidad**: 
-- **Penalizacion**: fitness = k + numero_de_conflictos o 100
-- **Reparacion**: Aplicar RepairConflicts antes de evaluar
-- **Permitir infactibilidad temporal** durante bosqueda (enfoque TabuCol)
+- **Opción 1** (Canónica): Garantizar $f(S) = 0$ siempre → Evaluar solo $k$
+- **Opción 2** (Flexible): Usar fitness penalizada $f(S) = \alpha \cdot \text{conflictos} + \beta \cdot k$
+- **Opción 3** (Estricta): Penalizar con $\infty$ si $f(S) > 0$
+
+---
+
+### 3.5 Compatibilidad con Datasets DIMACS
+
+**Requisito crítico**: Todo el framework debe ser compatible con los 79 datasets DIMACS del proyecto.
+
+**Conjuntos de datos del proyecto**:
+
+| Familia | Cantidad | Rango de instancias | Tipo |
+|---------|----------|-------------------|------|
+| **CUL** | 6 | $n \in [5-100]$ | Color University of Leeds |
+| **DSJ** | 15 | $n \in [125-500]$ | David S. Johnson |
+| **LEI** | 12 | $n \in [11-70]$ | Leighton |
+| **MYC** | 6 | $n \in [11-22]$ | Mycielski |
+| **REG** | 14 | $n \in [20-430]$ | Regular graphs |
+| **SCH** | 2 | $n \in [166-686]$ | School scheduling |
+| **SGB** | 24 | $n \in [14-512]$ | Stanford GraphBase |
+| **TOTAL** | **79** | $n \in [5-686]$ | Diversos |
+
+**Especificaciones técnicas por familia**:
+- **CUL**: Instancias pequeñas, útiles para validación rápida
+- **DSJ**: Instancias medianas-grandes, referencia de dificultad
+- **LEI**: Instancias pequeñas, casos especiales de coloración
+- **MYC**: Instancias muy pequeñas, grafos especiales (Mycielski)
+- **REG**: Grafos regulares, estructura simétrica
+- **SCH**: Grafos densos, problemas reales de horarios
+- **SGB**: Variedad de tamaños y densidades
+
+**Requerimientos de evaluación para estos datasets**:
+
+1. **Formato DIMACS**
+   - Entrada: Archivos `.col` en formato DIMACS
+   - Salida: Debe generar coloraciones válidas para todos los tamaños
+   - Verificación: $f(S) = 0$ para todas las soluciones reportadas
+
+2. **Escalabilidad**
+   - Algoritmo debe ser eficiente en $n \in [5, 686]$
+   - Búsqueda local incremental (no re-evaluar todo el grafo)
+   - Manejo eficiente de memoria para grafos densos
+
+3. **Consistencia de evaluación**
+   - Misma función fitness para todas las instancias
+   - Misma penalización de conflictos ($\alpha, \beta$) en todos los casos
+   - Registrar BKS (Best Known Solution) por familia
+
+4. **Reporting estándar**
+   - Reportar: $k$, $f(S)$, gap respecto a BKS
+   - Salidas en formato CSV/JSON con timestamp DD-MM-YY_HH-MM-SS
+   - Incluir logs de conflictos durante búsqueda
+
+✅ **Validación**: Antes de reportar resultados, verificar que:
+- Todos los 79 datasets se resuelven con $f(S) = 0$ (o reportan como infactibles)
+- No hay inconsistencias en evaluación entre familias
+- BKS conocidos se alcanzan o superan en instancias probadas
+
+---
+
+### 3.6 Gráficas de Output Esperadas en Experimentación GCP-DIMACS
+
+En trabajos de nivel experto, no basta con una tabla de colores. Se espera **evidencia empírica multivista** que capture calidad, estabilidad, convergencia y costo computacional.
+
+#### 1.1 Gráfica Principal: Convergencia de la Función Fitness
+
+**Qué muestra**:
+- **Eje X**: Iteraciones / Evaluaciones de fitness
+- **Eje Y**: Valor de fitness ($f(S)$ conflictos, penalización, o número de colores $k$)
+- **Líneas**: Una curva por corrida o promedio de $N$ corridas ($N \geq 20$)
+
+**Por qué es clave** (Talbi-friendly):
+- ✔️ Evidencia comportamiento dinámico de ILS
+- ✔️ Permite evaluar velocidad de convergencia
+- ✔️ Distingue exploración vs explotación
+- ✔️ Esperado por revisores de conferencias Q1
+
+**Pregunta que responde**: ¿La metaheurística mejora rápido? ¿Se estanca? ¿Es robusta?
+
+**Ejemplo esperado**:
+```
+Fitness vs Iteraciones (DSJC250.5)
+f(S) |     ___
+     |    /   \___
+     |   /       \___
+     |  /           \____
+     | /                \________
+     |/___________________
+     +---------+----------+--- iteraciones
+     0        500       1000
+```
+
+---
+
+#### 1.2 Boxplots de Calidad Final (Robustez Estadística)
+
+**Qué muestra**:
+- Distribución del fitness final en $N \in [20, 50]$ corridas independientes
+- Mediana, rango intercuartil (IQR), outliers
+- Permite análisis estadístico (media, desv. estándar, CV)
+
+**Buenas prácticas**:
+- Un boxplot por instancia DIMACS (ej. DSJC250.5, myciel5, LEI500)
+- Comparación entre algoritmos (ILS vs GRASP vs SA)
+- Normalizar por BKS: gap% = $(k - \text{BKS}) / \text{BKS} \times 100$
+
+**Por qué es obligatorio** (Talbi 1.7):
+- ✔️ Análisis estadístico obligatorio en journals
+- ✔️ Demuestra reproducibilidad y robustez
+- ✔️ Permite comparación justa entre métodos
+
+**Ejemplo esperado**:
+```
+Calidad Final en 30 corridas (DSJC500.5)
+gap (%) |  ○
+        |  │
+        | ╔╩╗
+        | ║ ║
+        | ╚═╝
+        |  ║
+        |  ○
+        +-------- DSJC500.5
+```
+
+---
+
+#### 1.3 Curvas Tiempo–Calidad (Trade-off Computacional)
+
+**Qué muestra**:
+- **Eje X**: Tiempo (segundos)
+- **Eje Y**: Mejor fitness alcanzado hasta ese tiempo $t$
+- Múltiples curvas para diferentes instancias o algoritmos
+
+**Muy valorado cuando**:
+- ✔️ Comparas ILS vs GRASP vs SA en igual tiempo
+- ✔️ Analizas escalabilidad en grafos grandes
+- ✔️ Muestras si hay "punto óptimo" de parada
+
+**Pregunta que responde**: ¿Vale la pena correr 10s vs 60s?
+
+**Ejemplo esperado**:
+```
+Fitness vs Tiempo (DSJ instances)
+fitness |  DSJC125 ___
+        |  DSJC250 _____
+        |  DSJC500 ________
+        |         /
+        |        /
+        +--------+-----+----- tiempo(s)
+        0        10    60
+```
+
+---
+
+#### 1.4 Heatmap / Matriz de Conflictos (Análisis Cualitativo)
+
+**Qué muestra**:
+- Matriz $n \times n$ donde elemento $(i,j)$ indica:
+  - Coloración final del vértice $i$ y $j$
+  - Presencia de conflicto si $(i,j) \in E$ y $c(i) = c(j)$
+- Colores: Verde (sin conflicto) → Rojo (conflicto)
+
+**Uso**:
+- ✔️ Visualizar estructura residual de conflictos
+- ✔️ Mostrar dónde falla el algoritmo
+- ✔️ Identificar subgrafos problemáticos
+
+**Util para**:
+- Discusión cualitativa en papers
+- Diagnosticar patrones de fallo
+- No reemplaza métricas cuantitativas
+
+---
+
+#### 1.5 Gráfico de Escalabilidad (Clave para Q1)
+
+**Qué muestra**:
+- **Eje X**: Tamaño del problema ($|V|$ o $|E|$ o densidad)
+- **Eje Y**: Métrica de costo:
+  - Tiempo medio hasta solución válida
+  - Iteraciones promedio
+  - Gap promedio respecto a BKS
+
+**Esperado para todas las familias DIMACS**:
+- CUL (5–100 vértices)
+- DSJ (125–500 vértices)
+- LEI (11–70 vértices)
+- MYC (11–22 vértices)
+- REG (20–430 vértices)
+- SCH (166–686 vértices)
+- SGB (14–512 vértices)
+
+**Clave si apuntas a revistas Q1**:
+- ✔️ Demuestra eficiencia computacional
+- ✔️ Valida complejidad teórica vs práctica
+- ✔️ Permite extrapolación a instancias mayores
+
+**Ejemplo esperado**:
+```
+Tiempo de Convergencia vs |V|
+tiempo(s)|              ╱╱╱ ILS
+         |            ╱╱
+         |          ╱╱ GRASP
+         |        ╱╱ SA
+         |      ╱╱
+         |    ╱╱
+         +---+---+----+---- |V|
+         0  100 250  500
+```
+
+---
+
+### 3.7 Tabla de Reportes Obligatorios
+
+Para cada experimento se debe generar:
+
+| Reporte | Formato | Contenido |
+|---------|---------|----------|
+| **Summary** | CSV | Instancia, $k$, Gap%, Tiempo, Factible |
+| **Detailed Results** | JSON | Config, mejoras por iteración, timestamps |
+| **Statistics** | TXT | Media, mediana, std, min, max de 30 corridas |
+| **Convergence Plots** | PNG/PDF | 1.1, 1.2, 1.3, 1.5 |
+| **Conflict Heatmap** | PNG | Matriz de conflictos final |
+| **Reproducibility** | TXT | Seed, params, hardware specs |
+
+✅ **Integración con workflow**:
+- Scripts generan automáticamente en `output/results/`
+- Plots se producen al terminar cada experimento
+- Logs incluyen datos brutos para análisis posterior
+
+---
+
+## 4. Output y Almacenamiento de Resultados
+
+### 4.1 Estructura de Carpetas
+
+Después de **cada ejecución**, todos los resultados se guardan automáticamente en la carpeta `output/` con **timestamp único** (DD-MM-YY_HH-MM-SS) para evitar sobrescrituras.
+
+```
+output/
+├── results/
+│   ├── all_datasets/              ← Ejecución COMPLETA (todos 79 datasets)
+│   │   └── 31-12-25_14-35-42/     ← Timestamp: DD-MM-YY_HH-MM-SS
+│   │       ├── summary.csv
+│   │       ├── detailed_results.json
+│   │       ├── statistics.txt
+│   │       ├── convergence_plot.png
+│   │       ├── boxplot_robustness.png
+│   │       ├── time_quality_tradeoff.png
+│   │       ├── scalability_plot.png
+│   │       └── conflict_heatmap.png
+│   │
+│   └── specific_datasets/         ← Ejecución ESPECÍFICA (una familia)
+│       ├── CUL/
+│       │   └── 31-12-25_14-35-42/
+│       ├── DSJ/
+│       │   └── 31-12-25_14-35-42/
+│       ├── LEI/
+│       │   └── 31-12-25_14-35-42/
+│       ├── MYC/
+│       │   └── 31-12-25_14-35-42/
+│       ├── REG/
+│       │   └── 31-12-25_14-35-42/
+│       ├── SCH/
+│       │   └── 31-12-25_14-35-42/
+│       └── SGB/
+│           └── 31-12-25_14-35-42/
+│
+├── solutions/                      ← Archivos de solución (.sol)
+│   ├── DSJC125_31-12-25_14-35-42.sol
+│   ├── myciel3_31-12-25_14-35-42.sol
+│   └── ... (una por instancia resuelta)
+│
+└── logs/                          ← Logs de ejecución detallados
+    └── execution_31-12-25_14-35-42.log
+```
+
+---
+
+### 4.2 Formato del Timestamp: DD-MM-YY_HH-MM-SS
+
+```
+31-12-25_14-35-42
+DD MM YY HH MM SS
+│  │  │  │  │  └─ SS: Segundo (00-59)
+│  │  │  │  └───── MM: Minuto (00-59)
+│  │  │  └────── HH: Hora (00-23)
+│  │  └──────── YY: Año (25 = 2025)
+│  └──────────── MM: Mes (01-12)
+└───────────────── DD: Día (01-31)
+```
+
+**Ejemplo**: `31-12-25_14-35-42` = 31 diciembre 2025 a las 14:35:42 horas
+
+---
+
+### 4.3 Dos Modos de Ejecución
+
+#### Modo 1: ALL (Todos los 79 datasets)
+
+Ejecuta el framework sobre **todas las instancias DIMACS**.
+
+```bash
+python scripts/experiment.py --mode all
+```
+
+**Resultado en**: `output/results/all_datasets/31-12-25_14-35-42/`
+
+**Contenido**:
+- Tabla con 79 instancias (CUL:6 + DSJ:15 + LEI:12 + MYC:6 + REG:14 + SCH:2 + SGB:24)
+- Resultados detallados en JSON
+- Reporte formateado en TXT
+- Gráficas de convergencia, robustez, escalabilidad
+- 79 soluciones individuales en `solutions/`
+
+---
+
+#### Modo 2: SPECIFIC (Una familia específica)
+
+Ejecuta sobre **una familia particular** de datasets.
+
+```bash
+python scripts/experiment.py --mode specific --dataset DSJ
+```
+
+**Familias disponibles**:
+- `CUL` → 6 instancias (Color University of Leeds)
+- `DSJ` → 15 instancias (David S. Johnson)
+- `LEI` → 12 instancias (Leighton)
+- `MYC` → 6 instancias (Mycielski)
+- `REG` → 14 instancias (Regular)
+- `SCH` → 2 instancias (School)
+- `SGB` → 24 instancias (Stanford GraphBase)
+
+**Resultado en**: `output/results/specific_datasets/DSJ/31-12-25_14-35-42/`
+
+**Contenido**: Ídem Modo 1 pero solo para la familia seleccionada.
+
+---
+
+### 4.4 Contenido de Archivos de Salida
+
+#### 📄 summary.csv
+Tabla rápida e importable para análisis.
+
+```csv
+Instance,Dataset,Vertices,Edges,BKS,Colors,Feasible,Gap,Gap(%),Time(s),Conflicts
+DSJC125.col,DSJ,125,736,45,48,True,+3,6.67,12.5,0
+myciel3.col,MYC,11,20,4,4,True,0,0.00,0.5,0
+CUL_100.col,CUL,100,850,5,7,True,+2,40.00,8.3,0
+```
+
+#### 📊 detailed_results.json
+Información completa máquina-legible con estructura jerárquica.
+
+```json
+{
+  "metadata": {
+    "execution_id": "31-12-25_14-35-42",
+    "mode": "all_datasets",
+    "total_instances": 79,
+    "total_time": 945.3
+  },
+  "algorithm_config": {
+    "name": "IteratedLocalSearch",
+    "max_iterations": 1000,
+    "perturbation_strength": 0.15,
+    "construction": "DSATUR"
+  },
+  "results": [
+    {
+      "instance": "DSJC125.col",
+      "family": "DSJ",
+      "num_colors": 48,
+      "num_conflicts": 0,
+      "is_feasible": true,
+      "fitness": 48,
+      "bks": 45,
+      "gap": 3,
+      "gap_percent": 6.67,
+      "time_seconds": 12.5,
+      "convergence_history": [
+        {"iteration": 0, "fitness": 52, "num_colors": 52},
+        {"iteration": 10, "fitness": 50, "num_colors": 50},
+        ...
+      ]
+    }
+  ],
+  "statistics": {
+    "total_feasible": 79,
+    "average_time": 11.96,
+    "average_colors": 22.4,
+    "average_gap_percent": 1.8
+  }
+}
+```
+
+#### 📋 statistics.txt
+Reporte legible para humanos.
+
+```
+═══════════════════════════════════════════════════════════════
+                   NEW-GCP-ILS-OK - REPORT
+═══════════════════════════════════════════════════════════════
+Execution ID:       31-12-25_14-35-42
+Mode:               all_datasets (79 instances)
+Algorithm:          Iterated Local Search
+Total Execution:    945.3 seconds
+
+RESUMEN GENERAL:
+├─ Total instancias:     79
+├─ Factibles (f(S)=0):   79/79 (100.0%)
+├─ Tiempo promedio:      11.96 segundos
+├─ Colores promedio:     22.4
+├─ Gap promedio:         +1.8 colors (+1.35%)
+
+MEJOR INSTANCIA:
+├─ Instance:     myciel3.col
+├─ Colores:      4 (óptimo)
+├─ Gap:          0 colors
+├─ Tiempo:       0.5 segundos
+
+PEOR INSTANCIA:
+├─ Instance:     DSJC500.5
+├─ Colores:      185
+├─ Gap:          +5 colors
+├─ Tiempo:       145.2 segundos
+
+POR FAMILIA:
+├─ CUL:  avg_colors=6.2, avg_time=2.3s, feasible=6/6
+├─ DSJ:  avg_colors=45.3, avg_time=18.7s, feasible=15/15
+├─ LEI:  avg_colors=8.1, avg_time=1.5s, feasible=12/12
+├─ MYC:  avg_colors=4.0, avg_time=0.3s, feasible=6/6
+├─ REG:  avg_colors=15.7, avg_time=5.2s, feasible=14/14
+├─ SCH:  avg_colors=34.5, avg_time=89.1s, feasible=2/2
+├─ SGB:  avg_colors=28.3, avg_time=12.8s, feasible=24/24
+
+═══════════════════════════════════════════════════════════════
+```
+
+#### 🔍 Gráficas Generadas Automáticamente
+
+1. **convergence_plot.png** → Fitness vs iteraciones (Sección 3.6.1)
+2. **boxplot_robustness.png** → Distribución estadística de 30 corridas (Sección 3.6.2)
+3. **time_quality_tradeoff.png** → Tiempo vs calidad (Sección 3.6.3)
+4. **conflict_heatmap.png** → Matriz de conflictos residuales (Sección 3.6.4)
+5. **scalability_plot.png** → $|V|$ vs tiempo/iteraciones (Sección 3.6.5)
+
+---
+
+### 4.5 Archivos Adicionales
+
+#### 💾 Soluciones (.sol)
+```
+output/solutions/DSJC125_31-12-25_14-35-42.sol
+output/solutions/myciel3_31-12-25_14-35-42.sol
+```
+
+**Formato**: Línea por vértice con su color asignado:
+```
+c 1 0
+c 2 1
+c 3 0
+c 4 2
+...
+```
+
+**Verificación**: $f(S) = 0$ para todas las soluciones reportadas.
+
+#### 📝 Logs (.log)
+```
+output/logs/execution_31-12-25_14-35-42.log
+```
+
+**Contenido**:
+- Timestamp de inicio/fin
+- Parámetros de ejecución
+- Progreso por instancia
+- Mensajes de error o warnings
+- Estadísticas de hardware (CPU, memoria)
+
+---
+
+### 4.6 Ciclo Completo: Ejecución → Almacenamiento → Análisis
+
+**Paso 1**: Ejecutar experimentación
+```bash
+python scripts/experiment.py --mode all
+```
+
+**Paso 2**: Se generan automáticamente
+```
+output/results/all_datasets/31-12-25_14-35-42/
+├── summary.csv                    # ← Usar para análisis rápido
+├── detailed_results.json          # ← Datos completos
+├── statistics.txt                 # ← Leer para reporte
+├── convergence_plot.png           # ← Incluir en paper
+├── boxplot_robustness.png         # ← Estadística Q1
+├── time_quality_tradeoff.png      # ← Comparación algoritmos
+├── scalability_plot.png           # ← Complejidad
+└── conflict_heatmap.png           # ← Análisis cualitativo
+```
+
+**Paso 3**: Análisis y reporte
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Cargar resultados
+df = pd.read_csv("output/results/all_datasets/31-12-25_14-35-42/summary.csv")
+
+# Análisis por familia
+by_family = df.groupby('Dataset')[['Colors', 'Gap(%)', 'Time(s)']].mean()
+print(by_family)
+
+# Visualizar
+df.plot(x='Vertices', y='Gap(%)', kind='scatter')
+plt.savefig('custom_analysis.png')
+```
+
+---
+
+### 4.7 Checklist de Validación Post-Ejecución
+
+Después de cada experimentación confirma que:
+
+- ✅ Carpeta `output/results/` existe
+- ✅ Subcarpeta con timestamp correcto (DD-MM-YY_HH-MM-SS)
+- ✅ 3 archivos (CSV, JSON, TXT) presentes
+- ✅ 5 gráficas PNG generadas (convergencia, boxplot, time-quality, heatmap, scalability)
+- ✅ Archivos .sol en `solutions/` (uno por instancia resuelta)
+- ✅ Log en `logs/` con información completa
+- ✅ **Sin sobrescritura**: cada ejecución = carpeta nueva
+- ✅ Todas las instancias reportan $f(S) = 0$ (factibles)
+- ✅ BKS conocidos se alcanzan o se superan en instancias validadas
+- ✅ Estadísticas coherentes (media, mediana, desv. estándar)
+
+---
+
+### 4.8 Integración con Publicación Académica
+
+Los archivos generados están diseñados para:
+
+| Archivo | Uso en Paper |
+|---------|-----------|
+| **summary.csv** | Tabla de resultados principal |
+| **statistics.txt** | Sección "Results" (valores numéricos) |
+| **convergence_plot.png** | Figura 1 (comportamiento dinámico) |
+| **boxplot_robustness.png** | Figura 2 (análisis estadístico) |
+| **time_quality_tradeoff.png** | Figura 3 (comparación con otros métodos) |
+| **scalability_plot.png** | Figura 4 (complejidad computacional) |
+| **conflict_heatmap.png** | Figura 5 (análisis cualitativo, opcional) |
+| **detailed_results.json** | Datos suplementarios (appendix) |
+
+✅ **Reproducibilidad**: Todos los datos están versionados con timestamp y seed registrado en logs.
 
 ### Implementacion de Evaluador (PENDIENTE)
 
@@ -1077,7 +1704,7 @@ El sistema GAA generaro algoritmos ILS representados como AST combinando:
 - [x] Operadores del dominio identificados (15 terminales)
 - [x] METAHEURISTICA seleccionada (ILS)
 - [x] Parametros de ILS configurados
-- [x] Datasets agregados (81 instancias DIMACS clasificadas)
+- [x] Datasets agregados (79 instancias DIMACS clasificadas)
 - [x] Datasets descriptos por familia y dificultad
 
 ### Implementacion (Pendiente - Fases 1-6)

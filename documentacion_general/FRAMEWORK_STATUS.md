@@ -305,6 +305,79 @@ python run.py                         # Ejecutar optimización
 
 ---
 
+## 🔧 Plan de Mejoras Pendientes
+
+### CRÍTICO - Documentación de Generación de Algoritmos
+
+**Problema Identificado** (2025-12-30):
+El sistema GAA genera y prueba 500+ configuraciones de algoritmo, pero los outputs no documentan claramente:
+- ❌ Qué características de GAA se generaron en cada iteración
+- ❌ Cómo evolucionó el algoritmo a través de la búsqueda
+- ❌ Qué operadores/parámetros fueron más influyentes
+- ❌ Historial completo de 500 configuraciones evaluadas
+
+**Impacto**: Los reportes muestran solo el algoritmo FINAL, no el proceso de generación automática.
+
+**Solución Requerida**:
+
+1. **Mejorar logging de ILS** (A Corto Plazo)
+   - [ ] Guardar configuración completa en cada iteración
+   - [ ] Documentar qué cambió vs iteración anterior
+   - [ ] Registrar razón de aceptación/rechazo
+   - [ ] Crear archivo `gaa_evolution.json` con historial completo
+
+2. **Enriquecer outputs** (A Corto Plazo)
+   - [ ] Mostrar componentes del algoritmo en cada print de ILS
+   - [ ] Indicar qué operador fue perturbado
+   - [ ] Marcar iteraciones que mejoraron fitness
+   - [ ] Mostrar evolución de cada componente (gráficos)
+
+3. **Análisis de espacio de búsqueda** (A Mediano Plazo)
+   - [ ] Generar tabla de todas las configuraciones evaluadas
+   - [ ] Análisis de sensibilidad (impacto de cada operador)
+   - [ ] Visualizar distribución de fitness
+   - [ ] Identificar patrones en soluciones exitosas
+
+4. **Documentación clara de GAA** (A Corto Plazo)
+   - [ ] Crear EXPLICACION_GAA_ALGORITMOS.md ✅ HECHO
+   - [ ] Explicar diferencia GAA vs GA vs programación genética
+   - [ ] Mostrar ejemplos de espacio de configuraciones
+   - [ ] Aclarar qué es "generación automática de algoritmos"
+
+**Archivos Afectados**:
+- `04-Generated/scripts/gaa_orchestrator.py` - Mejorar logging
+- `04-Generated/scripts/ils_search.py` - Guardar historial completo
+- `projects/GCP-ILS-GAA/GUIA_EXPERIMENTACION.md` - Documentar outputs
+- `projects/GCP-ILS-GAA/EXPLICACION_GAA_ALGORITMOS.md` ✅ NUEVO
+
+**Estado**: Agregado a backlog de mejoras
+
+---
+
+### MEDIANO PLAZO - Análisis Comparativo por Familias
+
+**Objetivo**: Entender qué algoritmos generados son mejores para cada familia de instancias.
+
+**Tareas**:
+- [ ] Ejecutar experimentos en todas 7 familias (CUL, DSJ, LEI, MYC, REG, SCH, SGB)
+- [ ] Comparar mejores algoritmos encontrados para cada familia
+- [ ] Identificar si hay patrones (¿MYC siempre requiere X operador?)
+- [ ] Medir transferencia (¿puede algoritmo de CUL usarse en DSJ?)
+- [ ] Generar tabla comparativa de configuraciones por familia
+
+**Scripts Listos**: `gaa_family_experiments.py`, `analyze_family_results.py`
+
+---
+
+### LARGO PLAZO - Metaaprendizaje
+
+- [ ] Crear metamodelo: dada familia → predecir mejores operadores
+- [ ] Análisis de bajo dimensionalidad: PCA de espacio de configuraciones
+- [ ] Visualización 2D del espacio explorado
+- [ ] Recomendador: sugiere configuración base por tipo de instancia
+
+---
+
 ## ✅ Conclusión
 
 **El framework GAA está COMPLETO, FUNCIONAL y COHERENTE.**
@@ -316,11 +389,13 @@ Todos los componentes principales están implementados y validados:
 - ✅ Tres proyectos completamente especificados
 - ✅ Documentación técnica exhaustiva
 - ✅ Sistema de validación integrado
+- ⚠️ **NOTA**: Documentación de generación de algoritmos necesita mejora (ver plan arriba)
 
 **Listo para comenzar experimentos** en cuanto se añadan los datasets.
 
 ---
 
-**Última verificación**: 2025-11-17 14:30  
+**Última verificación**: 2025-12-30 14:45  
 **Ejecutado**: `verify_framework.py`  
-**Resultado**: 34 ✅ | 0 ⚠️ | 0 ❌
+**Resultado**: 34 ✅ | 0 ⚠️ | 0 ❌  
+**Mejora Pendiente**: Documentación de generación automática de algoritmos (CRÍTICO)

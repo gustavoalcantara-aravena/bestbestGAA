@@ -1,0 +1,141 @@
+project:
+  name: "GCP-ILS-GAA"
+  description: "Graph Coloring Problem con Iterated Local Search - Integrado con GAA"
+  version: "1.0.0"
+  created: "2025-12-30"
+  framework: "GAA"
+
+problem:
+  type: "Graph Coloring Problem"
+  optimization: "minimize"
+  objective: "Minimizar número de colores utilizados"
+  constraint: "Vértices adyacentes deben tener colores diferentes"
+  
+  instance_sizes:
+    small: [11, 23, 47]
+    medium: [100, 200, 450]
+    large: [385, 500, 1000]
+
+metaheuristic:
+  name: "Iterated Local Search"
+  type: "ILS"
+  
+  parameters:
+    max_iterations: 500
+    local_search_iterations: 100
+    perturbation_strength: 0.2
+    restart_threshold: 50
+    restart_intensity: 0.5
+    constructive_heuristic: "DSATUR"
+    acceptance_criterion: "better_or_equal"
+    temperature: 0.1
+  
+  operators:
+    constructive:
+      - DSATUR
+      - LargestFirst
+      - SmallestLast
+      - RandomSequential
+    
+    local_search:
+      - KempeChain
+      - SingleVertexMove
+      - ColorClassMerge
+    
+    perturbation:
+      - RandomRecolor
+      - PartialDestroy
+    
+    repair:
+      - RepairConflicts
+      - IterativeRepair
+
+datasets:
+  path: "datasets/"
+  format: "DIMACS (.col)"
+  available:
+    - MYC
+    - LEI
+    - DSJ
+    - REG
+    - SCH
+    - CUL
+    - SGB
+
+experimentation:
+  phases: 6
+  replicas_per_instance: 10
+  
+  phase1:
+    name: "Benchmark Baseline"
+    duration_minutes: 15
+    instances: [3]
+    configurations: [1]
+  
+  phase2:
+    name: "Comparativa de Operadores"
+    duration_minutes: 30
+    configurations: [12]
+    replicas: [5]
+  
+  phase3:
+    name: "Parameter Tuning"
+    duration_minutes: 25
+    parameters_to_vary: [3]
+    values_per_parameter: [4]
+  
+  phase4:
+    name: "Instancia Scaling"
+    duration_minutes: 20
+    classes: [3]
+    instances_per_class: [4]
+  
+  phase5:
+    name: "Convergence Analysis"
+    duration_minutes: 20
+    convergence_plot: true
+    detailed_logging: true
+  
+  phase6:
+    name: "Benchmark vs Óptimos"
+    duration_minutes: 15
+    gap_calculation: true
+    statistical_tests: true
+
+gaa:
+  terminals:
+    constructive:
+      - GreedyDSATUR
+      - GreedyLargestFirst
+      - GreedySmallestLast
+      - RandomSequentialColoring
+    
+    improvement:
+      - KempeChain
+      - TabuSearch
+      - OneVertexMove
+      - SwapColors
+      - GreedyImprovement
+    
+    perturbation:
+      - RandomRecolor
+      - PartialDestroy
+      - ColorClassMerge
+      - ShakeColors
+    
+    repair:
+      - RepairConflicts
+      - BacktrackRepair
+      - IterativeRepair
+
+output:
+  results_dir: "results/"
+  logs_dir: "logs/"
+  plots_dir: "results/plots/"
+  formats: ["csv", "json", "markdown"]
+
+validation:
+  check_feasibility: true
+  check_bounds: true
+  statistical_tests: true
+  significance_level: 0.05
