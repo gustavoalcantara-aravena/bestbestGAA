@@ -1,0 +1,208 @@
+# config/config.yaml
+# Configuración centralizada del proyecto GCP-ILS
+
+# ============================================================================
+# CONFIGURACIÓN DE PROBLEMA
+# ============================================================================
+problem:
+  # Directorio de datasets
+  datasets_dir: "./datasets"
+  
+  # Subdirectorios
+  training_dir: "./datasets/training"
+  validation_dir: "./datasets/validation"
+  test_dir: "./datasets/test"
+  
+  # Número máximo de vértices para pruebas rápidas
+  max_vertices_quick: 50
+
+# ============================================================================
+# CONFIGURACIÓN DE BÚSQUEDA LOCAL (ILS)
+# ============================================================================
+ils:
+  # Parámetros de iteración
+  max_iterations: 500
+  iterations_without_improvement: 50
+  
+  # Presupuesto de tiempo (segundos, 0 = sin límite)
+  time_budget: 0
+  
+  # Estrategia de aceptación: "better", "better_or_equal", "aspiration"
+  acceptance_strategy: "better_or_equal"
+  
+  # Rastreo de historias
+  track_history: true
+  save_all_solutions: false
+
+# ============================================================================
+# CONFIGURACIÓN DE OPERADORES
+# ============================================================================
+operators:
+  # Operador constructivo
+  constructive:
+    method: "greedy_dsatur"  # greedy_dsatur, greedy_lf, random_sequential
+    seed: 42
+  
+  # Operador de mejora local
+  improvement:
+    method: "kempe_chain"  # kempe_chain, one_vertex_move, tabu_col
+    max_iterations: 100
+    stagnation_limit: 10
+  
+  # Operador de perturbación
+  perturbation:
+    method: "random_recolor"  # random_recolor, partial_destroy
+    ratio: 0.2  # Proporción de vértices a perturbar [0.0, 1.0]
+    seed: 42
+
+# ============================================================================
+# CONFIGURACIÓN DE TABU SEARCH (si se usa)
+# ============================================================================
+tabu_search:
+  enabled: false
+  tabu_tenure: 10
+  max_iterations: 100
+  aspiration_threshold: 0.05
+
+# ============================================================================
+# CONFIGURACIÓN DE EXPERIMENTACIÓN
+# ============================================================================
+experimentation:
+  # Número de réplicas (ejecuciones independientes)
+  num_replicas: 30
+  
+  # Seeds para reproducibilidad (None = seeds aleatorios)
+  seed_base: 42
+  
+  # Modo de experimento
+  mode: "all"  # quick, small, medium, all
+  
+  # Quick: instancias con <50 vértices
+  # Small: <200 vértices
+  # Medium: <500 vértices
+  # All: todas las instancias
+
+# ============================================================================
+# CONFIGURACIÓN DE SALIDA Y RESULTADOS
+# ============================================================================
+output:
+  # Directorio de resultados
+  results_dir: "./output/results"
+  
+  # Subdirectorios
+  solutions_dir: "./output/solutions"
+  logs_dir: "./output/logs"
+  plots_dir: "./output/plots"
+  
+  # Formato de resultados
+  save_csv: true
+  save_json: true
+  save_txt: true
+  
+  # Generación de gráficas
+  generate_plots: true
+  
+  # Plots a generar
+  plots:
+    convergence: true
+    boxplot_robustness: true
+    time_quality_tradeoff: true
+    scalability: true
+    conflict_heatmap: true
+  
+  # Verbosidad
+  verbose: true
+  save_logs: true
+
+# ============================================================================
+# CONFIGURACIÓN DE EJECUCIÓN
+# ============================================================================
+execution:
+  # Número de threads paralelos (0 = autodetectar)
+  num_threads: 0
+  
+  # Modo de paralelización: serial, threading, multiprocessing
+  parallelization: "serial"
+  
+  # Verificar factibilidad de soluciones
+  verify_feasibility: true
+  
+  # Guardar soluciones intermedias
+  save_intermediate: false
+
+# ============================================================================
+# CONFIGURACIÓN DE MÉTRICAS
+# ============================================================================
+metrics:
+  # Penalización por conflictos
+  conflict_penalty: 1000
+  
+  # Estadísticas a reportar
+  report_stats:
+    - min
+    - max
+    - mean
+    - median
+    - std
+    - quantiles
+
+# ============================================================================
+# CONFIGURACIÓN DE LOGGING
+# ============================================================================
+logging:
+  # Nivel de logging: DEBUG, INFO, WARNING, ERROR
+  level: "INFO"
+  
+  # Mostrar en consola
+  console: true
+  
+  # Guardar en archivo
+  file: true
+  
+  # Formato de timestamp
+  timestamp_format: "%Y-%m-%d %H:%M:%S"
+
+# ============================================================================
+# CONFIGURACIÓN DE VALIDACIÓN
+# ============================================================================
+validation:
+  # Validar grafo al cargar
+  validate_graph: true
+  
+  # Validar soluciones después de cambios
+  validate_after_operations: true
+  
+  # Convertir warnings a errores
+  strict_mode: false
+
+# ============================================================================
+# CONFIGURACIÓN DE REFERENCIA (DIMACS)
+# ============================================================================
+dimacs:
+  # Directorio de BKS (Best Known Solutions)
+  bks_file: "./BKS.json"
+  
+  # Usar valores BKS para calcular gap
+  use_bks: true
+  
+  # Fuente de BKS: local_file, cmakesql, none
+  source: "local_file"
+
+# ============================================================================
+# CONFIGURACIÓN DE ANÁLISIS POST-EJECUCIÓN
+# ============================================================================
+analysis:
+  # Análisis estadístico
+  perform_statistical_tests: true
+  
+  # Tests a realizar: friedman, nemenyi, wilcoxon
+  statistical_tests:
+    - friedman
+    - nemenyi
+  
+  # Nivel de significancia
+  significance_level: 0.05
+  
+  # Análisis comparativo
+  compare_with_baseline: false
+  baseline_method: "greedy_dsatur"
