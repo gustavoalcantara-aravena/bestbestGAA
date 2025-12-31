@@ -1,0 +1,186 @@
+ORGANIZACION MANUAL POR FAMILIA
+================================
+
+Copia/mueve los archivos .col de raw/ a estas carpetas:
+
+by_family/DSJ/ (15 archivos)
+================================
+DSJC125.1.col
+DSJC125.5.col
+DSJC125.9.col
+DSJC250.1.col
+DSJC250.5.col
+DSJC250.9.col
+DSJC500.1.col
+DSJC500.5.col
+DSJC500.9.col
+DSJC1000.1.col
+DSJC1000.5.col
+DSJC1000.9.col
+DSJR500.1.col
+DSJR500.1c.col
+DSJR500.5.col
+
+
+by_family/CUL/ (6 archivos)
+================================
+flat300_20_0.col
+flat300_26_0.col
+flat300_28_0.col
+flat1000_50_0.col
+flat1000_60_0.col
+flat1000_76_0.col
+
+
+by_family/REG/ (13 archivos)
+================================
+fpsol2.i.1.col
+fpsol2.i.2.col
+fpsol2.i.3.col
+inithx.i.1.col
+inithx.i.2.col
+inithx.i.3.col
+mulsol.i.1.col
+mulsol.i.2.col
+mulsol.i.3.col
+mulsol.i.4.col
+mulsol.i.5.col
+zeroin.i.1.col
+zeroin.i.2.col
+zeroin.i.3.col
+
+
+by_family/LEI/ (12 archivos)
+================================
+le450_5a.col
+le450_5b.col
+le450_5c.col
+le450_5d.col
+le450_15a.col
+le450_15b.col
+le450_15c.col
+le450_15d.col
+le450_25a.col
+le450_25b.col
+le450_25c.col
+le450_25d.col
+
+
+by_family/SCH/ (2 archivos)
+================================
+school1.col
+school1_nsh.col
+
+
+by_family/SGB/ (24 archivos)
+================================
+# Book graphs (5)
+anna.col
+david.col
+homer.col
+huck.col
+jean.col
+
+# Game graph (1)
+games120.col
+
+# Miles graphs (5)
+miles250.col
+miles500.col
+miles750.col
+miles1000.col
+miles1500.col
+
+# Queen graphs (13)
+queen5_5.col
+queen6_6.col
+queen7_7.col
+queen8_8.col
+queen8_12.col
+queen9_9.col
+queen10_10.col
+queen11_11.col
+queen12_12.col
+queen13_13.col
+queen14_14.col
+queen15_15.col
+queen16_16.col
+
+
+by_family/MYC/ (5 archivos)
+================================
+myciel3.col
+myciel4.col
+myciel5.col
+myciel6.col
+myciel7.col
+
+
+TOTAL: 79 archivos
+
+
+PASOS PARA ORGANIZAR MANUALMENTE:
+==================================
+
+1. Abre Explorador de archivos
+2. Ve a: instances/raw/
+3. Para cada familia arriba:
+   - Selecciona los archivos
+   - Copia (Ctrl+C)
+   - Ve a by_family/[FAMILIA]/
+   - Pega (Ctrl+V)
+
+O desde PowerShell (más rápido):
+
+cd "c:\Users\gustavo_windows\Desktop\DATASET_DIMACS_ASCII_FORMAT\instances"
+
+# DSJ
+Copy-Item raw\DSJC*.col by_family\DSJ\
+Copy-Item raw\DSJR*.col by_family\DSJ\
+
+# CUL
+Copy-Item raw\flat*.col by_family\CUL\
+
+# REG
+Copy-Item raw\fpsol*.col by_family\REG\
+Copy-Item raw\inithx*.col by_family\REG\
+Copy-Item raw\mulsol*.col by_family\REG\
+Copy-Item raw\zeroin*.col by_family\REG\
+
+# LEI
+Copy-Item raw\le450*.col by_family\LEI\
+
+# SCH
+Copy-Item raw\school*.col by_family\SCH\
+
+# SGB
+Copy-Item raw\anna.col by_family\SGB\
+Copy-Item raw\david.col by_family\SGB\
+Copy-Item raw\homer.col by_family\SGB\
+Copy-Item raw\huck.col by_family\SGB\
+Copy-Item raw\jean.col by_family\SGB\
+Copy-Item raw\games120.col by_family\SGB\
+Copy-Item raw\miles*.col by_family\SGB\
+Copy-Item raw\queen*.col by_family\SGB\
+
+# MYC
+Copy-Item raw\myciel*.col by_family\MYC\
+
+---
+
+VERIFICAR:
+cd by_family
+foreach ($folder in @('DSJ','CUL','REG','LEI','SCH','SGB','MYC')) {
+    $count = (Get-ChildItem $folder -Filter "*.col").Count
+    Write-Host "$folder`: $count archivos"
+}
+
+Debería mostrar:
+DSJ: 15
+CUL: 6
+REG: 13
+LEI: 12
+SCH: 2
+SGB: 24
+MYC: 5
+Total: 79

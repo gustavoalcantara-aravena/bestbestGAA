@@ -1,0 +1,57 @@
+================================================================================
+         DATASET DIMACS - INICIO RAPIDO
+================================================================================
+
+CARPETAS CREADAS:
+  raw/           - 79 archivos .col (AQUI ESTAN LOS DATOS)
+  by_family/     - Carpetas organizadas (DSJ, CUL, REG, LEI, SCH, SGB, MYC)
+
+ARCHIVOS IMPORTANTES:
+  metadata.json           - Info de cada instancia (optimos, bounds, etc)
+  loader.py               - Herramienta Python para cargar datos
+  CONTEXT.md              - Descripcion detallada de cada familia
+  SUMMARY.md              - Resumen completo
+  README.md               - Fuentes y referencias
+
+COMIENZA CON:
+
+  1. Abre Python
+  2. Copia esto:
+  
+     from loader import InstanceLoader
+     loader = InstanceLoader()
+     loader.print_summary()
+  
+  3. Para obtener una instancia:
+  
+     path = loader.get_file_path('queen12_12')
+     with open(path) as f:
+         lineas = f.readlines()
+
+FILTRAR INSTANCIAS:
+
+  sgb_instances = loader.get_by_source('SGB')
+  easy_instances = loader.get_by_difficulty('easy')
+  small = loader.get_by_size(max_nodes=100)
+  
+VALIDAR RESULTADOS:
+
+  instance = loader.get_instance('queen12_12')
+  
+  lower_bound = instance['lower_bound']  # Minimo posible
+  optimal = instance['best_known']       # Optimo si se conoce
+  
+  if my_result == optimal:
+      print("OPTIMO ENCONTRADO!")
+  elif my_result >= lower_bound:
+      gap = (my_result - lower_bound) / lower_bound
+      print(f"Gap: {gap:.2%}")
+
+DOCUMENTACION:
+  - CONTEXT.md:        Descripcion de DSJ, CUL, REG, LEI, SCH, SGB, MYC
+  - SUMMARY.md:        Resumen completo y ejemplos
+  - ESTRUCTURA_FINAL:  Estructura y como usar
+
+================================================================================
+79 INSTANCIAS LISTAS PARA USAR
+================================================================================
