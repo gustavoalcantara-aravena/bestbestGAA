@@ -97,8 +97,8 @@ class PlotManagerV2:
             else:
                 ax.plot(fitness_history, 'b-', linewidth=2, label='Fitness')
             
-            ax.set_xlabel('Iteración' if not times else 'Tiempo (s)', fontsize=12)
-            ax.set_ylabel('Fitness (Colores)', fontsize=12)
+            ax.set_xlabel('Iteration' if not times else 'Time (s)', fontsize=12)
+            ax.set_ylabel('Fitness (Number of Colors)', fontsize=12)
             ax.set_title(f'Current fitness trajectory during ILS execution: {instance_name}', fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
             ax.legend()
