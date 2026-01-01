@@ -266,7 +266,7 @@ class PlotManagerV2:
             
             ax.set_xlabel('Time (s)', fontsize=12, fontweight='bold')
             ax.set_ylabel('Fitness (Number of Colors)', fontsize=12, fontweight='bold')
-            ax.set_title(f'Temporal evolution of visited solution quality during ILS execution: {instance_name}', fontsize=14, fontweight='bold')
+            ax.set_title(f'Temporal evolution of visited solution quality: {instance_name}', fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
             
             filepath = instance_dir / "06_visited_quality_time_evolution_ils.png"
