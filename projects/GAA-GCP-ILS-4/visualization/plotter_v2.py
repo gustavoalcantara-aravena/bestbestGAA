@@ -207,11 +207,12 @@ class PlotManagerV2:
                        fontsize=11, fontweight='bold')
             
             ax.axhline(y=0, color='black', linestyle='-', linewidth=1)
-            ax.set_ylabel('Gap (%)', fontsize=12)
-            ax.set_title(f'Gaps de Algoritmos: {instance_name}', fontsize=14, fontweight='bold')
+            ax.set_xlabel('Algorithm', fontsize=12)
+            ax.set_ylabel('Optimality Gap (%)', fontsize=12)
+            ax.set_title(f'Optimality gaps per algorithm relative to the best known solution (BKS): {instance_name}', fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3, axis='y')
             
-            filepath = instance_dir / "05_algorithm_gaps.png"
+            filepath = instance_dir / "05_optimality_gaps_per_algorithm_bks.png"
             plt.savefig(filepath, dpi=300, bbox_inches='tight')
             plt.close()
             
