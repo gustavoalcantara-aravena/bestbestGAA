@@ -99,15 +99,15 @@ class PlotManagerV2:
             
             ax.set_xlabel('Iteración' if not times else 'Tiempo (s)', fontsize=12)
             ax.set_ylabel('Fitness (Colores)', fontsize=12)
-            ax.set_title(f'Fitness trajectory during ILS execution: {instance_name}', fontsize=14, fontweight='bold')
+            ax.set_title(f'Current fitness trajectory during ILS execution: {instance_name}', fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
             ax.legend()
             
-            filepath = instance_dir / "01_fitness_trajectory.png"
+            filepath = instance_dir / "01_current_fitness_trajectory_ils.png"
             plt.savefig(filepath, dpi=300, bbox_inches='tight')
             plt.close()
             
-            self.logger.info(f"Ploteo individual fitness trajectory: {filepath}")
+            self.logger.info(f"Ploteo individual current fitness trajectory: {filepath}")
             return str(filepath)
         except Exception as e:
             self.logger.error(f"Error en ploteo convergencia: {e}")
