@@ -663,7 +663,21 @@ class FullExperiment:
             print(f"   ✅ {len(population)} algoritmos GAA generados exitosamente")
             print(f"   ✅ Todos los algoritmos son válidos\n")
             
-            print("📋 Etapa 5/5: Guardando información de algoritmos generados...")
+            print("📋 Etapa 5/5: Mostrando estructura detallada de algoritmos...")
+            print(f"   ✅ Extrayendo operadores y estrategias de cada algoritmo\n")
+            
+            # Visualizar estructura detallada de cada algoritmo
+            from utils.algorithm_visualizer import extract_algorithm_structure, print_algorithm_structure, print_algorithms_comparison
+            
+            algorithm_structures = []
+            for algo_idx, algo in enumerate(population, 1):
+                structure = extract_algorithm_structure(algo, algo_idx)
+                algorithm_structures.append(structure)
+                print_algorithm_structure(structure)
+            
+            # Mostrar comparación
+            print_algorithms_comparison(algorithm_structures)
+            
             print(f"   ✅ Algoritmos listos para ejecución\n")
             
             # Validar que hay resultados de ILS para ejecutar GAA
@@ -710,6 +724,52 @@ class FullExperiment:
                         print(f"  [{result_idx}/{len(gaa_problems)}] {problem.name}: Error - {e}")
                         algorithm_results[algo_name].append(float('inf'))
                 
+                print()
+            
+            # ====================================================================
+            # RESUMEN DETALLADO DE RESULTADOS POR INSTANCIA
+            # ====================================================================
+            print("="*80)
+            print("RESUMEN DETALLADO - RESULTADOS POR INSTANCIA")
+            print("="*80)
+            print()
+            
+            # Crear tabla de resultados detallados
+            for problem in gaa_problems:
+                print(f"📊 {problem.name.upper()}")
+                print(f"   Vértices: {problem.n_vertices} | Aristas: {problem.n_edges}")
+                print(f"   BKS (Best Known Solution): {problem.colors_known if problem.colors_known else 'Desconocido'}")
+                print()
+                print(f"   {'Algoritmo':<20} {'Colores':<12} {'Gap':<15} {'Estado':<15}")
+                print(f"   {'-'*60}")
+                
+                best_algo = None
+                best_colors = float('inf')
+                
+                for algo_idx, algo_name in enumerate([f"GAA_Algorithm_{i+1}" for i in range(len(population))]):
+                    if algo_name in algorithm_results and len(algorithm_results[algo_name]) > gaa_problems.index(problem):
+                        colors = algorithm_results[algo_name][gaa_problems.index(problem)]
+                        if colors != float('inf'):
+                            gap = ((problem.colors_known - colors) / problem.colors_known * 100) if problem.colors_known else 0
+                            
+                            # Determinar estado
+                            if gap == 0:
+                                status = "✅ ÓPTIMO"
+                            elif gap > 0:
+                                status = "⚠️  SUBÓPTIMO"
+                            else:
+                                status = "🏆 RECORD"
+                            
+                            print(f"   {algo_name:<20} {colors:<12} {gap:>+6.2f}%{'':<7} {status:<15}")
+                            
+                            # Rastrear mejor algoritmo
+                            if colors < best_colors:
+                                best_colors = colors
+                                best_algo = algo_name
+                
+                if best_algo:
+                    print()
+                    print(f"   🏆 Mejor algoritmo: {best_algo} ({best_colors} colores)")
                 print()
             
             # ====================================================================

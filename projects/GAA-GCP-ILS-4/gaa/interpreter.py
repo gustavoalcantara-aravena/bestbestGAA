@@ -218,11 +218,27 @@ class ASTInterpreter:
             return
         
         op = op_class()
-        perturbed = op.perturb(
-            self.context.current_solution,
-            self.problem,
-            ratio=node.intensity
-        )
+        
+        # Usar parámetro correcto según el operador
+        if node.method == "RandomRecolor":
+            perturbed = op.perturb(
+                self.context.current_solution,
+                self.problem,
+                ratio=node.intensity
+            )
+        elif node.method == "PartialDestroy":
+            perturbed = op.perturb(
+                self.context.current_solution,
+                self.problem,
+                region_size=node.intensity
+            )
+        else:
+            perturbed = op.perturb(
+                self.context.current_solution,
+                self.problem,
+                ratio=node.intensity
+            )
+        
         self.context.update_solution(perturbed)
     
     def _execute_seq(self, node: Seq):

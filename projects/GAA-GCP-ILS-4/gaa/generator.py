@@ -237,7 +237,8 @@ class AlgorithmGenerator:
         Seq (1 nodo)
           ├─ GreedyConstruct (1 nodo)
           └─ If (1 nodo)
-              └─ LocalSearch (1 nodo)
+              ├─ LocalSearch (1 nodo - then_branch)
+              └─ Perturbation (1 nodo - else_branch)
         
         Total: 4 nodos, profundidad 3
         
@@ -249,19 +250,26 @@ class AlgorithmGenerator:
             heuristic=self.rng.choice(list(self.grammar.CONSTRUCTIVE_TERMINALS))
         )
         
-        # Nodo 4: Mejora local
+        # Nodo 3: Mejora local
         improvement = LocalSearch(
             method=self.rng.choice(list(self.grammar.IMPROVEMENT_TERMINALS)),
             max_iterations=int(self.rng.choice([100, 200, 500]))
         )
         
-        # Nodo 3: Condicional
-        conditional = If(
-            condition=self.rng.choice(list(self.grammar.CONDITIONS)),
-            then_branch=improvement
+        # Nodo 4: Perturbación
+        perturbation = Perturbation(
+            method=self.rng.choice(list(self.grammar.PERTURBATION_TERMINALS)),
+            intensity=float(self.rng.uniform(0.15, 0.35))
         )
         
-        # Nodo 2: Secuencia
+        # Nodo 2: Condicional
+        conditional = If(
+            condition=self.rng.choice(list(self.grammar.CONDITIONS)),
+            then_branch=improvement,
+            else_branch=perturbation
+        )
+        
+        # Secuencia
         return Seq(body=[construction, conditional])
     
     def get_generation_stats(self, algorithm: ASTNode) -> dict:

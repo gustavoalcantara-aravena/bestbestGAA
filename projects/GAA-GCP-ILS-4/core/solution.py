@@ -47,8 +47,9 @@ class ColoringSolution:
             raise ValueError("Asignación no puede estar vacía")
         
         # Validar que los colores son no-negativos
+        # Nota: Aceptamos vértices >= 0 para soportar tanto 0-indexed como 1-indexed
         for vertex, color in self.assignment.items():
-            if not isinstance(vertex, int) or vertex < 1:
+            if not isinstance(vertex, int) or vertex < 0:
                 raise ValueError(f"Vértice inválido: {vertex}")
             if not isinstance(color, int) or color < 0:
                 raise ValueError(f"Color inválido para vértice {vertex}: {color}")

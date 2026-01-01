@@ -50,6 +50,7 @@ class GraphColoringProblem:
     _degree_sequence: Optional[np.ndarray] = field(default=None, init=False, repr=False)
     _max_degree: Optional[int] = field(default=None, init=False, repr=False)
     _is_bipartite: Optional[bool] = field(default=None, init=False, repr=False)
+    _vertex_offset: int = field(default=1, init=False, repr=False)  # 0 para 0-indexed, 1 para 1-indexed
     
     def __post_init__(self):
         """Validar e inicializar la instancia después de la construcción."""
@@ -57,32 +58,64 @@ class GraphColoringProblem:
         if self.vertices <= 0:
             raise ValueError(f"Número de vértices debe ser positivo, obtenido: {self.vertices}")
         
-        if not self.edges:
-            # Grafo sin aristas
-            self._validate_edges()
-            self._build_adjacency_list()
-        else:
-            # Validar aristas
-            self._validate_edges()
-            self._build_adjacency_list()
+        # Detectar automáticamente indexación del dataset ANTES de validar aristas
+        self._detect_vertex_offset()
+        
+        # Validar y construir lista de adyacencia
+        self._validate_edges()
+        self._build_adjacency_list()
         
         # Si no se proporciona óptimo, computar cota superior
         if self.colors_known is None and self.guaranteed_upper_bound is None:
             self.guaranteed_upper_bound = self.upper_bound
     
+    def _detect_vertex_offset(self):
+        """
+        Detectar automáticamente si el dataset usa 0-indexed o 1-indexed.
+        
+        Lógica:
+        - Si hay aristas y el mínimo vértice es 0 → 0-indexed
+        - Si hay aristas y el mínimo vértice es 1 → 1-indexed
+        - Si no hay aristas → asumir 1-indexed (por defecto DIMACS)
+        """
+        if not self.edges:
+            # Sin aristas, asumir 1-indexed (estándar DIMACS)
+            self._vertex_offset = 1
+            return
+        
+        # Encontrar vértice mínimo en las aristas
+        min_vertex = min(min(u, v) for u, v in self.edges)
+        
+        if min_vertex == 0:
+            self._vertex_offset = 0  # 0-indexed
+        else:
+            self._vertex_offset = 1  # 1-indexed
+    
+    @property
+    def vertex_offset(self) -> int:
+        """Retorna el offset de vértices: 0 para 0-indexed, 1 para 1-indexed."""
+        return self._vertex_offset
+    
     def _validate_edges(self):
-        """Validar que las aristas son correctas."""
+        """Validar que las aristas son correctas según la indexación detectada."""
+        min_valid = self._vertex_offset
+        max_valid = self.vertices + self._vertex_offset - 1
+        
         for u, v in self.edges:
-            if u < 1 or u > self.vertices:
-                raise ValueError(f"Vértice {u} fuera de rango [1, {self.vertices}]")
-            if v < 1 or v > self.vertices:
-                raise ValueError(f"Vértice {v} fuera de rango [1, {self.vertices}]")
+            if u < min_valid or u > max_valid:
+                raise ValueError(f"Vértice {u} fuera de rango [{min_valid}, {max_valid}]")
+            if v < min_valid or v > max_valid:
+                raise ValueError(f"Vértice {v} fuera de rango [{min_valid}, {max_valid}]")
             if u == v:
                 raise ValueError(f"Arista de auto-loop no permitida: ({u}, {v})")
     
     def _build_adjacency_list(self):
         """Construir lista de adyacencia a partir de las aristas."""
-        self._adjacency_list = {i: set() for i in range(1, self.vertices + 1)}
+        # Crear diccionario con rango según vertex_offset
+        start = self._vertex_offset
+        end = self.vertices + self._vertex_offset
+        self._adjacency_list = {i: set() for i in range(start, end)}
+        
         for u, v in self.edges:
             self._adjacency_list[u].add(v)
             self._adjacency_list[v].add(u)
@@ -192,20 +225,27 @@ class GraphColoringProblem:
         """
         Obtener vecinos de un vértice.
         
-        Parametros:
+        Parámetros:
             v (int): Vértice
         
         Retorna:
-            Set[int]: Conjunto de vértices adyacentes a v
+            Set[int]: Conjunto de vértices adyacentes
+        
+        Complejidad:
+            Tiempo: O(1) amortizado
         """
-        if v < 1 or v > self.vertices:
-            raise ValueError(f"Vértice {v} fuera de rango [1, {self.vertices}]")
+        min_valid = self._vertex_offset
+        max_valid = self.vertices + self._vertex_offset - 1
+        if v < min_valid or v > max_valid:
+            raise ValueError(f"Vértice {v} fuera de rango [{min_valid}, {max_valid}]")
         return self._adjacency_list[v].copy()
     
     def degree(self, v: int) -> int:
         """Grado de un vértice."""
-        if v < 1 or v > self.vertices:
-            raise ValueError(f"Vértice {v} fuera de rango [1, {self.vertices}]")
+        min_valid = self._vertex_offset
+        max_valid = self.vertices + self._vertex_offset - 1
+        if v < min_valid or v > max_valid:
+            raise ValueError(f"Vértice {v} fuera de rango [{min_valid}, {max_valid}]")
         return len(self._adjacency_list[v])
     
     # ========================================================================
@@ -261,16 +301,14 @@ class GraphColoringProblem:
         """
         Cargar instancia desde archivo DIMACS (.col).
         
-        Formato DIMACS:
-            c Comments
-            p edge <nodes> <edges>
-            e <v1> <v2>
-            ...
+        Intenta cargar BKS desde:
+        1. Archivo DIMACS (línea 'x')
+        2. BKS.json si está disponible
         
-        Parametros:
+        Args:
             filepath (str): Ruta al archivo DIMACS
         
-        Retorna:
+        Returns:
             GraphColoringProblem: Instancia cargada
         
         Ejemplo:
@@ -278,8 +316,7 @@ class GraphColoringProblem:
             >>> print(f"Vértices: {problem.n_vertices}")
         """
         path = Path(filepath)
-        if not path.exists():
-            raise FileNotFoundError(f"Archivo no encontrado: {filepath}")
+        name = path.stem
         
         n_vertices = None
         n_edges_declared = None
@@ -289,41 +326,32 @@ class GraphColoringProblem:
         with open(path, 'r') as f:
             for line in f:
                 line = line.strip()
-                
-                # Comentarios
-                if line.startswith('c'):
-                    # Buscar "optimal" en comentarios
-                    if "optimal" in line.lower():
-                        try:
-                            tokens = line.split()
-                            for i, token in enumerate(tokens):
-                                if token.isdigit() and int(token) > 0:
-                                    colors_known = int(token)
-                                    break
-                        except:
-                            pass
+                if not line or line.startswith('c'):
                     continue
                 
-                # Header
-                if line.startswith('p'):
+                if line.startswith('p edge'):
                     tokens = line.split()
-                    if len(tokens) >= 4 and tokens[1] == 'edge':
-                        n_vertices = int(tokens[2])
-                        n_edges_declared = int(tokens[3])
-                    continue
+                    n_vertices = int(tokens[2])
+                    n_edges_declared = int(tokens[3])
                 
-                # Aristas
-                if line.startswith('e'):
+                elif line.startswith('e'):
                     tokens = line.split()
-                    if len(tokens) >= 3:
-                        u = int(tokens[1])
-                        v = int(tokens[2])
-                        edges.append((u, v))
+                    u, v = int(tokens[1]), int(tokens[2])
+                    edges.append((min(u, v), max(u, v)))
+                
+                elif line.startswith('x'):
+                    try:
+                        tokens = line.split()
+                        for i, token in enumerate(tokens):
+                            if token.isdigit() and int(token) > 0:
+                                colors_known = int(token)
+                                break
+                    except:
+                        pass
         
-        if n_vertices is None:
-            raise ValueError("Archivo DIMACS inválido: falta header 'p edge'")
-        
-        name = path.stem  # Nombre sin extensión
+        # Si no encontró BKS en el archivo DIMACS, intentar cargar desde BKS.json
+        if colors_known is None:
+            colors_known = cls._load_bks_from_json(name)
         
         return cls(
             vertices=n_vertices,
@@ -331,6 +359,40 @@ class GraphColoringProblem:
             colors_known=colors_known,
             name=name
         )
+    
+    @classmethod
+    def _load_bks_from_json(cls, instance_name: str) -> Optional[int]:
+        """
+        Cargar BKS desde BKS.json si está disponible.
+        
+        Args:
+            instance_name (str): Nombre de la instancia (ej: 'myciel3')
+        
+        Returns:
+            Optional[int]: BKS si está disponible, None en caso contrario
+        """
+        try:
+            import json
+            bks_file = Path(__file__).parent.parent / "datasets" / "BKS.json"
+            
+            if not bks_file.exists():
+                return None
+            
+            with open(bks_file, 'r') as f:
+                bks_data = json.load(f)
+            
+            # Buscar en todas las familias
+            for family_name, family_data in bks_data.items():
+                if family_name == "metadata" or family_name == "summary":
+                    continue
+                
+                instances = family_data.get("instances", {})
+                if instance_name in instances:
+                    return instances[instance_name].get("bks")
+            
+            return None
+        except Exception as e:
+            return None
     
     # ========================================================================
     # REPRESENTACIÓN

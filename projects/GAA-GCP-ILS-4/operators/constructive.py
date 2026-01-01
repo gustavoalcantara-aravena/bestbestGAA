@@ -61,15 +61,16 @@ class GreedyDSATUR:
             np.random.seed(seed)
         
         n = problem.n_vertices
+        offset = problem.vertex_offset
         assignment = {}
         colored = set()
         
-        # Inicializar grados de saturación
-        saturation_degree = {v: 0 for v in range(1, n + 1)}
-        used_colors = {v: set() for v in range(1, n + 1)}  # Colores en vecinos
+        # Inicializar grados de saturación (adaptado a indexación del dataset)
+        saturation_degree = {v: 0 for v in range(offset, n + offset)}
+        used_colors = {v: set() for v in range(offset, n + offset)}  # Colores en vecinos
         
         # Colorear el vértice de mayor grado primero
-        first_vertex = max(range(1, n + 1), key=lambda v: problem.degree(v))
+        first_vertex = max(range(offset, n + offset), key=lambda v: problem.degree(v))
         assignment[first_vertex] = 0
         colored.add(first_vertex)
         
@@ -82,7 +83,7 @@ class GreedyDSATUR:
         while len(colored) < n:
             # Seleccionar vértice con máximo grado de saturación
             # En caso de empate, usar grado total
-            uncolored = [v for v in range(1, n + 1) if v not in colored]
+            uncolored = [v for v in range(offset, n + offset) if v not in colored]
             selected_vertex = max(
                 uncolored,
                 key=lambda v: (saturation_degree[v], problem.degree(v))
@@ -148,17 +149,18 @@ class GreedyLF:
             np.random.seed(seed)
         
         n = problem.n_vertices
+        offset = problem.vertex_offset
         
-        # Ordenar vértices por grado decreciente
-        vertices_by_degree = sorted(
-            range(1, n + 1),
+        # Ordenar vértices por grado decreciente (adaptado a indexación del dataset)
+        vertices_order = sorted(
+            range(offset, n + offset),
             key=lambda v: problem.degree(v),
             reverse=True
         )
         
         assignment = {}
         
-        for vertex in vertices_by_degree:
+        for vertex in vertices_order:
             # Encontrar colores usados por vecinos coloreados
             neighbor_colors = set()
             for neighbor in problem.neighbors(vertex):
@@ -221,13 +223,17 @@ class RandomSequential:
             np.random.seed(seed)
         
         n = problem.n_vertices
+        offset = problem.vertex_offset
         
-        # Orden aleatorio de vértices
-        vertices_order = np.random.permutation(list(range(1, n + 1)))
+        # Orden aleatorio de vértices (adaptado a indexación del dataset)
+        vertices_order = np.random.permutation(list(range(offset, n + offset)))
         
         assignment = {}
         
         for vertex in vertices_order:
+            # Convertir a int si es necesario (numpy puede retornar np.int64)
+            vertex = int(vertex)
+            
             # Colores usados por vecinos ya coloreados
             neighbor_colors = set()
             for neighbor in problem.neighbors(vertex):
