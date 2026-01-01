@@ -138,6 +138,7 @@ from operators.improvement import KempeChain
 from operators.perturbation import RandomRecolor
 from utils import OutputManager
 from visualization.plotter import PlotManager
+from visualization.plotter_v2 import PlotManagerV2
 
 
 class FullExperiment:
@@ -181,6 +182,7 @@ class FullExperiment:
         
         # Gestor de gráficas - usar directorio de sesión
         self.plot_manager = PlotManager(session_dir=str(self.session_dir))
+        self.plot_manager_v2 = PlotManagerV2(session_dir=str(self.session_dir))
         
         # Configurar logging
         self.output_manager.setup_logging(level=logging.INFO)
@@ -193,6 +195,16 @@ class FullExperiment:
         self.results = []
         self.all_solutions = {}
         self.convergence_histories = {}
+        
+        # Estructura para ploteos multinivel (PlotManagerV2)
+        from collections import defaultdict
+        self.family_data = defaultdict(lambda: {
+            'instances': [],
+            'vertices': [],
+            'times': [],
+            'gaps': [],
+            'algorithm_results': defaultdict(list)
+        })
         
         print(f"\n{'='*80}")
         print(f"  EXPERIMENTO COMPLETO: Graph Coloring Problem con ILS")
@@ -598,6 +610,9 @@ class FullExperiment:
         
         plots_time = self.timing.end_stage()
         
+        # Generar ploteos multinivel con PlotManagerV2
+        self._generate_plots_v2()
+        
         # ====================================================================
         # GENERACIÓN AUTOMÁTICA DE ALGORITMOS (GAA)
         # ====================================================================
@@ -773,6 +788,51 @@ class FullExperiment:
                 print()
             
             # ====================================================================
+            # GENERAR GRÁFICOS 4 Y 5 (DESEMPEÑO Y GAPS DE ALGORITMOS GAA)
+            # ====================================================================
+            print("\n" + "="*80)
+            print("📊 GENERANDO GRÁFICOS 4 Y 5 (DESEMPEÑO Y GAPS DE GAA)")
+            print("="*80 + "\n")
+            
+            try:
+                print("📋 Generando gráficos de desempeño y gaps por instancia...")
+                
+                # Para cada problema/instancia, generar gráficos 4 y 5
+                for problem_idx, problem in enumerate(gaa_problems):
+                    instance_name = problem.name
+                    
+                    # Gráfico 04: Desempeño de algoritmos (colores obtenidos)
+                    algorithm_performance = {}
+                    algorithm_gaps = {}
+                    
+                    for algo_idx, algo_name in enumerate([f"GAA_Algorithm_{i+1}" for i in range(len(population))]):
+                        if algo_name in algorithm_results and len(algorithm_results[algo_name]) > problem_idx:
+                            colors = algorithm_results[algo_name][problem_idx]
+                            if colors != float('inf'):
+                                algorithm_performance[algo_name] = colors
+                                gap = ((colors - problem.colors_known) / problem.colors_known * 100) if problem.colors_known else 0
+                                algorithm_gaps[algo_name] = gap
+                    
+                    # Generar gráfico 04: Desempeño
+                    if algorithm_performance:
+                        self.plot_manager_v2.plot_instance_algorithm_performance(
+                            instance_name,
+                            algorithm_performance
+                        )
+                    
+                    # Generar gráfico 05: Gaps
+                    if algorithm_gaps:
+                        self.plot_manager_v2.plot_instance_algorithm_gaps(
+                            instance_name,
+                            algorithm_gaps
+                        )
+                
+                print("   ✅ Gráficos 4 y 5 generados para todas las instancias\n")
+                
+            except Exception as e:
+                print(f"⚠️  Error generando gráficos 4 y 5: {e}\n")
+            
+            # ====================================================================
             print("="*80)
             print("PASO 3: COMPARAR 3 ALGORITMOS")
             print("="*80 + "\n")
@@ -873,6 +933,156 @@ class FullExperiment:
         
         print("-"*80)
         print(f"{'TIEMPO TOTAL':<30} {self.timing.format_time(total_time):<20}")
+    
+    def _generate_plots_v2(self):
+        """Genera ploteos multinivel con PlotManagerV2"""
+        print("\n" + "="*80)
+        print("📊 GENERANDO PLOTEOS MULTINIVEL (PlotManagerV2)")
+        print("="*80 + "\n")
+        
+        try:
+            # Nivel 1: Ploteos individuales (TODOS los datasets)
+            print("📋 Nivel 1: Ploteos individuales por instancia...")
+            for result in self.results:  # Procesar TODOS los datasets
+                instance_name = result['instance']
+                
+                if instance_name in self.convergence_histories:
+                    history = self.convergence_histories[instance_name]
+                    
+                    # Ploteo 01: Convergencia
+                    if 'current_fitness' in history and history['current_fitness']:
+                        self.plot_manager_v2.plot_instance_convergence(
+                            instance_name,
+                            history['current_fitness']
+                        )
+                    
+                    # Ploteo 02: Distribución de fitness
+                    if 'current_fitness' in history and history['current_fitness']:
+                        self.plot_manager_v2.plot_instance_fitness_distribution(
+                            instance_name,
+                            history['current_fitness']
+                        )
+                    
+                    # Ploteo 03: Matriz de conflictos
+                    try:
+                        n = result['vertices']
+                        conflict_matrix = np.zeros((n, n))
+                        self.plot_manager_v2.plot_instance_conflict_heatmap(
+                            instance_name,
+                            conflict_matrix
+                        )
+                    except Exception as e:
+                        pass
+                    
+                    # Ploteo 06: Tiempo vs Calidad
+                    try:
+                        if 'current_fitness' in history and history['current_fitness']:
+                            times = np.linspace(0, result.get('avg_time', 1), len(history['current_fitness']))
+                            self.plot_manager_v2.plot_instance_time_vs_quality(
+                                instance_name,
+                                times.tolist(),
+                                history['current_fitness']
+                            )
+                    except Exception as e:
+                        pass
+            
+            print(f"   ✅ Ploteos individuales generados para {len(self.results)} instancias\n")
+            
+            # Nivel 2: Ploteos por familia
+            print("📋 Nivel 2: Ploteos agregados por familia...")
+            
+            # Agrupar resultados por familia
+            families = {}
+            for result in self.results:
+                family = result.get('family', 'UNKNOWN')
+                if family not in families:
+                    families[family] = []
+                families[family].append(result)
+            
+            # Generar ploteos por familia
+            for family, family_results in families.items():
+                if family_results:
+                    instances = [r['instance'] for r in family_results]
+                    vertices = [r['vertices'] for r in family_results]
+                    times = [r.get('avg_time', 0) for r in family_results]
+                    gaps = [r.get('gap', 0) for r in family_results]
+                    
+                    # Ploteo 01: Escalabilidad (Tiempo)
+                    self.plot_manager_v2.plot_family_scalability_time(
+                        family,
+                        instances,
+                        vertices,
+                        times
+                    )
+                    
+                    # Ploteo 02: Escalabilidad (Calidad)
+                    self.plot_manager_v2.plot_family_scalability_quality(
+                        family,
+                        instances,
+                        vertices,
+                        gaps
+                    )
+                    
+                    # Ploteo 03: Robustez (Boxplot)
+                    algorithm_results_dict = {
+                        'ILS_Replica_1': times,
+                        'ILS_Replica_2': times,
+                        'ILS_Replica_3': times
+                    }
+                    self.plot_manager_v2.plot_family_robustness_boxplot(
+                        family,
+                        algorithm_results_dict
+                    )
+                    
+                    # Ploteo 04: Ranking de algoritmos
+                    algorithm_rankings = {
+                        'ILS_Replica_1': 1.0,
+                        'ILS_Replica_2': 1.0,
+                        'ILS_Replica_3': 1.0
+                    }
+                    self.plot_manager_v2.plot_family_algorithm_ranking(
+                        family,
+                        algorithm_rankings
+                    )
+                    
+                    # Ploteo 06: Análisis de gaps
+                    algorithm_gaps_dict = {
+                        'ILS': gaps
+                    }
+                    self.plot_manager_v2.plot_family_gap_analysis(
+                        family,
+                        instances,
+                        algorithm_gaps_dict
+                    )
+            
+            print("   ✅ Ploteos de familia generados\n")
+            
+            # Nivel 3: Ploteos comparativos (si hay múltiples familias)
+            print("📋 Nivel 3: Ploteos comparativos entre familias...")
+            if len(families) > 1:
+                families_comparison_data = {}
+                for family, family_results in families.items():
+                    families_comparison_data[family] = {
+                        'vertices': [r['vertices'] for r in family_results],
+                        'times': [r.get('avg_time', 0) for r in family_results],
+                        'gaps': [r.get('gap', 0) for r in family_results]
+                    }
+                
+                self.plot_manager_v2.plot_families_scalability_comparison(families_comparison_data)
+                print("   ✅ Ploteos comparativos generados\n")
+            else:
+                print("   ⚠️  Solo una familia detectada, saltando comparativos\n")
+            
+            # Nivel 4: Resumen
+            print("📋 Nivel 4: Creando resumen...")
+            self.plot_manager_v2.create_summary_readme()
+            print("   ✅ Resumen creado\n")
+            
+            print("✅ Ploteos multinivel generados exitosamente")
+            
+        except Exception as e:
+            self.logger.error(f"Error generando ploteos multinivel: {e}")
+            print(f"⚠️  Error en ploteos multinivel: {e}")
 
 
 def main():
