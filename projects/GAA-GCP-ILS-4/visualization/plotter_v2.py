@@ -236,7 +236,7 @@ class PlotManagerV2:
             im = ax.imshow(conflict_matrix, cmap='RdYlGn_r', aspect='auto')
             ax.set_xlabel('Vertex', fontsize=12)
             ax.set_ylabel('Vertex', fontsize=12)
-            ax.set_title(f'Adjacency matrix (conflict structure) of instance {instance_name}', fontsize=14, fontweight='bold')
+            ax.set_title(f'Adjacency matrix of the graph (instance {instance_name})', fontsize=14, fontweight='bold')
             
             plt.colorbar(im, ax=ax, label='Edge')
             
