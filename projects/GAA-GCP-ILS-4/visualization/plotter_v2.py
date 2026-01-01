@@ -103,11 +103,11 @@ class PlotManagerV2:
             ax.grid(True, alpha=0.3)
             ax.legend()
             
-            filepath = instance_dir / "01_convergence.png"
+            filepath = instance_dir / "01_fitness_trajectory.png"
             plt.savefig(filepath, dpi=300, bbox_inches='tight')
             plt.close()
             
-            self.logger.info(f"Ploteo individual convergencia: {filepath}")
+            self.logger.info(f"Ploteo individual fitness trajectory: {filepath}")
             return str(filepath)
         except Exception as e:
             self.logger.error(f"Error en ploteo convergencia: {e}")
