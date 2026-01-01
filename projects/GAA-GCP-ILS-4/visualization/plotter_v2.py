@@ -168,11 +168,12 @@ class PlotManagerV2:
                        f'{int(value)}',
                        ha='center', va='bottom', fontsize=11, fontweight='bold')
             
-            ax.set_ylabel('Colores Obtenidos', fontsize=12)
-            ax.set_title(f'Desempeño de Algoritmos: {instance_name}', fontsize=14, fontweight='bold')
+            ax.set_xlabel('Algorithm', fontsize=12)
+            ax.set_ylabel('Number of Colors', fontsize=12)
+            ax.set_title(f'Final solution quality per algorithm (measured as number of colors): {instance_name}', fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3, axis='y')
             
-            filepath = instance_dir / "04_algorithm_performance.png"
+            filepath = instance_dir / "04_final_solution_quality_per_algorithm_measured_num_colors.png"
             plt.savefig(filepath, dpi=300, bbox_inches='tight')
             plt.close()
             
