@@ -32,26 +32,31 @@ logger = logging.getLogger(__name__)
 class PlotManager:
     """Gestor centralizado de visualizaciones con integración a config.yaml."""
     
-    def __init__(self, output_dir: Optional[str] = None, config_path: Optional[str] = None):
+    def __init__(self, session_dir: Optional[str] = None, config_path: Optional[str] = None):
         """
         Inicializa el gestor de visualizaciones.
         
         Parámetros:
-            output_dir: Directorio base para guardar resultados
-                       Si None, carga de config.yaml
+            session_dir: Directorio de sesión (output/{timestamp}/)
+                        Las gráficas se guardarán en {session_dir}/plots/
             config_path: Ruta al config.yaml (si None, busca automáticamente)
         """
+        # Inicializar logger primero
+        self.logger = logger
+        
         # Cargar configuración
         self.config = self._load_config(config_path)
         
         # Determinar directorio de output
-        if output_dir is None:
-            output_dir = self.config.get('output', {}).get('plots_dir', 'output/plots')
+        # Las gráficas van en {session_dir}/plots/
+        if session_dir:
+            self.output_dir = Path(session_dir) / "plots"
+        else:
+            self.output_dir = Path(self.config.get('output', {}).get('plots_dir', 'output/plots'))
         
-        self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        self.session_dir = None
-        self.logger = logger
+        self.session_dir = self.output_dir
+        self.logger.info(f"PlotManager inicializado con directorio: {self.output_dir}")
     
     def _load_config(self, config_path: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -91,8 +96,8 @@ class PlotManager:
         Crea un directorio de sesión con timestamp.
         
         RESPETA LA ESTRUCTURA DE OUTPUT DEL PROYECTO:
-        - output/results/all_datasets/{timestamp}/
-        - output/results/specific_datasets/{family}/{timestamp}/
+        - output/plots/all_datasets/{timestamp}/
+        - output/plots/specific_datasets/{family}/{timestamp}/
         
         Parámetros:
             mode: "all_datasets" o "specific_datasets/{family}"
@@ -103,12 +108,13 @@ class PlotManager:
         timestamp = datetime.now().strftime("%d-%m-%y_%H-%M-%S")
         
         # Construir ruta según estructura de proyecto
+        # Las gráficas van en output/plots/ (no en output/results/)
         if mode.startswith("specific_datasets/"):
-            # Modo específico: output/results/specific_datasets/FAMILY/timestamp/
+            # Modo específico: output/plots/specific_datasets/FAMILY/timestamp/
             family = mode.split("/")[1]
             session_dir = self.output_dir / "specific_datasets" / family / timestamp
         else:
-            # Modo todos: output/results/all_datasets/timestamp/
+            # Modo todos: output/plots/all_datasets/timestamp/
             session_dir = self.output_dir / "all_datasets" / timestamp
         
         session_dir.mkdir(parents=True, exist_ok=True)
@@ -451,3 +457,223 @@ class PlotManager:
         
         self.logger.info(f"Summary saved: {summary_path}")
         return str(summary_path)
+    
+    # ========================================================================
+    # GRÁFICAS AGREGADAS (PATRÓN BOTH) PARA COMPARACIÓN DE ALGORITMOS GAA
+    # ========================================================================
+    
+    def plot_algorithm_comparison_boxplot(self, 
+                                         algorithm_results: Dict[str, List[float]],
+                                         title: str = "Comparación de Algoritmos GAA",
+                                         filename: str = "algorithm_comparison_boxplot.png") -> str:
+        """
+        Genera boxplot comparativo de algoritmos GAA
+        
+        Args:
+            algorithm_results: Dict con {nombre_algoritmo: [valores]}
+            title: Título de la gráfica
+            filename: Nombre del archivo
+        
+        Returns:
+            Ruta del archivo guardado
+        """
+        import matplotlib.pyplot as plt
+        
+        try:
+            fig, ax = plt.subplots(figsize=(12, 6))
+            
+            # Preparar datos
+            algorithms = list(algorithm_results.keys())
+            data = [algorithm_results[alg] for alg in algorithms]
+            
+            # Crear boxplot
+            bp = ax.boxplot(data, labels=algorithms, patch_artist=True)
+            
+            # Colorear boxes
+            colors = ['lightblue', 'lightgreen', 'lightcoral']
+            for patch, color in zip(bp['boxes'], colors[:len(algorithms)]):
+                patch.set_facecolor(color)
+            
+            ax.set_ylabel('Valor (Gap o Colores)', fontsize=12)
+            ax.set_xlabel('Algoritmo', fontsize=12)
+            ax.set_title(title, fontsize=14, fontweight='bold')
+            ax.grid(True, alpha=0.3)
+            
+            plt.tight_layout()
+            
+            # Guardar
+            filepath = self.output_dir / filename
+            plt.savefig(filepath, dpi=300, bbox_inches='tight')
+            plt.close()
+            
+            self.logger.info(f"Algorithm comparison boxplot saved: {filepath}")
+            return str(filepath)
+        
+        except Exception as e:
+            self.logger.error(f"Error generating algorithm comparison boxplot: {e}")
+            return ""
+    
+    def plot_algorithm_ranking_bars(self,
+                                   rankings: Dict[str, float],
+                                   title: str = "Ranking Promedio de Algoritmos GAA",
+                                   filename: str = "algorithm_ranking_bars.png") -> str:
+        """
+        Genera gráfica de barras con ranking de algoritmos
+        
+        Args:
+            rankings: Dict con {nombre_algoritmo: ranking_promedio}
+            title: Título de la gráfica
+            filename: Nombre del archivo
+        
+        Returns:
+            Ruta del archivo guardado
+        """
+        import matplotlib.pyplot as plt
+        
+        try:
+            fig, ax = plt.subplots(figsize=(10, 6))
+            
+            # Ordenar por ranking
+            sorted_rankings = sorted(rankings.items(), key=lambda x: x[1])
+            algorithms = [alg for alg, _ in sorted_rankings]
+            ranks = [rank for _, rank in sorted_rankings]
+            
+            # Crear barras
+            colors = ['gold' if i == 0 else 'silver' if i == 1 else 'chocolate' 
+                     for i in range(len(algorithms))]
+            bars = ax.barh(algorithms, ranks, color=colors)
+            
+            # Agregar valores en las barras
+            for i, (bar, rank) in enumerate(zip(bars, ranks)):
+                ax.text(rank + 0.05, i, f'{rank:.2f}', va='center', fontsize=10)
+            
+            ax.set_xlabel('Ranking Promedio (menor = mejor)', fontsize=12)
+            ax.set_title(title, fontsize=14, fontweight='bold')
+            ax.invert_yaxis()
+            ax.grid(True, alpha=0.3, axis='x')
+            
+            plt.tight_layout()
+            
+            # Guardar
+            filepath = self.output_dir / filename
+            plt.savefig(filepath, dpi=300, bbox_inches='tight')
+            plt.close()
+            
+            self.logger.info(f"Algorithm ranking bars saved: {filepath}")
+            return str(filepath)
+        
+        except Exception as e:
+            self.logger.error(f"Error generating algorithm ranking bars: {e}")
+            return ""
+    
+    def plot_algorithm_performance_scatter(self,
+                                          algorithm_results: Dict[str, List[float]],
+                                          instance_names: List[str] = None,
+                                          title: str = "Desempeño de Algoritmos por Instancia",
+                                          filename: str = "algorithm_performance_scatter.png") -> str:
+        """
+        Genera scatter plot del desempeño de algoritmos por instancia
+        
+        Args:
+            algorithm_results: Dict con {nombre_algoritmo: [valores]}
+            instance_names: Nombres de instancias (opcional)
+            title: Título de la gráfica
+            filename: Nombre del archivo
+        
+        Returns:
+            Ruta del archivo guardado
+        """
+        import matplotlib.pyplot as plt
+        
+        try:
+            fig, ax = plt.subplots(figsize=(12, 6))
+            
+            algorithms = list(algorithm_results.keys())
+            colors = ['blue', 'green', 'red', 'orange', 'purple']
+            
+            # Plotear cada algoritmo
+            for idx, (alg, values) in enumerate(algorithm_results.items()):
+                x_pos = np.arange(len(values))
+                ax.scatter(x_pos, values, label=alg, alpha=0.6, s=100, 
+                          color=colors[idx % len(colors)])
+            
+            ax.set_xlabel('Instancia', fontsize=12)
+            ax.set_ylabel('Valor (Gap o Colores)', fontsize=12)
+            ax.set_title(title, fontsize=14, fontweight='bold')
+            ax.legend(fontsize=10)
+            ax.grid(True, alpha=0.3)
+            
+            plt.tight_layout()
+            
+            # Guardar
+            filepath = self.output_dir / filename
+            plt.savefig(filepath, dpi=300, bbox_inches='tight')
+            plt.close()
+            
+            self.logger.info(f"Algorithm performance scatter saved: {filepath}")
+            return str(filepath)
+        
+        except Exception as e:
+            self.logger.error(f"Error generating algorithm performance scatter: {e}")
+            return ""
+    
+    def plot_group_comparison(self,
+                             group1_results: Dict[str, List[float]],
+                             group2_results: Dict[str, List[float]],
+                             group1_name: str = "Grupo 1",
+                             group2_name: str = "Grupo 2",
+                             title: str = "Comparación entre Grupos",
+                             filename: str = "group_comparison.png") -> str:
+        """
+        Genera gráfica comparativa entre dos grupos (BOTH pattern)
+        
+        Args:
+            group1_results: Resultados del grupo 1
+            group2_results: Resultados del grupo 2
+            group1_name: Nombre del grupo 1
+            group2_name: Nombre del grupo 2
+            title: Título de la gráfica
+            filename: Nombre del archivo
+        
+        Returns:
+            Ruta del archivo guardado
+        """
+        import matplotlib.pyplot as plt
+        
+        try:
+            fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+            
+            # Grupo 1
+            algorithms1 = list(group1_results.keys())
+            data1 = [group1_results[alg] for alg in algorithms1]
+            bp1 = ax1.boxplot(data1, labels=algorithms1, patch_artist=True)
+            for patch in bp1['boxes']:
+                patch.set_facecolor('lightblue')
+            ax1.set_title(f"{group1_name}", fontsize=12, fontweight='bold')
+            ax1.set_ylabel('Valor', fontsize=11)
+            ax1.grid(True, alpha=0.3)
+            
+            # Grupo 2
+            algorithms2 = list(group2_results.keys())
+            data2 = [group2_results[alg] for alg in algorithms2]
+            bp2 = ax2.boxplot(data2, labels=algorithms2, patch_artist=True)
+            for patch in bp2['boxes']:
+                patch.set_facecolor('lightcoral')
+            ax2.set_title(f"{group2_name}", fontsize=12, fontweight='bold')
+            ax2.set_ylabel('Valor', fontsize=11)
+            ax2.grid(True, alpha=0.3)
+            
+            fig.suptitle(title, fontsize=14, fontweight='bold')
+            plt.tight_layout()
+            
+            # Guardar
+            filepath = self.output_dir / filename
+            plt.savefig(filepath, dpi=300, bbox_inches='tight')
+            plt.close()
+            
+            self.logger.info(f"Group comparison plot saved: {filepath}")
+            return str(filepath)
+        
+        except Exception as e:
+            self.logger.error(f"Error generating group comparison plot: {e}")
+            return ""

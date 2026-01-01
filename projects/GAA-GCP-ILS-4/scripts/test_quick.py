@@ -20,6 +20,8 @@ from pathlib import Path
 # Agregar el directorio padre al path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from utils import OutputManager
+
 
 def test_imports():
     """✓ Validar que todos los imports funcionan correctamente"""
@@ -141,6 +143,11 @@ def main():
     print("  Verifica funcionamiento básico de componentes")
     print("="*60 + "\n")
     
+    # Crear gestor de outputs
+    output_mgr = OutputManager()
+    session_dir = output_mgr.create_session(mode="gaa_experiment")
+    print(f"📁 Sesión creada en: {session_dir}\n")
+    
     start = time.time()
     
     # Lista de tests
@@ -153,10 +160,17 @@ def main():
     ]
     
     results = []
+    test_details = []
+    
     for name, test_func in tests:
         print(f"[{len(results)+1}/{len(tests)}] {name}...")
         result = test_func()
         results.append(result)
+        test_details.append({
+            'test_name': name,
+            'passed': result,
+            'status': '✓ PASÓ' if result else '✗ FALLÓ'
+        })
         print()
     
     elapsed = time.time() - start
@@ -170,19 +184,54 @@ def main():
     print(f"  Tiempo total: {elapsed:.2f}s")
     print("="*60 + "\n")
     
+    # Guardar resultados de tests
+    summary_text = _generate_test_summary(test_details, passed, total, elapsed)
+    output_mgr.save_statistics_txt(summary_text, filename="test_results.txt")
+    
+    output_mgr.save_detailed_json({
+        'test_results': test_details,
+        'summary': {
+            'total_tests': total,
+            'passed': passed,
+            'failed': total - passed,
+            'elapsed_time': elapsed,
+            'status': status
+        }
+    }, filename="test_results.json")
+    
+    print(f"✅ Resultados guardados en: {session_dir}\n")
+    
     # Instrucciones siguientes
     if all(results):
         print("✓ Validación rápida completada exitosamente")
         print("\nPróximos pasos:")
-        print("  1. Implementar core/problem.py, core/solution.py, core/evaluation.py")
-        print("  2. Implementar operators/ (constructive, improvement, perturbation)")
-        print("  3. Implementar metaheuristic/ils_core.py")
-        print("  4. Ejecutar pytest: pytest tests/ -v")
-        print("  5. Ejecutar demo_complete.py para ver resultados\n")
+        print("  1. Ejecutar pytest: pytest tests/ -v")
+        print("  2. Ejecutar scripts/gaa_quick_demo.py para ver demo GAA")
+        print("  3. Ejecutar scripts/gaa_experiment.py para evolucionar algoritmos\n")
     else:
         print("✗ Algunos tests fallaron. Revisa los errores arriba.\n")
     
     return 0 if all(results) else 1
+
+
+def _generate_test_summary(test_details, passed, total, elapsed) -> str:
+    """Genera resumen de tests en texto"""
+    text = "RESULTADOS DE VALIDACIÓN RÁPIDA\n"
+    text += "="*60 + "\n\n"
+    text += f"Fecha: {time.strftime('%Y-%m-%d %H:%M:%S')}\n"
+    text += f"Total de tests: {total}\n"
+    text += f"Tests pasados: {passed}\n"
+    text += f"Tests fallidos: {total - passed}\n"
+    text += f"Tiempo total: {elapsed:.2f}s\n\n"
+    text += "DETALLE DE TESTS:\n"
+    text += "-"*60 + "\n"
+    
+    for test in test_details:
+        text += f"{test['status']:12} {test['test_name']}\n"
+    
+    text += "\n" + "="*60 + "\n"
+    
+    return text
 
 
 if __name__ == "__main__":

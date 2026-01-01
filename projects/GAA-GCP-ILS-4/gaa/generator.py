@@ -229,6 +229,41 @@ class AlgorithmGenerator:
         
         return None
     
+    def generate_fixed_structure(self) -> ASTNode:
+        """
+        Genera algoritmo con estructura fija: 4 nodos y profundidad 3
+        
+        Estructura:
+        Seq (1 nodo)
+          ├─ GreedyConstruct (1 nodo)
+          └─ If (1 nodo)
+              └─ LocalSearch (1 nodo)
+        
+        Total: 4 nodos, profundidad 3
+        
+        Returns:
+            AST con 4 nodos y profundidad 3
+        """
+        # Nodo 1: Construcción
+        construction = GreedyConstruct(
+            heuristic=self.rng.choice(list(self.grammar.CONSTRUCTIVE_TERMINALS))
+        )
+        
+        # Nodo 4: Mejora local
+        improvement = LocalSearch(
+            method=self.rng.choice(list(self.grammar.IMPROVEMENT_TERMINALS)),
+            max_iterations=int(self.rng.choice([100, 200, 500]))
+        )
+        
+        # Nodo 3: Condicional
+        conditional = If(
+            condition=self.rng.choice(list(self.grammar.CONDITIONS)),
+            then_branch=improvement
+        )
+        
+        # Nodo 2: Secuencia
+        return Seq(body=[construction, conditional])
+    
     def get_generation_stats(self, algorithm: ASTNode) -> dict:
         """
         Obtiene estadísticas del algoritmo generado

@@ -163,10 +163,153 @@ python scripts/test_quick.py
 ============================================================
 ```
 
-### 3. Ejecutar Suite Completa de Tests
+### 3. Ejecutar Scripts de Experimentación
+
+#### Demo Rápida GAA (1-2 minutos)
+```bash
+python scripts/gaa_quick_demo.py
+```
+Genera algoritmos aleatorios y los ejecuta en una instancia pequeña.
+
+#### Experimento GAA Completo (5-10 minutos)
+```bash
+python scripts/gaa_experiment.py
+```
+Evoluciona algoritmos usando Simulated Annealing.
+
+#### Experimento Completo en Todos los Datasets (15-20 minutos)
+```bash
+python scripts/run_full_experiment.py --mode all
+```
+Ejecuta ILS en todos los 79 datasets DIMACS.
+
+#### Experimento en Familia Específica (3-5 minutos)
+```bash
+python scripts/run_full_experiment.py --mode family --family DSJ
+```
+Ejecuta ILS en una familia específica (CUL, DSJ, LEI, MYC, REG, SCH, SGB).
+
+### 4. Ejecutar Suite Completa de Tests
 
 ```bash
 pytest tests/ -v
+```
+
+---
+
+## 📁 Sistema de Outputs Automáticos
+
+El proyecto genera automáticamente outputs en una estructura unificada usando el módulo `OutputManager`.
+
+### Módulo OutputManager
+
+**Ubicación**: `utils/output_manager.py`
+
+**Responsabilidades**:
+- Crear sesiones con timestamp único (DD-MM-YY_HH-MM-SS)
+- Guardar resultados en CSV, JSON, TXT
+- Guardar soluciones en formato .sol
+- Guardar algoritmos GAA
+- Gestionar logs de ejecución
+- Integración con PlotManager
+
+### Estructura de Outputs
+
+```
+output/
+├── results/
+│   ├── all_datasets/
+│   │   └── {timestamp}/
+│   │       ├── summary.csv                    # Tabla resumen
+│   │       ├── detailed_results.json          # Resultados detallados
+│   │       ├── statistics.txt                 # Reporte estadístico
+│   │       ├── convergence_plot.png           # Gráfica convergencia
+│   │       └── scalability_plot.png           # Gráfica escalabilidad
+│   │
+│   ├── specific_datasets/
+│   │   ├── CUL/{timestamp}/
+│   │   ├── DSJ/{timestamp}/
+│   │   ├── LEI/{timestamp}/
+│   │   ├── MYC/{timestamp}/
+│   │   ├── REG/{timestamp}/
+│   │   ├── SCH/{timestamp}/
+│   │   └── SGB/{timestamp}/
+│   │
+│   └── gaa_experiments/
+│       └── {timestamp}/
+│           ├── best_algorithm.json
+│           ├── algorithm_pseudocode.txt
+│           ├── evolution_history.json
+│           ├── demo_results.json
+│           ├── test_results.json
+│           └── fitness_evolution.png
+│
+├── solutions/
+│   ├── myciel3_{timestamp}.sol
+│   ├── DSJC125_{timestamp}.sol
+│   └── ...
+│
+└── logs/
+    ├── execution_{timestamp}.log
+    └── ...
+```
+
+### Archivos Generados
+
+#### CSV - Tabla Resumen
+```csv
+Instance,Family,Vertices,Edges,BKS,Best_Colors,Avg_Colors,Feasible,Avg_Time,Gap
+myciel3,MYC,11,20,4,4,4.0,True,0.50,0.0000
+DSJC125.1,DSJ,125,736,5,6,6.2,True,12.30,0.2000
+```
+
+#### JSON - Resultados Detallados
+Contiene metadatos, configuración, resultados por instancia y estadísticas generales.
+
+#### TXT - Reporte Estadístico
+Reporte legible con resumen general y resultados por instancia.
+
+#### SOL - Archivos de Solución
+Formato estándar para soluciones de Graph Coloring Problem.
+
+#### PNG - Gráficas
+- `convergence_plot.png` - Evolución del fitness
+- `scalability_plot.png` - Tiempo vs tamaño de instancia
+
+### Ejemplos de Uso
+
+#### Ejecutar experimento y guardar resultados automáticamente
+```bash
+python scripts/run_full_experiment.py --mode all
+```
+Genera automáticamente:
+- `output/results/all_datasets/{timestamp}/summary.csv`
+- `output/results/all_datasets/{timestamp}/detailed_results.json`
+- `output/results/all_datasets/{timestamp}/statistics.txt`
+- `output/solutions/{instance}_{timestamp}.sol`
+- `output/logs/execution_{timestamp}.log`
+
+#### Ejecutar en familia específica con múltiples réplicas
+```bash
+python scripts/run_full_experiment.py \
+    --mode family \
+    --family DSJ \
+    --num-replicas 3 \
+    --max-time 60
+```
+
+#### Usar OutputManager programáticamente
+```python
+from utils import OutputManager
+
+output_mgr = OutputManager()
+session_dir = output_mgr.create_session(mode="all_datasets")
+
+# Guardar datos
+output_mgr.save_summary_csv(data)
+output_mgr.save_detailed_json(results)
+output_mgr.save_statistics_txt(report)
+output_mgr.save_solution(instance_name, solution)
 ```
 
 ---
@@ -353,6 +496,30 @@ Distribuidas en 7 familias:
 ---
 
 ## 📝 Cambios Recientes
+
+### 31 Diciembre 2025 - Sistema de Outputs Automáticos e Integración Completa
+
+✨ **Agregada - Sistema de Outputs Unificado**:
+- [utils/output_manager.py](utils/output_manager.py) - Módulo centralizado de gestión de outputs (500+ líneas)
+- [scripts/run_full_experiment.py](scripts/run_full_experiment.py) - Script de experimentación completo en 79 datasets (450+ líneas)
+- Integración automática con PlotManager para generación de gráficas
+- Estructura unificada de directorios: `output/results/{mode}/{timestamp}/`
+- Timestamp consistente: DD-MM-YY_HH-MM-SS
+- Generación automática de: CSV, JSON, TXT, .sol, PNG, LOG
+
+✨ **Actualización de Scripts Existentes**:
+- [scripts/gaa_experiment.py](scripts/gaa_experiment.py) - Integrado con OutputManager
+- [scripts/gaa_quick_demo.py](scripts/gaa_quick_demo.py) - Integrado con OutputManager
+- [scripts/test_quick.py](scripts/test_quick.py) - Integrado con OutputManager
+
+✨ **Documentación Agregada**:
+- [PROPUESTA_UNIFICACION_OUTPUTS.md](PROPUESTA_UNIFICACION_OUTPUTS.md) - Análisis y propuesta
+- [RESUMEN_OUTPUTS_UNIFICADOS.md](RESUMEN_OUTPUTS_UNIFICADOS.md) - Lista de 15 tipos de outputs
+- [SISTEMA_OUTPUTS_IMPLEMENTADO.md](SISTEMA_OUTPUTS_IMPLEMENTADO.md) - Documentación del módulo
+- [VERIFICACION_INTEGRACION_OUTPUTS.md](VERIFICACION_INTEGRACION_OUTPUTS.md) - Verificación de integración
+- [RESUMEN_FINAL_INTEGRACION.md](RESUMEN_FINAL_INTEGRACION.md) - Resumen ejecutivo
+- [SCRIPT_EXPERIMENTO_COMPLETO.md](SCRIPT_EXPERIMENTO_COMPLETO.md) - Documentación del script
+- [VERIFICACION_FUNCIONALIDADES_SCRIPT.md](VERIFICACION_FUNCIONALIDADES_SCRIPT.md) - Verificación de funcionalidades
 
 ### 31 Diciembre 2025 - Generación de Suite de Tests
 

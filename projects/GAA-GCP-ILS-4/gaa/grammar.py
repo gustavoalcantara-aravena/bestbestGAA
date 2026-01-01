@@ -22,23 +22,20 @@ class Grammar:
     CONSTRUCTIVE_TERMINALS = [
         "DSATUR",
         "LF",
-        "RandomSequential",
-        "SL"
+        "RandomSequential"
     ]
     
     # TERMINALES DE MEJORA LOCAL
     IMPROVEMENT_TERMINALS = [
         "KempeChain",
         "OneVertexMove",
-        "TabuCol",
-        "SwapColors"
+        "TabuCol"
     ]
     
     # TERMINALES DE PERTURBACIÓN
     PERTURBATION_TERMINALS = [
         "RandomRecolor",
-        "PartialDestroy",
-        "ColorClassMerge"
+        "PartialDestroy"
     ]
     
     # CONDICIONES

@@ -15,13 +15,13 @@ from core.problem import GraphColoringProblem
 from core.solution import ColoringSolution
 from core.evaluation import ColoringEvaluator
 from operators.constructive import (
-    GreedyDSATUR, GreedyLF, RandomSequential, GreedySL
+    GreedyDSATUR, GreedyLF, RandomSequential
 )
 from operators.improvement import (
-    KempeChain, OneVertexMove, TabuCol, SwapColors
+    KempeChain, OneVertexMove, TabuCol
 )
 from operators.perturbation import (
-    RandomRecolor, PartialDestroy, ColorClassMerge
+    RandomRecolor, PartialDestroy
 )
 
 
@@ -99,7 +99,7 @@ class ExecutionContext:
             'best_colors': self.best_value if self.best_solution else None,
             'best_conflicts': self.best_solution.num_conflicts if self.best_solution else None,
             'improvements': len(self.improvement_iterations),
-            'final_feasible': self.best_solution.is_feasible() if self.best_solution else False
+            'final_feasible': self.best_solution.is_feasible(self.problem) if self.best_solution else False
         }
 
 
@@ -114,21 +114,18 @@ class ASTInterpreter:
     CONSTRUCTIVE_OPS = {
         "DSATUR": GreedyDSATUR,
         "LF": GreedyLF,
-        "RandomSequential": RandomSequential,
-        "SL": GreedySL
+        "RandomSequential": RandomSequential
     }
     
     IMPROVEMENT_OPS = {
         "KempeChain": KempeChain,
         "OneVertexMove": OneVertexMove,
-        "TabuCol": TabuCol,
-        "SwapColors": SwapColors
+        "TabuCol": TabuCol
     }
     
     PERTURBATION_OPS = {
         "RandomRecolor": RandomRecolor,
-        "PartialDestroy": PartialDestroy,
-        "ColorClassMerge": ColorClassMerge
+        "PartialDestroy": PartialDestroy
     }
     
     def __init__(self, 
@@ -271,7 +268,7 @@ class ASTInterpreter:
         elif condition == "Feasible":
             # Solución actual es factible
             return (self.context.current_solution and 
-                    self.context.current_solution.is_feasible())
+                    self.context.current_solution.is_feasible(self.context.problem))
         
         elif condition == "Stagnation":
             # Hay estancamiento

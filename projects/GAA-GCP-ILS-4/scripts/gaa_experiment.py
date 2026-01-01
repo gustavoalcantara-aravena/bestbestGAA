@@ -28,6 +28,7 @@ from gaa.interpreter import execute_algorithm
 from gaa.ast_nodes import mutate_ast
 from core.problem import GraphColoringProblem
 from data.loader import DatasetLoader
+from utils import OutputManager
 
 
 class GAASolver:
@@ -37,7 +38,8 @@ class GAASolver:
                  training_dir: str = "datasets/training",
                  pop_size: int = 10,
                  generations: int = 50,
-                 seed: int = 42):
+                 seed: int = 42,
+                 output_manager: OutputManager = None):
         """
         Inicializa solucionador GAA
         
@@ -46,12 +48,16 @@ class GAASolver:
             pop_size: Tamaño de población de algoritmos
             generations: Número de generaciones
             seed: Semilla aleatoria
+            output_manager: Gestor de outputs (si None, se crea uno)
         """
         self.training_dir = Path(training_dir)
         self.pop_size = pop_size
         self.generations = generations
         self.seed = seed
         self.rng = np.random.default_rng(seed)
+        
+        # Gestor de outputs
+        self.output_manager = output_manager or OutputManager()
         
         # Cargar instancias de entrenamiento
         print(f"📁 Cargando instancias de entrenamiento desde {training_dir}...")
@@ -236,39 +242,56 @@ class GAASolver:
         print()
     
     def save_results(self, best_algorithm, best_fitness):
-        """Guarda resultados de evolución"""
-        timestamp = datetime.now().strftime("%d-%m-%y_%H-%M-%S")
-        output_dir = project_root / "output" / "gaa"
-        output_dir.mkdir(parents=True, exist_ok=True)
+        """Guarda resultados de evolución usando OutputManager"""
+        session_dir = self.output_manager.get_session_dir()
         
-        # Guardar mejor algoritmo
-        algo_file = output_dir / f"best_algorithm_{timestamp}.json"
-        with open(algo_file, 'w') as f:
-            json.dump(best_algorithm.to_dict(), f, indent=2)
+        # Guardar mejor algoritmo (JSON)
+        algo_file = self.output_manager.save_algorithm_json(best_algorithm)
         
-        # Guardar historial
-        hist_file = output_dir / f"evolution_history_{timestamp}.json"
-        with open(hist_file, 'w') as f:
-            json.dump(self.history, f, indent=2)
+        # Guardar pseudocódigo
+        pseudo_file = self.output_manager.save_algorithm_pseudocode(best_algorithm)
         
-        # Guardar resumen
-        summary_file = output_dir / f"summary_{timestamp}.txt"
-        with open(summary_file, 'w') as f:
-            f.write("RESULTADOS GAA\n")
-            f.write("="*80 + "\n\n")
-            f.write(f"Timestamp: {timestamp}\n")
-            f.write(f"Población: {self.pop_size}\n")
-            f.write(f"Generaciones: {self.generations}\n")
-            f.write(f"Semilla: {self.seed}\n")
-            f.write(f"Instancias entrenamiento: {len(self.training_instances)}\n")
-            f.write(f"\nMejor fitness encontrado: {best_fitness:.2f}\n")
-            f.write(f"\nMejor algoritmo:\n")
-            f.write(best_algorithm.to_pseudocode())
+        # Guardar historial de evolución (JSON)
+        hist_file = self.output_manager.save_detailed_json({
+            'best_fitness': float(best_fitness),
+            'evolution_history': self.history,
+            'algorithm_stats': self.grammar.get_statistics(best_algorithm)
+        }, filename="evolution_history.json")
         
-        print(f"\n📁 Resultados guardados en:")
-        print(f"   • {algo_file}")
-        print(f"   • {hist_file}")
-        print(f"   • {summary_file}")
+        # Generar resumen en texto
+        summary_text = self._generate_summary_text(best_algorithm, best_fitness)
+        summary_file = self.output_manager.save_statistics_txt(summary_text)
+        
+        print(f"\n📁 Resultados guardados en: {session_dir}")
+        print(f"   • {Path(algo_file).name}")
+        print(f"   • {Path(pseudo_file).name}")
+        print(f"   • {Path(hist_file).name}")
+        print(f"   • {Path(summary_file).name}")
+    
+    def _generate_summary_text(self, best_algorithm, best_fitness) -> str:
+        """Genera resumen en texto"""
+        stats = self.grammar.get_statistics(best_algorithm)
+        
+        text = "RESULTADOS GAA - GENERACIÓN AUTOMÁTICA DE ALGORITMOS\n"
+        text += "="*80 + "\n\n"
+        text += f"Timestamp: {self.output_manager.get_timestamp()}\n"
+        text += f"Población: {self.pop_size}\n"
+        text += f"Generaciones: {self.generations}\n"
+        text += f"Semilla: {self.seed}\n"
+        text += f"Instancias entrenamiento: {len(self.training_instances)}\n"
+        text += f"\nMejor fitness encontrado: {best_fitness:.2f}\n"
+        text += f"\nESTADÍSTICAS DEL MEJOR ALGORITMO:\n"
+        text += f"  • Total nodos: {stats['total_nodes']}\n"
+        text += f"  • Profundidad: {stats['depth']}\n"
+        text += f"  • Nodos constructivos: {stats['node_counts']['constructive']}\n"
+        text += f"  • Nodos mejora: {stats['node_counts']['improvement']}\n"
+        text += f"  • Nodos perturbación: {stats['node_counts']['perturbation']}\n"
+        text += f"  • Válido: {'✓' if stats['is_valid'] else '✗'}\n"
+        text += f"\nPSEUDOCÓDIGO:\n"
+        text += best_algorithm.to_pseudocode()
+        text += "\n\n" + "="*80 + "\n"
+        
+        return text
 
 
 def main():

@@ -2,6 +2,7 @@
 """
 Quick GAA Demo - GAA-GCP-ILS-4
 Demostración rápida del sistema GAA funcionando
+Genera outputs automáticamente en output/results/gaa_experiments/{timestamp}/
 """
 
 import sys
@@ -15,12 +16,18 @@ from gaa.generator import AlgorithmGenerator
 from gaa.interpreter import execute_algorithm
 from core.problem import GraphColoringProblem
 from data.loader import DatasetLoader
+from utils import OutputManager
 
 
 def main():
     print("\n" + "="*80)
     print("  DEMO RÁPIDA: GENERACIÓN AUTOMÁTICA DE ALGORITMOS (GAA)")
     print("="*80 + "\n")
+    
+    # Crear gestor de outputs
+    output_mgr = OutputManager()
+    session_dir = output_mgr.create_session(mode="gaa_experiment")
+    print(f"📁 Sesión creada en: {session_dir}\n")
     
     # 1. Crear gramática
     print("1️⃣  CREAR GRAMÁTICA")
@@ -43,6 +50,8 @@ def main():
     print("-" * 80)
     
     algorithms = []
+    algorithm_data = []
+    
     for i in range(3):
         alg = generator.generate_with_validation()
         if alg:
@@ -53,6 +62,15 @@ def main():
             print(f"   Pseudocódigo:")
             for line in alg.to_pseudocode(indent=0).split('\n'):
                 print(f"     {line}")
+            
+            # Guardar información del algoritmo
+            algorithm_data.append({
+                'algorithm_id': i + 1,
+                'total_nodes': stats['total_nodes'],
+                'depth': stats['depth'],
+                'is_valid': stats['is_valid'],
+                'pseudocode': alg.to_pseudocode()
+            })
     print()
     
     # 4. Cargar problema
@@ -71,7 +89,7 @@ def main():
         print("⚠️  No hay instancias de entrenamiento. Creando pequeño problema...")
         problem = GraphColoringProblem(
             vertices=10,
-            edges=[(0,1), (0,2), (1,2), (1,3), (2,3), (2,4), (3,4), (3,5), (4,5)],
+            edges=[(1,2), (1,3), (2,3), (2,4), (3,4), (3,5), (4,5), (4,6), (5,6)],
             colors_known=3,
             name="test_small"
         )
@@ -81,22 +99,58 @@ def main():
     print("5️⃣  EJECUTAR ALGORITMOS")
     print("-" * 80)
     
+    execution_results = []
+    
     for i, alg in enumerate(algorithms[:2]):  # Ejecutar primeros 2
         print(f"\nEjecutando Algoritmo {i+1}...")
         solution = execute_algorithm(alg, problem, seed=42)
         
         if solution:
             print(f"   • Colores: {solution.num_colors}")
-            print(f"   • Conflictos: {solution.num_conflicts}")
-            print(f"   • Factible: {'✓' if solution.is_feasible() else '✗'}")
+            print(f"   • Conflictos: {solution.num_conflicts(problem)}")
+            print(f"   • Factible: {'✓' if solution.is_feasible(problem) else '✗'}")
             if problem.colors_known:
                 gap = solution.num_colors - problem.colors_known
                 gap_pct = 100 * gap / problem.colors_known if problem.colors_known > 0 else 0
                 print(f"   • Gap respecto a BKS: +{gap} ({gap_pct:.1f}%)")
+            
+            # Guardar resultado
+            execution_results.append({
+                'algorithm_id': i + 1,
+                'instance': problem.name,
+                'num_colors': solution.num_colors,
+                'conflicts': solution.num_conflicts(problem),
+                'feasible': solution.is_feasible(problem),
+                'gap': gap if problem.colors_known else None
+            })
         else:
             print(f"   ✗ Error ejecutando algoritmo")
     
-    print("\n" + "="*80)
+    # 6. Guardar resultados
+    print("\n6️⃣  GUARDAR RESULTADOS")
+    print("-" * 80)
+    
+    # Guardar datos de algoritmos generados
+    output_mgr.save_detailed_json({
+        'algorithms_generated': algorithm_data,
+        'execution_results': execution_results,
+        'problem': {
+            'name': problem.name,
+            'vertices': problem.vertices,
+            'edges': problem.num_edges,
+            'bks': problem.colors_known
+        }
+    }, filename="demo_results.json")
+    
+    # Guardar mejor algoritmo si existe
+    if algorithms:
+        best_alg = algorithms[0]
+        output_mgr.save_algorithm_json(best_alg, filename="first_algorithm.json")
+        output_mgr.save_algorithm_pseudocode(best_alg, filename="first_algorithm_pseudocode.txt")
+    
+    print(f"✅ Resultados guardados en: {session_dir}\n")
+    
+    print("="*80)
     print("  ✅ DEMO COMPLETADA")
     print("="*80 + "\n")
 
