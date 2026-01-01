@@ -416,9 +416,9 @@ def test_quick_experiment():
                         num_colors = solution.num_colors
                         algorithm_results[algo_name].append(num_colors)
                         
-                        gap = ((problem.colors_known - num_colors) / problem.colors_known * 100) if problem.colors_known else 0
+                        gap = ((num_colors - problem.colors_known) / problem.colors_known * 100) if problem.colors_known else 0
                         
-                        print(f"  [{result_idx}/{len(gaa_problems)}] {problem.name}: {num_colors} colores (gap: {gap:.2f}%)")
+                        print(f"  [{result_idx}/{len(gaa_problems)}] {problem.name}: {num_colors} colores (gap: {gap:+.2f}%)")
                     
                     except Exception as e:
                         print(f"  [{result_idx}/{len(gaa_problems)}] {problem.name}: Error - {e}")
@@ -452,7 +452,7 @@ def test_quick_experiment():
                     if algo_name in algorithm_results and len(algorithm_results[algo_name]) > gaa_problems.index(problem):
                         colors = algorithm_results[algo_name][gaa_problems.index(problem)]
                         if colors != float('inf'):
-                            gap = ((problem.colors_known - colors) / problem.colors_known * 100) if problem.colors_known else 0
+                            gap = ((colors - problem.colors_known) / problem.colors_known * 100) if problem.colors_known else 0
                             
                             # Determinar estado
                             if gap == 0:

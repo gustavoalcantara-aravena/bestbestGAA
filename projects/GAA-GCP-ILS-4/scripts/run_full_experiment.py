@@ -314,9 +314,9 @@ class FullExperiment:
                     instance_results['feasible'].append(metrics['feasible'])
                     
                     if problem.colors_known:
-                        gap = (metrics['num_colors'] - problem.colors_known) / problem.colors_known
+                        gap = (metrics['num_colors'] - problem.colors_known) / problem.colors_known * 100
                         instance_results['gaps'].append(gap)
-                        gap_str = f"({gap*100:+.1f}%)"
+                        gap_str = f"({gap:+.1f}%)"
                     else:
                         gap_str = ""
                     
@@ -543,10 +543,10 @@ class FullExperiment:
         report += "-"*80 + "\n"
         
         if all_gaps:
-            report += f"Gap promedio: {np.mean(all_gaps):+.2f}%\n"
-            report += f"Gap mínimo: {np.min(all_gaps):+.2f}%\n"
-            report += f"Gap máximo: {np.max(all_gaps):+.2f}%\n"
-            report += f"Desviación estándar: {np.std(all_gaps):.2f}%\n"
+            report += f"Gap promedio: {np.mean(all_gaps):+.4f}%\n"
+            report += f"Gap mínimo: {np.min(all_gaps):+.4f}%\n"
+            report += f"Gap máximo: {np.max(all_gaps):+.4f}%\n"
+            report += f"Desviación estándar: {np.std(all_gaps):.4f}%\n"
             
             # Contar óptimos
             optimal = sum(1 for g in all_gaps if g == 0)
@@ -716,9 +716,9 @@ class FullExperiment:
                         num_colors = solution.num_colors
                         algorithm_results[algo_name].append(num_colors)
                         
-                        gap = ((problem.colors_known - num_colors) / problem.colors_known * 100) if problem.colors_known else 0
+                        gap = ((num_colors - problem.colors_known) / problem.colors_known * 100) if problem.colors_known else 0
                         
-                        print(f"  [{result_idx}/{len(gaa_problems)}] {problem.name}: {num_colors} colores (gap: {gap:.2f}%)")
+                        print(f"  [{result_idx}/{len(gaa_problems)}] {problem.name}: {num_colors} colores (gap: {gap:+.2f}%)")
                     
                     except Exception as e:
                         print(f"  [{result_idx}/{len(gaa_problems)}] {problem.name}: Error - {e}")
@@ -750,7 +750,7 @@ class FullExperiment:
                     if algo_name in algorithm_results and len(algorithm_results[algo_name]) > gaa_problems.index(problem):
                         colors = algorithm_results[algo_name][gaa_problems.index(problem)]
                         if colors != float('inf'):
-                            gap = ((problem.colors_known - colors) / problem.colors_known * 100) if problem.colors_known else 0
+                            gap = ((colors - problem.colors_known) / problem.colors_known * 100) if problem.colors_known else 0
                             
                             # Determinar estado
                             if gap == 0:
