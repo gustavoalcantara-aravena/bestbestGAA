@@ -234,13 +234,13 @@ class PlotManagerV2:
             fig, ax = plt.subplots(figsize=(10, 10))
             
             im = ax.imshow(conflict_matrix, cmap='RdYlGn_r', aspect='auto')
-            ax.set_xlabel('Vértice', fontsize=12)
-            ax.set_ylabel('Vértice', fontsize=12)
-            ax.set_title(f'Matriz de Conflictos: {instance_name}', fontsize=14, fontweight='bold')
+            ax.set_xlabel('Vertex', fontsize=12)
+            ax.set_ylabel('Vertex', fontsize=12)
+            ax.set_title(f'Adjacency matrix of the graph (conflict structure): {instance_name}', fontsize=14, fontweight='bold')
             
-            plt.colorbar(im, ax=ax, label='Conflicto')
+            plt.colorbar(im, ax=ax, label='Edge')
             
-            filepath = instance_dir / "03_conflict_heatmap.png"
+            filepath = instance_dir / "03_graph_adjacency_matrix.png"
             plt.savefig(filepath, dpi=300, bbox_inches='tight')
             plt.close()
             
