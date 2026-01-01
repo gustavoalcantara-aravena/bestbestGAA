@@ -125,9 +125,9 @@ class PlotManagerV2:
             
             ax.hist(fitness_values, bins=20, color='skyblue', edgecolor='black', alpha=0.7)
             ax.axvline(np.mean(fitness_values), color='red', linestyle='--', 
-                      linewidth=2, label=f'Mean: {np.mean(fitness_values):.2f}')
+                      linewidth=2, label=f'Mean (visited): {np.mean(fitness_values):.2f}')
             ax.axvline(np.median(fitness_values), color='green', linestyle='--',
-                      linewidth=2, label=f'Median: {np.median(fitness_values):.2f}')
+                      linewidth=2, label=f'Median (visited): {np.median(fitness_values):.2f}')
             
             ax.set_xlabel('Fitness (Number of Colors)', fontsize=12)
             ax.set_ylabel('Frequency', fontsize=12)
