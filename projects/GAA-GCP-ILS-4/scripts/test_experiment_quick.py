@@ -159,6 +159,7 @@ def test_quick_experiment():
     all_times = []
     all_colors = []
     convergence_histories = {}
+    problems_dict = {}  # Almacenar problemas por nombre para acceder a su matriz de adyacencia
     
     # Estructura para ploteos multinivel (PlotManagerV2) - Familia MYC
     from collections import defaultdict
@@ -186,6 +187,7 @@ def test_quick_experiment():
         try:
             # Cargar problema
             problem = GraphColoringProblem.load_from_dimacs(str(dataset_file))
+            problems_dict[problem.name] = problem  # Almacenar para acceso posterior
             print(f"   📊 Vértices: {problem.n_vertices} | Aristas: {problem.n_edges} | BKS: {problem.colors_known}")
             
             # Ejecutar ILS
@@ -427,12 +429,13 @@ def test_quick_experiment():
                 # Ploteo 03: Matriz de conflictos (Matriz de adyacencia real)
                 try:
                     # Obtener la matriz de adyacencia real del problema
-                    problem = problem_instance  # Usar el problema actual
-                    conflict_matrix = problem.edge_weight_matrix
-                    plot_mgr_v2.plot_instance_conflict_heatmap(
-                        instance_name,
-                        conflict_matrix
-                    )
+                    if instance_name in problems_dict:
+                        problem = problems_dict[instance_name]
+                        conflict_matrix = problem.edge_weight_matrix
+                        plot_mgr_v2.plot_instance_conflict_heatmap(
+                            instance_name,
+                            conflict_matrix
+                        )
                 except Exception as e:
                     pass  # Ignorar si no se puede generar
                 
