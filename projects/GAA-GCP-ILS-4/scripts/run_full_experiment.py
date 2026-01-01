@@ -195,6 +195,7 @@ class FullExperiment:
         self.results = []
         self.all_solutions = {}
         self.convergence_histories = {}
+        self.problems_dict = {}  # Almacenar problemas por nombre para acceder a su matriz de adyacencia
         
         # Estructura para ploteos multinivel (PlotManagerV2)
         from collections import defaultdict
@@ -291,6 +292,9 @@ class FullExperiment:
         start_time = time.time()
         
         for idx, problem in enumerate(problems, 1):
+            # Almacenar problema para acceso posterior (matriz de adyacencia)
+            self.problems_dict[problem.name] = problem
+            
             # Barra de progreso
             progress = (idx - 1) / len(problems) * 100
             print(f"\n[{idx:3d}/{len(problems)}] ({progress:5.1f}%) {problem.name}")
@@ -963,14 +967,16 @@ class FullExperiment:
                             history['current_fitness']
                         )
                     
-                    # Ploteo 03: Matriz de conflictos
+                    # Ploteo 03: Matriz de conflictos (Matriz de adyacencia real)
                     try:
-                        n = result['vertices']
-                        conflict_matrix = np.zeros((n, n))
-                        self.plot_manager_v2.plot_instance_conflict_heatmap(
-                            instance_name,
-                            conflict_matrix
-                        )
+                        # Obtener la matriz de adyacencia real del problema
+                        if instance_name in self.problems_dict:
+                            problem = self.problems_dict[instance_name]
+                            conflict_matrix = problem.edge_weight_matrix
+                            self.plot_manager_v2.plot_instance_conflict_heatmap(
+                                instance_name,
+                                conflict_matrix
+                            )
                     except Exception as e:
                         pass
                     

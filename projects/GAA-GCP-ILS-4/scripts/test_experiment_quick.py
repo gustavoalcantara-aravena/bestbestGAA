@@ -424,12 +424,11 @@ def test_quick_experiment():
                         history['current_fitness']
                     )
                 
-                # Ploteo 03: Matriz de conflictos
+                # Ploteo 03: Matriz de conflictos (Matriz de adyacencia real)
                 try:
-                    # Crear matriz de conflictos (simulada con datos disponibles)
-                    n = result['vertices']
-                    conflict_matrix = np.zeros((n, n))
-                    # En una ejecución real, se llenarían los conflictos reales
+                    # Obtener la matriz de adyacencia real del problema
+                    problem = problem_instance  # Usar el problema actual
+                    conflict_matrix = problem.edge_weight_matrix
                     plot_mgr_v2.plot_instance_conflict_heatmap(
                         instance_name,
                         conflict_matrix
