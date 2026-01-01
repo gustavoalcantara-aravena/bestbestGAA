@@ -125,17 +125,17 @@ class PlotManagerV2:
             
             ax.hist(fitness_values, bins=20, color='skyblue', edgecolor='black', alpha=0.7)
             ax.axvline(np.mean(fitness_values), color='red', linestyle='--', 
-                      linewidth=2, label=f'Media: {np.mean(fitness_values):.2f}')
+                      linewidth=2, label=f'Mean: {np.mean(fitness_values):.2f}')
             ax.axvline(np.median(fitness_values), color='green', linestyle='--',
-                      linewidth=2, label=f'Mediana: {np.median(fitness_values):.2f}')
+                      linewidth=2, label=f'Median: {np.median(fitness_values):.2f}')
             
-            ax.set_xlabel('Fitness (Colores)', fontsize=12)
-            ax.set_ylabel('Frecuencia', fontsize=12)
-            ax.set_title(f'Distribución de Fitness: {instance_name}', fontsize=14, fontweight='bold')
+            ax.set_xlabel('Fitness (Number of Colors)', fontsize=12)
+            ax.set_ylabel('Frequency', fontsize=12)
+            ax.set_title(f'Distribution of visited solutions during ILS execution: {instance_name}', fontsize=14, fontweight='bold')
             ax.legend()
             ax.grid(True, alpha=0.3, axis='y')
             
-            filepath = instance_dir / "02_fitness_distribution.png"
+            filepath = instance_dir / "02_visited_solutions_distribution_ils.png"
             plt.savefig(filepath, dpi=300, bbox_inches='tight')
             plt.close()
             
