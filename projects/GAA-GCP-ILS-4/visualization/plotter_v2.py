@@ -262,12 +262,12 @@ class PlotManagerV2:
             ax.scatter(times, fitness_values, s=100, alpha=0.6, edgecolor='black', linewidth=1.5)
             ax.plot(times, fitness_values, 'b-', alpha=0.3, linewidth=1)
             
-            ax.set_xlabel('Tiempo (s)', fontsize=12, fontweight='bold')
-            ax.set_ylabel('Fitness (Colores)', fontsize=12, fontweight='bold')
-            ax.set_title(f'Tiempo vs Calidad: {instance_name}', fontsize=14, fontweight='bold')
+            ax.set_xlabel('Time (s)', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Fitness (Number of Colors)', fontsize=12, fontweight='bold')
+            ax.set_title(f'Temporal evolution of visited solution quality during ILS execution: {instance_name}', fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
             
-            filepath = instance_dir / "06_time_vs_quality.png"
+            filepath = instance_dir / "06_visited_quality_time_evolution_ils.png"
             plt.savefig(filepath, dpi=300, bbox_inches='tight')
             plt.close()
             
