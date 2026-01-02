@@ -381,7 +381,7 @@ class PlotManagerV2:
                 patch.set_alpha(0.7)
             
             ax.set_ylabel('Number of Colors', fontsize=12)
-            ax.set_title(f'Robustness (Color Count Distribution): {family_name} Family',
+            ax.set_title(f'Robustness of Solution Quality (Color Count Distribution) across {family_name} Instances',
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3, axis='y')
             
@@ -419,7 +419,7 @@ class PlotManagerV2:
                        ha='left', va='center', fontsize=11, fontweight='bold')
             
             ax.set_xlabel('Average Ranking (lower = better)', fontsize=12)
-            ax.set_title(f'Average Ranking (Lower is Better): {family_name} Family',
+            ax.set_title(f'Average Algorithm Ranking (Lower is Better) across {family_name} Instances',
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3, axis='x')
             
@@ -454,7 +454,7 @@ class PlotManagerV2:
             ax.axhline(y=0, color='black', linestyle='-', linewidth=1)
             ax.set_xlabel('Instance', fontsize=12)
             ax.set_ylabel('Optimality Gap (%)', fontsize=12)
-            ax.set_title(f'Optimality Gap across {family_name} Instances',
+            ax.set_title(f'Per-Instance Optimality Gap across {family_name} Instances',
                         fontsize=14, fontweight='bold')
             ax.set_xticks(x)
             ax.set_xticklabels(instances, rotation=45, ha='right')
