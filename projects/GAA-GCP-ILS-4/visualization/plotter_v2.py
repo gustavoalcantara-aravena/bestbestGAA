@@ -303,7 +303,7 @@ class PlotManagerV2:
                            xytext=(0,10), ha='center', fontsize=9)
             
             ax.set_xlabel('Number of Vertices', fontsize=12)
-            ax.set_ylabel('Execution Time (s)', fontsize=12)
+            ax.set_ylabel('Execution Time (s, log scale)', fontsize=12)
             ax.set_title(f'Computational Scalability (Execution Time) across {family_name} Instances', 
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
