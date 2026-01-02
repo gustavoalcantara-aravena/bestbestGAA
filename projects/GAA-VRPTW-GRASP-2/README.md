@@ -1,0 +1,187 @@
+# VRPTW-GRASP: Vehicle Routing Problem with Time Windows
+
+**Project**: Hybrid GRASP + GAA (Generación Automática de Algoritmos) para VRPTW  
+**Benchmark**: 56 instancias Solomon (C1, C2, R1, R2, RC1, RC2)  
+**Estado**: En desarrollo
+
+## 📦 Instalación Rápida
+
+### 1. Clonar repositorio
+```bash
+git clone <repo-url>
+cd GAA-VRPTW-GRASP-2
+```
+
+### 2. Crear ambiente virtual
+```bash
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+```
+
+### 3. Instalar dependencias
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Instalar proyecto
+```bash
+pip install -e .
+```
+
+## 🚀 Primeros Pasos
+
+### Verificar BKS (Best Known Solutions)
+```bash
+python scripts/test_bks_manager.py
+```
+
+Debe mostrar:
+- ✓ Carga de 56 instancias Solomon
+- ✓ BKS para cada familia
+- ✓ Estadísticas por familia
+
+### Validar instalación
+```bash
+python -c "import src; print('✓ Proyecto listo')"
+```
+
+## 📁 Estructura del Proyecto
+
+```
+GAA-VRPTW-GRASP-2/
+├── config.yaml              # Configuración GRASP, GAA, Solomon
+├── requirements.txt         # Dependencias
+├── setup.py                # Script instalación
+├── best_known_solutions.json  # BKS para 56 instancias
+├── best_known_solutions.csv   # BKS formato tabular
+│
+├── src/
+│   ├── core/               # Clases fundamentales VRPTW
+│   │   ├── bks.py         # Gestor de BKS
+│   │   └── __init__.py
+│   ├── operators/          # 22 operadores VRPTW
+│   ├── metaheuristic/      # GRASP core
+│   ├── gaa/                # Módulo GAA (AST, generador, intérprete)
+│   └── __init__.py
+│
+├── scripts/
+│   ├── test_bks_manager.py       # Verificar BKS
+│   ├── demo_experimentation_quick.py  # Experimentos QUICK (5-10 min)
+│   ├── demo_experimentation_full.py   # Experimentos FULL (40-60 min)
+│   └── validate_datasets.py      # Validar instancias Solomon
+│
+├── datasets/                # 56 instancias Solomon
+│   ├── C1/ (9 instancias)
+│   ├── C2/ (8 instancias)
+│   ├── R1/ (12 instancias)
+│   ├── R2/ (11 instancias)
+│   ├── RC1/ (8 instancias)
+│   └── RC2/ (8 instancias)
+│
+├── output/                 # Resultados experimentos
+│   ├── results/
+│   ├── plots/
+│   ├── solutions/
+│   └── logs/
+│
+└── documentacion_general/  # Documentación del proyecto (11 docs)
+    ├── 01-problema-vrptw.md
+    ├── 02-modelo-matematico.md
+    ├── 03-operadores-dominio.md
+    ├── 04-metaheuristica-grasp.md
+    ├── 05-datasets-solomon.md
+    ├── 06-experimentos-plan.md
+    ├── 07-fitness-canonico.md
+    ├── 08-metricas-canonicas.md
+    ├── 09-outputs-estructura.md
+    ├── 10-gaa-ast-implementation.md
+    └── 11-buenas-practicas-gaa.md
+```
+
+## 🎯 Plan de Desarrollo (15 Fases)
+
+| Fase | Descripción | Estado |
+|------|-------------|--------|
+| 1-2 | Infraestructura + clases base | ⏳ EN PROGRESO |
+| 3-4 | Operadores + GRASP | ⏳ PRÓXIMO |
+| 5 | Módulo GAA | ⏳ PRÓXIMO |
+| 6-9 | Datasets + scripts experimentación | ⏳ PRÓXIMO |
+| 10-14 | Análisis + experimentos | ⏳ PRÓXIMO |
+| 15 | Publicación | ⏳ PRÓXIMO |
+
+Ver [00-development_checklist.md](00-development_checklist.md) para detalles completos.
+
+## 📚 Documentación Referencial
+
+**11 documentos técnicos** disponibles en `documentacion_general/`:
+
+- **01-problema-vrptw.md**: Definición VRPTW, Solomon instances
+- **02-modelo-matematico.md**: Formulación matemática canónica
+- **03-operadores-dominio.md**: 22 operadores VRPTW catalogados
+- **04-metaheuristica-grasp.md**: GRASP (α=0.15, 100 iteraciones)
+- **05-datasets-solomon.md**: 56 instancias (C1-C2, R1-R2, RC1-RC2)
+- **06-experimentos-plan.md**: Plan QUICK (36 exp) + FULL (168 exp)
+- **07-fitness-canonico.md**: Fitness jerárquico (K primario, D secundario)
+- **08-metricas-canonicas.md**: Métricas estadísticas canónicas
+- **09-outputs-estructura.md**: Esquema CSV/JSON exacto
+- **10-gaa-ast-implementation.md**: Especificación GAA técnica (AST, gramática BNF)
+- **11-buenas-practicas-gaa.md**: Implementación GAA + código ready-to-run
+
+## 🔍 Recursos Disponibles
+
+- ✅ **BKS (Best Known Solutions)**: `best_known_solutions.json` + CSV
+- ✅ **Módulo BKS**: `src/core/bks.py` (BKSManager para validación)
+- ✅ **56 datasets Solomon**: Estructura C1-C2, R1-R2, RC1-RC2
+- ✅ **Documentación completa**: 11 documentos temáticos
+- ✅ **Checklist de desarrollo**: 309 items en 15 fases
+
+## 🧪 Testing
+
+```bash
+# Verificar BKS
+python scripts/test_bks_manager.py
+
+# Validar datasets Solomon (cuando esté implementado)
+python scripts/validate_datasets.py
+
+# Ejecutar experimentos QUICK (5-10 min)
+python scripts/demo_experimentation_quick.py
+
+# Ejecutar experimentos FULL (40-60 min)
+python scripts/demo_experimentation_full.py
+```
+
+## ⚙️ Configuración
+
+Editar `config.yaml` para ajustar:
+- Parámetros GRASP (alpha, iteraciones, seed)
+- Parámetros GAA (número de algoritmos, profundidad AST)
+- Parámetros VRPTW (capacidad, tiempo máximo)
+- Plan experimental (QUICK o FULL)
+
+## 📖 Requisito Crítico: Compatibilidad Solomon
+
+**TODO el desarrollo DEBE ser compatible con:**
+- ✅ 56 instancias Solomon (100 clientes c/u)
+- ✅ 6 familias: C1, C2, R1, R2, RC1, RC2
+- ✅ Distancias euclidianas
+- ✅ Ventanas de tiempo Solomon
+- ✅ Comparación contra BKS publicadas
+
+Ver [05-datasets-solomon.md](documentacion_general/05-datasets-solomon.md) para detalles.
+
+## 🔗 Links Útiles
+
+- Checklist desarrollo: [00-development_checklist.md](00-development_checklist.md)
+- Índice documentación: [documentacion_general/INDEX.md](documentacion_general/INDEX.md)
+- BKS referencia: [best_known_solutions.json](best_known_solutions.json)
+
+## 📞 Contacto
+
+Para más información, consultar documentación técnica en `documentacion_general/`.
+
+---
+
+**Versión**: 0.1.0  
+**Última actualización**: 2026-01-02  
+**Estado**: Preparado para desarrollo Fase 1-2
