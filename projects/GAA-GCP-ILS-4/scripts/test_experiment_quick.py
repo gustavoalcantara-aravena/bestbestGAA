@@ -502,15 +502,9 @@ def test_quick_experiment():
                 algorithm_rankings
             )
             
-            # Ploteo 06: Análisis de gaps
-            algorithm_gaps_dict = {
-                'ILS': gaps
-            }
-            plot_mgr_v2.plot_family_gap_analysis(
-                'MYC',
-                instances,
-                algorithm_gaps_dict
-            )
+            # Ploteo 06: Análisis de gaps (se generará después de ejecutar algoritmos GAA)
+            # Placeholder - se actualizará en PASO 2
+            pass
         
         print("   ✅ Ploteos de familia generados (scalability, robustness, ranking, gaps)\n")
         
@@ -676,6 +670,37 @@ def test_quick_experiment():
                         )
                 
                 print("   ✅ Gráficos 4 y 5 generados para todas las instancias\n")
+                
+                # Ploteo 06: Análisis de gaps por instancia (con datos de 3 algoritmos GAA)
+                print("📋 Generando gráfico 06: Análisis de gaps por instancia...")
+                try:
+                    # Construir diccionario de gaps para los 3 algoritmos GAA
+                    algorithm_gaps_dict = {}
+                    for algo_idx, algo_name in enumerate([f"GAA_Algorithm_{i+1}" for i in range(len(gaa_algorithms))]):
+                        if algo_name in algorithm_results:
+                            gaps_list = []
+                            for problem_idx, problem in enumerate(gaa_problems):
+                                if len(algorithm_results[algo_name]) > problem_idx:
+                                    colors = algorithm_results[algo_name][problem_idx]
+                                    if colors != float('inf'):
+                                        gap = ((colors - problem.colors_known) / problem.colors_known * 100) if problem.colors_known else 0
+                                        gaps_list.append(gap)
+                                    else:
+                                        gaps_list.append(0)
+                                else:
+                                    gaps_list.append(0)
+                            algorithm_gaps_dict[algo_name] = gaps_list
+                    
+                    # Generar gráfico 06
+                    if algorithm_gaps_dict:
+                        plot_mgr_v2.plot_family_gap_analysis(
+                            'MYC',
+                            instances,
+                            algorithm_gaps_dict
+                        )
+                        print("   ✅ Gráfico 06 generado\n")
+                except Exception as e:
+                    print(f"⚠️  Error generando gráfico 06: {e}\n")
                 
             except Exception as e:
                 print(f"⚠️  Error generando gráficos 4 y 5: {e}\n")
