@@ -342,7 +342,7 @@ class PlotManagerV2:
                            xytext=(0,10), ha='center', fontsize=9)
             
             ax.axhline(y=0, color='black', linestyle='-', linewidth=1, zorder=1)
-            ax.set_xlabel('Number of Vertices', fontsize=12)
+            ax.set_xlabel('Number of Vertices (log scale)', fontsize=12)
             ax.set_ylabel('Optimality Gap (%)', fontsize=12)
             ax.set_title(f'Solution Quality Scalability (Optimality Gap): {family_name} Family',
                         fontsize=14, fontweight='bold')
