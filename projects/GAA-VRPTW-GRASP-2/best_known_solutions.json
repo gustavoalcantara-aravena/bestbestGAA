@@ -1,0 +1,401 @@
+{
+  "metadata": {
+    "source": "Solomon Benchmark Instances",
+    "description": "Best Known Solutions (BKS) for VRPTW Solomon instances",
+    "created": "2026-01-02",
+    "total_instances": 56,
+    "families": 6,
+    "note": "K_BKS = Best Known Number of Vehicles, D_BKS = Best Known Total Distance"
+  },
+  "families": {
+    "C1": {
+      "name": "Clustered - Normal Period",
+      "description": "Clustered customers with normal time horizon",
+      "num_instances": 9,
+      "instances": [
+        {
+          "id": "C101",
+          "k_bks": 10,
+          "d_bks": 828.93664
+        },
+        {
+          "id": "C102",
+          "k_bks": 10,
+          "d_bks": 828.93664
+        },
+        {
+          "id": "C103",
+          "k_bks": 10,
+          "d_bks": 828.06464
+        },
+        {
+          "id": "C104",
+          "k_bks": 10,
+          "d_bks": 824.77646
+        },
+        {
+          "id": "C105",
+          "k_bks": 10,
+          "d_bks": 828.93664
+        },
+        {
+          "id": "C106",
+          "k_bks": 10,
+          "d_bks": 828.93664
+        },
+        {
+          "id": "C107",
+          "k_bks": 10,
+          "d_bks": 828.93664
+        },
+        {
+          "id": "C108",
+          "k_bks": 10,
+          "d_bks": 828.93664
+        },
+        {
+          "id": "C109",
+          "k_bks": 10,
+          "d_bks": 828.93664
+        }
+      ]
+    },
+    "C2": {
+      "name": "Clustered - Extended Period",
+      "description": "Clustered customers with extended time horizon",
+      "num_instances": 8,
+      "instances": [
+        {
+          "id": "C201",
+          "k_bks": 3,
+          "d_bks": 591.55626
+        },
+        {
+          "id": "C202",
+          "k_bks": 3,
+          "d_bks": 591.55626
+        },
+        {
+          "id": "C203",
+          "k_bks": 3,
+          "d_bks": 591.17315
+        },
+        {
+          "id": "C204",
+          "k_bks": 3,
+          "d_bks": 590.59845
+        },
+        {
+          "id": "C205",
+          "k_bks": 3,
+          "d_bks": 588.87566
+        },
+        {
+          "id": "C206",
+          "k_bks": 3,
+          "d_bks": 588.49255
+        },
+        {
+          "id": "C207",
+          "k_bks": 3,
+          "d_bks": 588.28602
+        },
+        {
+          "id": "C208",
+          "k_bks": 3,
+          "d_bks": 588.32350
+        }
+      ]
+    },
+    "R1": {
+      "name": "Random - Normal Period",
+      "description": "Randomly distributed customers with normal time horizon",
+      "num_instances": 12,
+      "instances": [
+        {
+          "id": "R101",
+          "k_bks": 19,
+          "d_bks": 1650.79864
+        },
+        {
+          "id": "R102",
+          "k_bks": 17,
+          "d_bks": 1486.85859
+        },
+        {
+          "id": "R103",
+          "k_bks": 13,
+          "d_bks": 1292.67493
+        },
+        {
+          "id": "R104",
+          "k_bks": 9,
+          "d_bks": 1007.31005
+        },
+        {
+          "id": "R105",
+          "k_bks": 14,
+          "d_bks": 1377.11046
+        },
+        {
+          "id": "R106",
+          "k_bks": 12,
+          "d_bks": 1252.03013
+        },
+        {
+          "id": "R107",
+          "k_bks": 10,
+          "d_bks": 1104.65547
+        },
+        {
+          "id": "R108",
+          "k_bks": 9,
+          "d_bks": 960.87528
+        },
+        {
+          "id": "R109",
+          "k_bks": 11,
+          "d_bks": 1194.73359
+        },
+        {
+          "id": "R110",
+          "k_bks": 10,
+          "d_bks": 1118.83808
+        },
+        {
+          "id": "R111",
+          "k_bks": 10,
+          "d_bks": 1096.72605
+        },
+        {
+          "id": "R112",
+          "k_bks": 9,
+          "d_bks": 982.13919
+        }
+      ]
+    },
+    "R2": {
+      "name": "Random - Extended Period",
+      "description": "Randomly distributed customers with extended time horizon",
+      "num_instances": 11,
+      "instances": [
+        {
+          "id": "R201",
+          "k_bks": 4,
+          "d_bks": 1252.37074
+        },
+        {
+          "id": "R202",
+          "k_bks": 3,
+          "d_bks": 1191.70252
+        },
+        {
+          "id": "R203",
+          "k_bks": 3,
+          "d_bks": 939.50286
+        },
+        {
+          "id": "R204",
+          "k_bks": 2,
+          "d_bks": 825.51880
+        },
+        {
+          "id": "R205",
+          "k_bks": 3,
+          "d_bks": 994.42722
+        },
+        {
+          "id": "R206",
+          "k_bks": 3,
+          "d_bks": 906.14164
+        },
+        {
+          "id": "R207",
+          "k_bks": 2,
+          "d_bks": 890.60784
+        },
+        {
+          "id": "R208",
+          "k_bks": 2,
+          "d_bks": 726.82234
+        },
+        {
+          "id": "R209",
+          "k_bks": 3,
+          "d_bks": 909.16288
+        },
+        {
+          "id": "R210",
+          "k_bks": 3,
+          "d_bks": 939.37224
+        },
+        {
+          "id": "R211",
+          "k_bks": 2,
+          "d_bks": 885.71093
+        }
+      ]
+    },
+    "RC1": {
+      "name": "Random+Clustered - Normal Period",
+      "description": "Mix of random and clustered customers with normal time horizon",
+      "num_instances": 8,
+      "instances": [
+        {
+          "id": "RC101",
+          "k_bks": 14,
+          "d_bks": 1696.94871
+        },
+        {
+          "id": "RC102",
+          "k_bks": 12,
+          "d_bks": 1554.74684
+        },
+        {
+          "id": "RC103",
+          "k_bks": 11,
+          "d_bks": 1261.67143
+        },
+        {
+          "id": "RC104",
+          "k_bks": 10,
+          "d_bks": 1135.47902
+        },
+        {
+          "id": "RC105",
+          "k_bks": 13,
+          "d_bks": 1629.43589
+        },
+        {
+          "id": "RC106",
+          "k_bks": 11,
+          "d_bks": 1424.73327
+        },
+        {
+          "id": "RC107",
+          "k_bks": 11,
+          "d_bks": 1230.47709
+        },
+        {
+          "id": "RC108",
+          "k_bks": 10,
+          "d_bks": 1139.82108
+        }
+      ]
+    },
+    "RC2": {
+      "name": "Random+Clustered - Extended Period",
+      "description": "Mix of random and clustered customers with extended time horizon",
+      "num_instances": 8,
+      "instances": [
+        {
+          "id": "RC201",
+          "k_bks": 4,
+          "d_bks": 1406.93961
+        },
+        {
+          "id": "RC202",
+          "k_bks": 3,
+          "d_bks": 1365.64462
+        },
+        {
+          "id": "RC203",
+          "k_bks": 3,
+          "d_bks": 1049.62383
+        },
+        {
+          "id": "RC204",
+          "k_bks": 3,
+          "d_bks": 798.46323
+        },
+        {
+          "id": "RC205",
+          "k_bks": 4,
+          "d_bks": 1297.64736
+        },
+        {
+          "id": "RC206",
+          "k_bks": 3,
+          "d_bks": 1146.31689
+        },
+        {
+          "id": "RC207",
+          "k_bks": 3,
+          "d_bks": 1061.14420
+        },
+        {
+          "id": "RC208",
+          "k_bks": 3,
+          "d_bks": 828.14110
+        }
+      ]
+    }
+  },
+  "summary": {
+    "by_family": {
+      "C1": {
+        "avg_k": 10.0,
+        "min_k": 10,
+        "max_k": 10,
+        "avg_distance": 827.9404533,
+        "min_distance": 824.77646,
+        "max_distance": 828.93664
+      },
+      "C2": {
+        "avg_k": 3.0,
+        "min_k": 3,
+        "max_k": 3,
+        "avg_distance": 589.99697625,
+        "min_distance": 588.28602,
+        "max_distance": 591.55626
+      },
+      "R1": {
+        "avg_k": 12.25,
+        "min_k": 9,
+        "max_k": 19,
+        "avg_distance": 1218.33816075,
+        "min_distance": 960.87528,
+        "max_distance": 1650.79864
+      },
+      "R2": {
+        "avg_k": 2.909090909,
+        "min_k": 2,
+        "max_k": 4,
+        "avg_distance": 952.40256364,
+        "min_distance": 726.82234,
+        "max_distance": 1252.37074
+      },
+      "RC1": {
+        "avg_k": 11.375,
+        "min_k": 10,
+        "max_k": 14,
+        "avg_distance": 1441.51454675,
+        "min_distance": 1135.47902,
+        "max_distance": 1696.94871
+      },
+      "RC2": {
+        "avg_k": 3.375,
+        "min_k": 3,
+        "max_k": 4,
+        "avg_distance": 1072.3320612,
+        "min_distance": 798.46323,
+        "max_distance": 1406.93961
+      }
+    },
+    "overall": {
+      "total_instances": 56,
+      "avg_vehicles": 7.107142857,
+      "min_vehicles": 2,
+      "max_vehicles": 19,
+      "avg_distance": 1050.37697,
+      "min_distance": 588.28602,
+      "max_distance": 1650.79864
+    }
+  },
+  "usage": {
+    "in_code": "from best_known_solutions import load_bks; bks = load_bks('C101'); print(f\"K={bks['k_bks']}, D={bks['d_bks']}\")",
+    "computation_of_gap": "gap_percent = ((algo_k - bks_k) / bks_k) * 100 if algo_k == bks_k else 'K_worse'",
+    "reference_in_fases": [6, 7, 10, 14],
+    "validation": "All 56 instances have official BKS from Solomon benchmark literature"
+  }
+}

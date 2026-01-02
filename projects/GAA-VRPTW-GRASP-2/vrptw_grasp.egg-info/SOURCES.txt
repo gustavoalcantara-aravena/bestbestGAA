@@ -1,0 +1,7 @@
+README.md
+setup.py
+vrptw_grasp.egg-info/PKG-INFO
+vrptw_grasp.egg-info/SOURCES.txt
+vrptw_grasp.egg-info/dependency_links.txt
+vrptw_grasp.egg-info/requires.txt
+vrptw_grasp.egg-info/top_level.txt

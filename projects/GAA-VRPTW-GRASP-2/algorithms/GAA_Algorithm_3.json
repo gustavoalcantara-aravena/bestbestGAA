@@ -1,0 +1,15 @@
+{
+  "algorithm_id": "GAA_Algorithm_3",
+  "seed": 42,
+  "version": "1.0",
+  "components": {
+    "construction": "ConstructionHeuristic_3",
+    "local_search": "LocalSearch_3",
+    "parameters": {
+      "alpha": 0.69,
+      "beta": 0.64,
+      "max_iterations": 250
+    }
+  },
+  "description": "Auto-generated GAA algorithm #3 with seed=42"
+}
