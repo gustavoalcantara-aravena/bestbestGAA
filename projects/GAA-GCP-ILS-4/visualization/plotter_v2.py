@@ -264,8 +264,8 @@ class PlotManagerV2:
             ax.scatter(times, fitness_values, s=100, alpha=0.6, edgecolor='black', linewidth=1.5)
             ax.plot(times, fitness_values, 'b-', alpha=0.3, linewidth=1)
             
-            ax.set_xlabel('Time (s)', fontsize=12, fontweight='bold')
-            ax.set_ylabel('Fitness (Number of Colors)', fontsize=12, fontweight='bold')
+            ax.set_xlabel('Time (s)', fontsize=12)
+            ax.set_ylabel('Fitness (Number of Colors)', fontsize=12)
             ax.set_title(f'Temporal evolution of visited solution quality: {instance_name}', fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
             
@@ -302,8 +302,8 @@ class PlotManagerV2:
                 ax.annotate(inst, (v, t), textcoords="offset points", 
                            xytext=(0,10), ha='center', fontsize=9)
             
-            ax.set_xlabel('Number of Vertices', fontsize=12, fontweight='bold')
-            ax.set_ylabel('Execution Time (s)', fontsize=12, fontweight='bold')
+            ax.set_xlabel('Number of Vertices', fontsize=12)
+            ax.set_ylabel('Execution Time (s)', fontsize=12)
             ax.set_title(f'Computational Scalability (Execution Time) across {family_name} Instances', 
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
@@ -342,8 +342,8 @@ class PlotManagerV2:
                            xytext=(0,10), ha='center', fontsize=9)
             
             ax.axhline(y=0, color='black', linestyle='-', linewidth=1, zorder=1)
-            ax.set_xlabel('Number of Vertices', fontsize=12, fontweight='bold')
-            ax.set_ylabel('Optimality Gap (%)', fontsize=12, fontweight='bold')
+            ax.set_xlabel('Number of Vertices', fontsize=12)
+            ax.set_ylabel('Optimality Gap (%)', fontsize=12)
             ax.set_title(f'Solution Quality Scalability: {family_name} Family',
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
@@ -380,7 +380,7 @@ class PlotManagerV2:
                 patch.set_facecolor(color)
                 patch.set_alpha(0.7)
             
-            ax.set_ylabel('Number of Colors', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Number of Colors', fontsize=12)
             ax.set_title(f'Algorithm Robustness: {family_name} Family',
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3, axis='y')
@@ -418,7 +418,7 @@ class PlotManagerV2:
                        f'{value:.2f}',
                        ha='left', va='center', fontsize=11, fontweight='bold')
             
-            ax.set_xlabel('Average Ranking (lower = better)', fontsize=12, fontweight='bold')
+            ax.set_xlabel('Average Ranking (lower = better)', fontsize=12)
             ax.set_title(f'Algorithm Ranking: {family_name} Family',
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3, axis='x')
@@ -452,8 +452,8 @@ class PlotManagerV2:
                 ax.bar(x + offset, gaps, width, label=algo, alpha=0.8)
             
             ax.axhline(y=0, color='black', linestyle='-', linewidth=1)
-            ax.set_xlabel('Instance', fontsize=12, fontweight='bold')
-            ax.set_ylabel('Optimality Gap (%)', fontsize=12, fontweight='bold')
+            ax.set_xlabel('Instance', fontsize=12)
+            ax.set_ylabel('Optimality Gap (%)', fontsize=12)
             ax.set_title(f'Gap Analysis: {family_name} Family',
                         fontsize=14, fontweight='bold')
             ax.set_xticks(x)
@@ -490,8 +490,8 @@ class PlotManagerV2:
                     ax.plot(data['vertices'], data['times'], 'o-', 
                            linewidth=2.5, markersize=8, label=family_name, color=color)
             
-            ax.set_xlabel('Number of Vertices', fontsize=12, fontweight='bold')
-            ax.set_ylabel('Execution Time (s)', fontsize=12, fontweight='bold')
+            ax.set_xlabel('Number of Vertices', fontsize=12)
+            ax.set_ylabel('Execution Time (s)', fontsize=12)
             ax.set_title('Comparative Scalability: All Families',
                         fontsize=14, fontweight='bold')
             ax.legend(fontsize=11)
@@ -538,7 +538,7 @@ class PlotManagerV2:
             
             ax.set_xticks(positions)
             ax.set_xticklabels(labels, fontsize=9)
-            ax.set_ylabel('Number of Colors', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Number of Colors', fontsize=12)
             ax.set_title('Comparative Robustness: All Families',
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3, axis='y')
