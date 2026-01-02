@@ -70,8 +70,8 @@ def plot_scalability_time(
         ax.set_xscale('log')
         ax.set_yscale('log')
     
-    ax.set_xlabel('Número de vértices (|V|)', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Tiempo de ejecución (segundos)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Number of Vertices (|V|)', fontsize=12)
+    ax.set_ylabel('Execution Time (seconds)', fontsize=12)
     ax.set_title(title, fontsize=13, fontweight='bold', pad=15)
     ax.grid(True, alpha=0.3, linestyle='--')
     ax.set_axisbelow(True)

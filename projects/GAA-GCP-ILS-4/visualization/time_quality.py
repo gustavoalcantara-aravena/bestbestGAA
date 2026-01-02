@@ -54,10 +54,10 @@ def plot_time_quality_tradeoff(
     
     # Colorbar mostrando progresión temporal
     cbar = plt.colorbar(scatter, ax=ax)
-    cbar.set_label('Tiempo de ejecución', fontsize=10, fontweight='bold')
+    cbar.set_label('Execution Time', fontsize=10, fontweight='bold')
     
-    ax.set_xlabel('Tiempo de computación (segundos)', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Número de colores (Fitness)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Computation Time (seconds)', fontsize=12)
+    ax.set_ylabel('Number of Colors (Fitness)', fontsize=12)
     ax.set_title(f"{title}\n{instance_name}", fontsize=13, fontweight='bold', pad=15)
     
     ax.grid(True, alpha=0.3, linestyle='--')
@@ -69,10 +69,10 @@ def plot_time_quality_tradeoff(
     time_ratio = times[-1] / times[0] if times[0] > 0 else 0
     
     stats_text = (
-        f"Mejora: {improvement:.0f} ({improvement_ratio:.1f}%)\n"
-        f"Tiempo total: {times[-1]:.2f}s\n"
-        f"Fitness inicial: {fitness_values[0]:.0f}\n"
-        f"Fitness final: {fitness_values[-1]:.0f}"
+        f"Improvement: {improvement:.0f} ({improvement_ratio:.1f}%)\n"
+        f"Total Time: {times[-1]:.2f}s\n"
+        f"Initial Fitness: {fitness_values[0]:.0f}\n"
+        f"Final Fitness: {fitness_values[-1]:.0f}"
     )
     
     ax.text(0.02, 0.98, stats_text, transform=ax.transAxes,

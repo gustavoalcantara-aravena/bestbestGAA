@@ -52,15 +52,15 @@ def plot_conflict_heatmap(
     im = ax.imshow(conflict_matrix, cmap=cmap, aspect='auto', interpolation='nearest')
     
     # Etiquetas de ejes
-    ax.set_xlabel('Vértice (j)', fontsize=11, fontweight='bold')
-    ax.set_ylabel('Vértice (i)', fontsize=11, fontweight='bold')
+    ax.set_xlabel('Vertex (j)', fontsize=11)
+    ax.set_ylabel('Vertex (i)', fontsize=11)
     ax.set_title(f"{title}\n{instance_name} (n={n})", fontsize=12, fontweight='bold', pad=15)
     
     # Colorbar
     cbar = plt.colorbar(im, ax=ax)
-    cbar.set_label('Conflicto', fontsize=10, fontweight='bold')
+    cbar.set_label('Conflict', fontsize=10, fontweight='bold')
     cbar.set_ticks([0, 1])
-    cbar.set_ticklabels(['Sin conflicto', 'Con conflicto'])
+    cbar.set_ticklabels(['No Conflict', 'Conflict'])
     
     # Configurar tics si es matriz pequeña
     if n <= 20:

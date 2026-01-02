@@ -297,12 +297,17 @@ class FullExperiment:
             
             # Barra de progreso
             progress = (idx - 1) / len(problems) * 100
+            elapsed = time.time() - start_time
+            eta_per_instance = elapsed / (idx - 1) if idx > 1 else 0
+            eta_total = eta_per_instance * (len(problems) - idx + 1)
+            
             print(f"\n[{idx:3d}/{len(problems)}] ({progress:5.1f}%) {problem.name}")
             print(f"   📊 Vértices: {problem.n_vertices:4d} | Aristas: {problem.n_edges:6d}", end="")
             if problem.colors_known:
                 print(f" | BKS: {problem.colors_known}")
             else:
                 print(" | BKS: Desconocido")
+            print(f"   ⏱️  Tiempo promedio/instancia: {eta_per_instance:.1f}s | ETA: {self.timing.format_time(eta_total)}")
             
             instance_results = {
                 'instance': problem.name,
@@ -321,6 +326,7 @@ class FullExperiment:
             for replica in range(self.num_replicas):
                 try:
                     replica_start = time.time()
+                    print(f"   ⏳ Ejecutando réplica {replica+1}/{self.num_replicas}...", end="", flush=True)
                     solution, metrics, history = self.run_ils(problem)
                     replica_time = time.time() - replica_start
                     
@@ -337,8 +343,7 @@ class FullExperiment:
                         gap_str = ""
                     
                     feasible_icon = "✓" if metrics['feasible'] else "✗"
-                    print(f"   Réplica {replica+1}/{self.num_replicas}: {metrics['num_colors']} colores "
-                          f"({metrics['conflicts']} conflictos) {feasible_icon} {replica_time:.2f}s {gap_str}")
+                    print(f" ✅ {metrics['num_colors']} colores ({metrics['conflicts']} conflictos) {feasible_icon} {replica_time:.2f}s {gap_str}")
                     
                     # Guardar solución e historial de la primera réplica
                     if replica == 0:
@@ -587,7 +592,7 @@ class FullExperiment:
                 if 'current_fitness' in first_history and first_history['current_fitness']:
                     self.plot_manager.plot_convergence(
                         first_history['current_fitness'],
-                        instance_name="Convergencia Promedio"
+                        instance_name="Convergence - Average"
                     )
                     print("✅ Gráfica de convergencia generada")
                 else:
@@ -611,6 +616,54 @@ class FullExperiment:
         except Exception as e:
             self.logger.warning(f"Error generando escalabilidad: {e}")
             print(f"⚠️  Error en gráfica de escalabilidad: {e}")
+        
+        try:
+            # Robustez (boxplot) - usar colores de todas las instancias
+            all_colors = [r['best_colors'] for r in self.results if 'best_colors' in r]
+            
+            if all_colors:
+                self.plot_manager.plot_robustness(all_colors, instance_name="Robustness - All Instances")
+                print("✅ Gráfica de robustez generada")
+            else:
+                print("⚠️  No hay datos suficientes para gráfica de robustez")
+        except Exception as e:
+            self.logger.warning(f"Error generando robustez: {e}")
+            print(f"⚠️  Error en gráfica de robustez: {e}")
+        
+        try:
+            # Tiempo-Calidad (tradeoff)
+            vertices = [r['vertices'] for r in self.results]
+            all_colors = [r['best_colors'] for r in self.results if 'best_colors' in r]
+            
+            if vertices and all_colors and len(vertices) == len(all_colors):
+                self.plot_manager.plot_time_quality(vertices, all_colors, instance_name="Time-Quality Tradeoff - All Instances")
+                print("✅ Gráfica tiempo-calidad generada")
+            else:
+                print("⚠️  No hay datos suficientes para gráfica tiempo-calidad")
+        except Exception as e:
+            self.logger.warning(f"Error generando tiempo-calidad: {e}")
+            print(f"⚠️  Error en gráfica tiempo-calidad: {e}")
+        
+        try:
+            # Heatmap de conflictos - usar la última solución
+            if self.all_solutions:
+                last_solution = list(self.all_solutions.values())[-1]
+                last_problem = list(self.problems_dict.values())[-1]
+                
+                n = last_problem.n_vertices
+                conflict_matrix = np.zeros((n, n))
+                for u, v in last_problem.edges:
+                    if last_solution.assignment[u] == last_solution.assignment[v]:
+                        conflict_matrix[u][v] = 1
+                        conflict_matrix[v][u] = 1
+                
+                self.plot_manager.plot_conflict_heatmap(conflict_matrix, instance_name=f"Conflict Heatmap - {last_problem.name}")
+                print("✅ Gráfica de conflictos generada")
+            else:
+                print("⚠️  No hay soluciones disponibles para gráfica de conflictos")
+        except Exception as e:
+            self.logger.warning(f"Error generando conflictos: {e}")
+            print(f"⚠️  Error en gráfica de conflictos: {e}")
         
         plots_time = self.timing.end_stage()
         

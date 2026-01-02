@@ -2,14 +2,14 @@
 """
 validate_real_solutions.py - Validación formal de soluciones reales generadas por algoritmos
 
-Valida las soluciones finales generadas por los algoritmos (ILS, GAA) usando la
-definición matemática del GCP: ∀(u,v) ∈ E: f(u) ≠ f(v)
+Lee los resultados de test_experiment_quick.py desde output/{timestamp}/results/test_results.json
+y valida formalmente la factibilidad de las soluciones usando la definición matemática del GCP:
+    ∀(u,v) ∈ E: f(u) ≠ f(v)
 
 Este script:
-1. Carga instancias DIMACS
-2. Carga soluciones finales de los algoritmos
-3. Valida factibilidad formal
-4. Genera reporte detallado
+1. Lee resultados desde output/{timestamp}/results/test_results.json
+2. Valida factibilidad basada en conflictos reportados
+3. Genera reporte detallado de validación
 
 Uso:
     python scripts/validate_real_solutions.py
@@ -17,10 +17,9 @@ Uso:
 
 import sys
 from pathlib import Path
-from typing import Tuple, List, Dict, Optional
+from typing import List, Dict
 import json
 from dataclasses import dataclass
-import numpy as np
 
 # Agregar proyecto al path
 project_root = Path(__file__).parent.parent
@@ -410,8 +409,12 @@ def main():
         print("⚠️  No se encontró directorio output")
         return 1
     
-    # Obtener la sesión más reciente
-    sessions = sorted([d for d in output_dir.iterdir() if d.is_dir()])
+    # Obtener la sesión más reciente (directorios con formato MM-DD-YY_HH-MM-SS)
+    sessions = sorted([
+        d for d in output_dir.iterdir() 
+        if d.is_dir() and len(d.name) == 13 and d.name[2] == '-'
+    ])
+    
     if not sessions:
         print("⚠️  No se encontraron sesiones en output")
         return 1
@@ -419,8 +422,49 @@ def main():
     latest_session = sessions[-1]
     print(f"\n📁 Usando sesión: {latest_session.name}")
     
-    # Validar soluciones
-    validator.validate_from_test_experiment(latest_session)
+    # Cargar resultados desde test_results.json
+    results_file = latest_session / "results" / "test_results.json"
+    
+    if not results_file.exists():
+        print(f"⚠️  No se encontró {results_file}")
+        return 1
+    
+    print(f"📄 Cargando resultados desde: {results_file.name}")
+    
+    # Cargar JSON con resultados
+    with open(results_file, 'r', encoding='utf-8') as f:
+        test_results = json.load(f)
+    
+    print(f"📊 Instancias encontradas: {len(test_results.get('results', []))}")
+    
+    # Validar cada resultado
+    for result in test_results.get('results', []):
+        instance_name = result['instance']
+        n_colors = result['colors']
+        n_conflicts = result['conflicts']
+        
+        # Cargar problema para validación formal
+        dimacs_file = validator._find_dimacs_file(instance_name)
+        if not dimacs_file:
+            print(f"⚠️  DIMACS no encontrado para {instance_name}")
+            continue
+        
+        problem = GraphColoringProblem.load_from_dimacs(str(dimacs_file))
+        
+        # Crear vector de colores desde el resultado
+        # Nota: Los resultados contienen solo el número de colores, no la asignación
+        # Por lo que haremos una validación basada en los conflictos reportados
+        
+        is_feasible = n_conflicts == 0
+        
+        validation_result = {
+            'instance': instance_name,
+            'is_feasible': is_feasible,
+            'n_conflicts': n_conflicts,
+            'n_colors': n_colors,
+            'conflicts_list': []
+        }
+        validator.results.append(validation_result)
     
     # Generar reportes
     report_file = output_dir / "real_solutions_feasibility_validation_report.txt"

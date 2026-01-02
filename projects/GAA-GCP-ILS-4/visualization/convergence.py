@@ -46,16 +46,16 @@ def plot_convergence_single(
     # Graficar fitness
     ax.plot(iterations, fitness_history, 
            color='#1f77b4', linewidth=2, marker='o', markersize=4, 
-           label='Fitness actual', alpha=0.8)
+           label='Current Fitness', alpha=0.8)
     
     # Graficar mejor valor encontrado (monotónico decreciente)
     best_fitness = np.minimum.accumulate(fitness_history)
     ax.plot(iterations, best_fitness,
            color='#ff7f0e', linewidth=2.5, linestyle='--',
-           label='Mejor encontrado', alpha=0.8)
+           label='Best Found', alpha=0.8)
     
-    ax.set_xlabel('Iteración', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Número de colores (Fitness)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Iteration', fontsize=12)
+    ax.set_ylabel('Number of Colors (Fitness)', fontsize=12)
     ax.set_title(f"{title}\n{instance_name}", fontsize=13, fontweight='bold', pad=15)
     
     ax.grid(True, alpha=0.3, linestyle='--')
@@ -66,7 +66,7 @@ def plot_convergence_single(
     if times is not None and len(times) == len(fitness_history):
         ax2 = ax.twiny()
         ax2.set_xlim(ax.get_xlim())
-        ax2.set_xlabel('Tiempo (segundos)', fontsize=11, fontweight='bold', color='gray')
+        ax2.set_xlabel('Time (seconds)', fontsize=11, fontweight='bold', color='gray')
         ax2.tick_params(axis='x', labelcolor='gray')
     
     # Estadísticas
@@ -75,10 +75,10 @@ def plot_convergence_single(
     improvement = fitness_history[0] - best_found
     
     stats_text = (
-        f"Inicial: {fitness_history[0]:.0f}\n"
-        f"Mejor: {best_found:.0f}\n"
+        f"Initial: {fitness_history[0]:.0f}\n"
+        f"Best: {best_found:.0f}\n"
         f"Final: {final_fitness:.0f}\n"
-        f"Mejora: {improvement:.0f} ({improvement/fitness_history[0]*100:.1f}%)"
+        f"Improvement: {improvement:.0f} ({improvement/fitness_history[0]*100:.1f}%)"
     )
     
     ax.text(0.02, 0.98, stats_text, transform=ax.transAxes,
@@ -150,13 +150,13 @@ def plot_convergence_multiple(
     # Graficar promedio
     ax.plot(iterations, mean_fitness, 
            color='#1f77b4', linewidth=2.5, marker='o', markersize=5,
-           label=f'Promedio ({len(histories_aligned)} ejecuciones)', zorder=10)
+           label=f'Average ({len(histories_aligned)} runs)', zorder=10)
     
     # Zona de confianza (std)
     ax.fill_between(iterations, 
                     mean_fitness - std_fitness,
                     mean_fitness + std_fitness,
-                    color='#1f77b4', alpha=0.2, label='Desv. Estándar')
+                    color='#1f77b4', alpha=0.2, label='Standard Deviation')
     
     # Zona IQR
     ax.fill_between(iterations,
@@ -167,7 +167,7 @@ def plot_convergence_multiple(
     best_history = np.minimum.accumulate(mean_fitness)
     ax.plot(iterations, best_history,
            color='#ff7f0e', linewidth=2.5, linestyle='--',
-           label='Mejor encontrado (promedio)', zorder=9)
+           label='Best Found (average)', zorder=9)
     
     ax.set_xlabel('Iteración', fontsize=12, fontweight='bold')
     ax.set_ylabel('Número de colores (Fitness)', fontsize=12, fontweight='bold')
@@ -179,10 +179,10 @@ def plot_convergence_multiple(
     
     # Estadísticas globales
     stats_text = (
-        f"Media mejor final: {best_history[-1]:.0f}\n"
-        f"Std dev: ±{std_fitness[-1]:.2f}\n"
-        f"Min observado: {np.min(histories_array):.0f}\n"
-        f"Max observado: {np.max(histories_array):.0f}"
+        f"Average Best Final: {best_history[-1]:.0f}\n"
+        f"Std Dev: ±{std_fitness[-1]:.2f}\n"
+        f"Min Observed: {np.min(histories_array):.0f}\n"
+        f"Max Observed: {np.max(histories_array):.0f}"
     )
     
     ax.text(0.02, 0.98, stats_text, transform=ax.transAxes,

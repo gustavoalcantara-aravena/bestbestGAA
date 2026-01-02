@@ -346,7 +346,7 @@ def test_quick_experiment():
             print("Generando gráfica de convergencia...")
             plot_mgr.plot_convergence(
                 current_fitness_histories[0],
-                instance_name="Convergencia - Test Rápido"
+                instance_name="Convergence - myciel3 (First Instance)"
             )
             print("✅ Convergencia generada")
     except Exception as e:
@@ -356,7 +356,7 @@ def test_quick_experiment():
         # Gráfica de escalabilidad
         if all_vertices and all_times:
             print("Generando gráfica de escalabilidad...")
-            plot_mgr.plot_scalability(all_vertices, all_times)
+            plot_mgr.plot_scalability(all_vertices, all_times, family_labels=['myciel3', 'myciel4', 'myciel5', 'myciel6', 'myciel7'])
             print("✅ Escalabilidad generada")
     except Exception as e:
         print(f"⚠️  Error en escalabilidad: {e}")
@@ -365,7 +365,7 @@ def test_quick_experiment():
         # Gráfica de robustez (boxplot)
         if all_colors:
             print("Generando gráfica de robustez...")
-            plot_mgr.plot_robustness(all_colors, instance_name="Robustez - Test Rápido")
+            plot_mgr.plot_robustness(all_colors, instance_name="Robustness - MYC Family (myciel3-7)")
             print("✅ Robustez generada")
     except Exception as e:
         print(f"⚠️  Error en robustez: {e}")
@@ -374,7 +374,7 @@ def test_quick_experiment():
         # Gráfica tiempo-calidad
         if all_times and all_colors:
             print("Generando gráfica tiempo-calidad...")
-            plot_mgr.plot_time_quality(all_times, all_colors, instance_name="Tiempo-Calidad - Test Rápido")
+            plot_mgr.plot_time_quality(all_times, all_colors, instance_name="Time-Quality Tradeoff - MYC Family (myciel3-7)")
             print("✅ Tiempo-Calidad generada")
     except Exception as e:
         print(f"⚠️  Error en tiempo-calidad: {e}")
@@ -390,7 +390,7 @@ def test_quick_experiment():
                 if last_solution.assignment[u] == last_solution.assignment[v]:
                     conflict_matrix[u][v] = 1
                     conflict_matrix[v][u] = 1
-            plot_mgr.plot_conflict_heatmap(conflict_matrix, instance_name="Conflictos - Test Rápido")
+            plot_mgr.plot_conflict_heatmap(conflict_matrix, instance_name="Conflict Heatmap - myciel7 (Last Instance)")
             print("✅ Conflictos generada")
     except Exception as e:
         print(f"⚠️  Error en conflictos: {e}")

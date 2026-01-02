@@ -127,7 +127,8 @@ class PlotManager:
         fitness_history: List[float],
         times: Optional[List[float]] = None,
         instance_name: str = "Instance",
-        output_dir: Optional[Path] = None
+        output_dir: Optional[Path] = None,
+        family_name: str = "MYC"
     ) -> Optional[str]:
         """
         Genera gráfica de convergencia de una ejecución.
@@ -137,6 +138,7 @@ class PlotManager:
             times: Tiempos opcionales
             instance_name: Nombre de la instancia
             output_dir: Directorio para guardar
+            family_name: Nombre de la familia
         
         Retorna:
             str: Ruta del archivo generado
@@ -144,7 +146,11 @@ class PlotManager:
         if output_dir is None:
             output_dir = self.session_dir or self.output_dir
         
-        output_path = output_dir / "convergence_plot.png"
+        # Crear carpeta 5_other_plots
+        other_plots_dir = output_dir / "5_other_plots"
+        other_plots_dir.mkdir(parents=True, exist_ok=True)
+        
+        output_path = other_plots_dir / "convergence_plot.png"
         return plot_convergence_single(
             fitness_history,
             times=times,
@@ -186,7 +192,8 @@ class PlotManager:
         results: List[float],
         bks: Optional[float] = None,
         instance_name: str = "Instance",
-        output_dir: Optional[Path] = None
+        output_dir: Optional[Path] = None,
+        family_name: str = "MYC"
     ) -> Optional[str]:
         """
         Genera boxplot de robustez.
@@ -196,6 +203,7 @@ class PlotManager:
             bks: Best Known Solution
             instance_name: Nombre de la instancia
             output_dir: Directorio para guardar
+            family_name: Nombre de la familia
         
         Retorna:
             str: Ruta del archivo generado
@@ -203,7 +211,11 @@ class PlotManager:
         if output_dir is None:
             output_dir = self.session_dir or self.output_dir
         
-        output_path = output_dir / "boxplot_robustness.png"
+        # Crear carpeta 5_other_plots
+        other_plots_dir = output_dir / "5_other_plots"
+        other_plots_dir.mkdir(parents=True, exist_ok=True)
+        
+        output_path = other_plots_dir / "boxplot_robustness.png"
         return plot_robustness(
             results,
             bks=bks,
@@ -216,7 +228,8 @@ class PlotManager:
         vertices: List[int],
         times: List[float],
         family_labels: Optional[List[str]] = None,
-        output_dir: Optional[Path] = None
+        output_dir: Optional[Path] = None,
+        family_name: str = "MYC"
     ) -> Optional[str]:
         """
         Genera gráfica de escalabilidad (tiempo vs tamaño).
@@ -226,6 +239,7 @@ class PlotManager:
             times: Tiempos de ejecución
             family_labels: Etiquetas de familia
             output_dir: Directorio para guardar
+            family_name: Nombre de la familia
         
         Retorna:
             str: Ruta del archivo generado
@@ -233,7 +247,11 @@ class PlotManager:
         if output_dir is None:
             output_dir = self.session_dir or self.output_dir
         
-        output_path = output_dir / "scalability_plot.png"
+        # Crear carpeta 5_other_plots
+        other_plots_dir = output_dir / "5_other_plots"
+        other_plots_dir.mkdir(parents=True, exist_ok=True)
+        
+        output_path = other_plots_dir / "scalability_plot.png"
         return plot_scalability_time(
             vertices,
             times,
@@ -245,7 +263,8 @@ class PlotManager:
         self,
         conflict_matrix: np.ndarray,
         instance_name: str = "Instance",
-        output_dir: Optional[Path] = None
+        output_dir: Optional[Path] = None,
+        family_name: str = "MYC"
     ) -> Optional[str]:
         """
         Genera heatmap de conflictos.
@@ -254,6 +273,7 @@ class PlotManager:
             conflict_matrix: Matriz de conflictos n×n
             instance_name: Nombre de la instancia
             output_dir: Directorio para guardar
+            family_name: Nombre de la familia
         
         Retorna:
             str: Ruta del archivo generado
@@ -261,7 +281,11 @@ class PlotManager:
         if output_dir is None:
             output_dir = self.session_dir or self.output_dir
         
-        output_path = output_dir / "conflict_heatmap.png"
+        # Crear carpeta 5_other_plots
+        other_plots_dir = output_dir / "5_other_plots"
+        other_plots_dir.mkdir(parents=True, exist_ok=True)
+        
+        output_path = other_plots_dir / "conflict_heatmap.png"
         return plot_conflict_heatmap(
             conflict_matrix,
             instance_name=instance_name,
@@ -273,7 +297,8 @@ class PlotManager:
         times: List[float],
         fitness_values: List[float],
         instance_name: str = "Instance",
-        output_dir: Optional[Path] = None
+        output_dir: Optional[Path] = None,
+        family_name: str = "MYC"
     ) -> Optional[str]:
         """
         Genera gráfica tiempo-calidad.
@@ -283,6 +308,7 @@ class PlotManager:
             fitness_values: Valores de fitness
             instance_name: Nombre de la instancia
             output_dir: Directorio para guardar
+            family_name: Nombre de la familia
         
         Retorna:
             str: Ruta del archivo generado
@@ -290,7 +316,11 @@ class PlotManager:
         if output_dir is None:
             output_dir = self.session_dir or self.output_dir
         
-        output_path = output_dir / "time_quality_tradeoff.png"
+        # Crear carpeta 5_other_plots
+        other_plots_dir = output_dir / "5_other_plots"
+        other_plots_dir.mkdir(parents=True, exist_ok=True)
+        
+        output_path = other_plots_dir / "time_quality_tradeoff.png"
         return plot_time_quality_tradeoff(
             times,
             fitness_values,

@@ -16,7 +16,7 @@ def plot_robustness(
     bks: Optional[float] = None,
     output_path: Optional[str] = None,
     instance_name: str = "Instance",
-    title: str = "Robustez de ILS (30 ejecuciones)",
+    title: str = "ILS Robustness (30 runs)",
     figsize: tuple = (10, 6),
     dpi: int = 300
 ) -> Optional[str]:
@@ -67,7 +67,7 @@ def plot_robustness(
     if bks is not None:
         ax.axhline(y=bks, color='green', linestyle='--', linewidth=2, label=f'BKS = {bks}')
     
-    ax.set_ylabel('Número de colores', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Number of Colors', fontsize=12)
     ax.set_title(f"{title}\n{instance_name}", fontsize=13, fontweight='bold', pad=15)
     ax.set_xticklabels([instance_name])
     ax.grid(True, alpha=0.3, axis='y', linestyle='--')
@@ -75,9 +75,9 @@ def plot_robustness(
     
     # Agregar estadísticas en texto
     stats_text = (
-        f"Media: {mean_val:.2f}\n"
-        f"Mediana: {median_val:.2f}\n"
-        f"Desv. Est.: {std_val:.2f}\n"
+        f"Mean: {mean_val:.2f}\n"
+        f"Median: {median_val:.2f}\n"
+        f"Std Dev: {std_val:.2f}\n"
         f"Min: {min_val:.0f}, Max: {max_val:.0f}\n"
         f"IQR: [{q1:.0f}, {q3:.0f}]"
     )
