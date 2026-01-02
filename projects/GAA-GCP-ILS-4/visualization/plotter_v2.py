@@ -304,7 +304,7 @@ class PlotManagerV2:
             
             ax.set_xlabel('Number of Vertices', fontsize=12)
             ax.set_ylabel('Execution Time (s)', fontsize=12)
-            ax.set_title(f'Computational Scalability (Execution Time): {family_name} Family', 
+            ax.set_title(f'Computational Scalability (Execution Time) across {family_name} Instances', 
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
             ax.set_xscale('log')
@@ -454,7 +454,7 @@ class PlotManagerV2:
             ax.axhline(y=0, color='black', linestyle='-', linewidth=1)
             ax.set_xlabel('Instance', fontsize=12)
             ax.set_ylabel('Optimality Gap (%)', fontsize=12)
-            ax.set_title(f'Optimality Gap: {family_name} Family',
+            ax.set_title(f'Optimality Gap across {family_name} Instances',
                         fontsize=14, fontweight='bold')
             ax.set_xticks(x)
             ax.set_xticklabels(instances, rotation=45, ha='right')
