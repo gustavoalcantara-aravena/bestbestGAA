@@ -482,9 +482,9 @@ def test_quick_experiment():
             # Ploteo 03: Robustez (Boxplot)
             # Crear diccionario de resultados de algoritmos (simulado con los colores obtenidos)
             algorithm_results_dict = {
-                'ILS_Replica_1': all_colors,
-                'ILS_Replica_2': all_colors,
-                'ILS_Replica_3': all_colors
+                'GAA_Algorithm_1': all_colors,
+                'GAA_Algorithm_2': all_colors,
+                'GAA_Algorithm_3': all_colors
             }
             plot_mgr_v2.plot_family_robustness_boxplot(
                 'MYC',
@@ -493,9 +493,9 @@ def test_quick_experiment():
             
             # Ploteo 04: Ranking de algoritmos (simulado)
             algorithm_rankings = {
-                'ILS_Replica_1': 1.0,
-                'ILS_Replica_2': 1.0,
-                'ILS_Replica_3': 1.0
+                'GAA_Algorithm_1': 1.0,
+                'GAA_Algorithm_2': 1.0,
+                'GAA_Algorithm_3': 1.0
             }
             plot_mgr_v2.plot_family_algorithm_ranking(
                 'MYC',
