@@ -344,7 +344,7 @@ class PlotManagerV2:
             ax.axhline(y=0, color='black', linestyle='-', linewidth=1, zorder=1)
             ax.set_xlabel('Number of Vertices (log scale)', fontsize=12)
             ax.set_ylabel('Optimality Gap (%)', fontsize=12)
-            ax.set_title(f'Solution Quality Scalability (Optimality Gap): {family_name} Family',
+            ax.set_title(f'Solution Quality Scalability (Optimality Gap) across {family_name} Instances',
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3)
             ax.set_xscale('log')
