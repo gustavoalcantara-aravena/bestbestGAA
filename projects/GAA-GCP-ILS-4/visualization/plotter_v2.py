@@ -381,11 +381,11 @@ class PlotManagerV2:
                 patch.set_alpha(0.7)
             
             ax.set_ylabel('Number of Colors', fontsize=12)
-            ax.set_title(f'Algorithm Robustness: {family_name} Family',
+            ax.set_title(f'Robustness Analysis across {family_name} Instances',
                         fontsize=14, fontweight='bold')
             ax.grid(True, alpha=0.3, axis='y')
             
-            filepath = family_dir / "03_robustness_boxplot.png"
+            filepath = family_dir / f"03_robustness_analysis_({family_name}).png"
             plt.savefig(filepath, dpi=300, bbox_inches='tight')
             plt.close()
             
@@ -454,14 +454,14 @@ class PlotManagerV2:
             ax.axhline(y=0, color='black', linestyle='-', linewidth=1)
             ax.set_xlabel('Instance', fontsize=12)
             ax.set_ylabel('Optimality Gap (%)', fontsize=12)
-            ax.set_title(f'Gap Analysis: {family_name} Family',
+            ax.set_title(f'Optimality Gap across {family_name} Instances',
                         fontsize=14, fontweight='bold')
             ax.set_xticks(x)
             ax.set_xticklabels(instances, rotation=45, ha='right')
             ax.legend()
             ax.grid(True, alpha=0.3, axis='y')
             
-            filepath = family_dir / "06_gap_analysis.png"
+            filepath = family_dir / f"06_optimality_gap_({family_name}).png"
             plt.savefig(filepath, dpi=300, bbox_inches='tight')
             plt.close()
             
