@@ -46,8 +46,8 @@ results_path = csv_files[0]
 plots_dir = results_path.parent.parent / 'plots'
 plots_dir.mkdir(exist_ok=True, parents=True)
 
-print(f"📊 Cargando CSV más reciente: {results_path}")
-print(f"📁 Guardando gráficas en: {plots_dir}\n")
+print(f"[INFO] Cargando CSV más reciente: {results_path}")
+print(f"[INFO] Guardando gráficas en: {plots_dir}\n")
 
 raw_df = pd.read_csv(results_path)
 print(f"Datos cargados: {len(raw_df)} filas")
