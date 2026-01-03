@@ -316,41 +316,8 @@ class ASTInterpreter:
         new_solution = constructor.apply(instance)
         
         # Always use the constructed solution (overwrites initial empty solution)
-        # Then repair if needed to ensure feasibility
-        repaired_solution = self._repair_solution_if_needed(new_solution, instance)
-        
-        return repaired_solution
-    
-    def _repair_solution_if_needed(self, solution: Solution, instance: Instance) -> Solution:
-        """
-        Repair solution if it's incomplete or infeasible.
-        
-        Args:
-            solution: Solution to check and potentially repair
-            instance: Problem instance
-            
-        Returns:
-            Repaired solution (feasible or at least complete)
-        """
-        # Check if solution has all customers inserted
-        inserted_customers = set()
-        for route in solution.routes:
-            for cust_id in route.sequence[1:-1]:  # Exclude depot
-                inserted_customers.add(cust_id)
-        
-        expected_customers = set(range(1, instance.n_customers + 1))
-        missing_customers = expected_customers - inserted_customers
-        
-        # If solution is incomplete, use repair operator
-        if missing_customers or not all(r.is_feasible for r in solution.routes):
-            try:
-                from src.operators.repair_solution import GreedyRepairOperator
-                repair_op = GreedyRepairOperator()
-                solution = repair_op.apply(solution)
-            except ImportError:
-                logger.warning("Repair operator not available, returning as-is")
-        
-        return solution
+        # Constructive heuristics should always be preferred over an empty solution
+        return new_solution
     
     def _execute_local_search(self, node: LocalSearch, instance: Instance,
                              solution: Solution) -> Solution:
