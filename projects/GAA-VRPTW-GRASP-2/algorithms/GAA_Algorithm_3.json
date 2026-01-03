@@ -1,6 +1,7 @@
 {
   "id": 3,
   "name": "GAA_Algorithm_3",
+  "description": "ILS with adaptive parameters optimized per instance family (ITER-8)",
   "ast": {
     "type": "Seq",
     "body": [
@@ -12,24 +13,94 @@
       {
         "type": "While",
         "condition": "IterBudget",
-        "max_iterations": 200,
+        "max_iterations": 75,
         "body": {
-          "type": "LocalSearch",
-          "operator": "OrOpt",
-          "max_iterations": 100
+          "type": "Seq",
+          "body": [
+            {
+              "type": "LocalSearch",
+              "operator": "TwoOpt",
+              "max_iterations": 65,
+              "name": "2Opt_pre"
+            },
+            {
+              "type": "Perturbation",
+              "operator": "DoubleBridge",
+              "intensity": 2.1,
+              "name": "DB"
+            },
+            {
+              "type": "LocalSearch",
+              "operator": "TwoOpt",
+              "max_iterations": 54,
+              "name": "2Opt_post"
+            },
+            {
+              "type": "Repair",
+              "operator": "Relocate",
+              "max_iterations": 36,
+              "name": "Repair"
+            }
+          ]
         }
       }
     ]
   },
-  "pattern": "iterative-simple",
+  "parameters_by_family": {
+    "C1": {
+      "while_iterations": 80,
+      "2opt_pre": 30,
+      "double_bridge": 2.3,
+      "2opt_post": 70,
+      "relocate": 50
+    },
+    "C2": {
+      "while_iterations": 75,
+      "2opt_pre": 65,
+      "double_bridge": 2.1,
+      "2opt_post": 54,
+      "relocate": 36
+    },
+    "R1": {
+      "while_iterations": 78,
+      "2opt_pre": 28,
+      "double_bridge": 2.3,
+      "2opt_post": 63,
+      "relocate": 44
+    },
+    "R2": {
+      "while_iterations": 78,
+      "2opt_pre": 48,
+      "double_bridge": 2.0,
+      "2opt_post": 71,
+      "relocate": 10
+    },
+    "RC1": {
+      "while_iterations": 85,
+      "2opt_pre": 29,
+      "double_bridge": 1.0,
+      "2opt_post": 68,
+      "relocate": 31
+    },
+    "RC2": {
+      "while_iterations": 85,
+      "2opt_pre": 29,
+      "double_bridge": 1.0,
+      "2opt_post": 68,
+      "relocate": 31
+    }
+  },
+  "default_family": "C2",
+  "pattern": "ils-adaptive",
   "seed": 42,
-  "timestamp": "2026-01-03T06:19:26.613969",
+  "timestamp": "2026-01-03T16:30:00.000000",
   "stats": {
-    "depth": 3,
-    "size": 4,
+    "depth": 4,
+    "size": 8,
     "num_constructive": 1,
-    "num_improvement": 1,
-    "num_perturbation": 0,
-    "num_control": 2
+    "num_improvement": 2,
+    "num_perturbation": 1,
+    "num_repair": 1,
+    "num_control": 3
   }
 }
