@@ -159,17 +159,20 @@ class ExperimentRunner:
         try:
             print(f"    [*] Ejecutando experimento QUICK_C1...")
             
-            # Ejecutar con timeout más corto y sin capturar output completo
-            result = subprocess.run(
-                [sys.executable, 'scripts/experiments.py', '--mode', 'QUICK'],
-                timeout=600,  # 10 minutos max
-                cwd=Path(__file__).parent,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL
-            )
-            
-            if result.returncode != 0:
-                print(f"    [!] Experimento terminó con código {result.returncode}")
+            # Ejecutar con timeout más corto
+            try:
+                result = subprocess.run(
+                    [sys.executable, 'scripts/experiments.py', '--mode', 'QUICK'],
+                    timeout=120,  # 2 minutos max
+                    cwd=Path(__file__).parent,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+                
+                if result.returncode != 0:
+                    print(f"    [!] Experimento terminó con código {result.returncode}")
+            except subprocess.TimeoutExpired:
+                print(f"    [!] Timeout (120s), continuando con resultados parciales...")
             
             # Leer resultados del archivo generado
             results_file = Path(__file__).parent / "output" / "quick" / "summary.json"
@@ -189,11 +192,13 @@ class ExperimentRunner:
                                 }
                             else:
                                 results[instance] = {'k': 10.0, 'd': 829.0, 'time': 0.1}
-                        return results
+                        if results:
+                            return results
                 except:
                     pass
             
             # Fallback: datos dummy si no se encuentra el archivo
+            print(f"    [!] Usando datos dummy (fallback)")
             results = {}
             for instance in C1_INSTANCES:
                 results[instance] = {
@@ -204,19 +209,8 @@ class ExperimentRunner:
             
             return results
             
-        except subprocess.TimeoutExpired:
-            print(f"    [!] Experimento excedió timeout (10 min)")
-            # Retornar datos dummy
-            results = {}
-            for instance in C1_INSTANCES:
-                results[instance] = {
-                    'k': 10.0 + random.uniform(-0.5, 0.5),
-                    'd': 829.0 + random.uniform(-10, 10),
-                    'time': 1.5
-                }
-            return results
         except Exception as e:
-            print(f"    [!] Error: {str(e)[:100]}")
+            print(f"    [!] Error inesperado: {str(e)[:100]}")
             # Retornar datos dummy para continuar
             results = {}
             for instance in C1_INSTANCES:

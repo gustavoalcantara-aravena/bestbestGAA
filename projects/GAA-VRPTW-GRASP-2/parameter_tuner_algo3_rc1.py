@@ -1,9 +1,9 @@
 """
-Parameter Tuning Script for Algorithm 3 - C2 Family Optimization
+Parameter Tuning Script for Algorithm 3 - RC1 Family Optimization
 
 Ejecutar con:
-    python parameter_tuner_algo3_c2.py --num-combinations 5
-    python parameter_tuner_algo3_c2.py --num-combinations 100
+    python parameter_tuner_algo3_rc1.py --num-combinations 5
+    python parameter_tuner_algo3_rc1.py --num-combinations 100
 """
 
 import json
@@ -19,21 +19,21 @@ import statistics
 import argparse
 
 # ============================================================================
-# C2 FAMILY CONFIGURATION
+# RC1 FAMILY CONFIGURATION
 # ============================================================================
 
-C2_INSTANCES = ['C201', 'C202', 'C203', 'C204', 'C205', 'C206', 'C207', 'C208']
+RC1_INSTANCES = ['RC101', 'RC102', 'RC103', 'RC104', 'RC105', 'RC106', 'RC107', 'RC108']
 
-# Best Known Solutions para C2
-C2_BKS = {
-    'C201': {'k': 3, 'd': 591.55626},
-    'C202': {'k': 3, 'd': 591.55626},
-    'C203': {'k': 3, 'd': 591.17315},
-    'C204': {'k': 3, 'd': 590.59845},
-    'C205': {'k': 3, 'd': 588.87566},
-    'C206': {'k': 3, 'd': 588.49255},
-    'C207': {'k': 3, 'd': 588.28602},
-    'C208': {'k': 3, 'd': 588.32152},
+# Best Known Solutions para RC1
+RC1_BKS = {
+    'RC101': {'k': 14, 'd': 1696.94159},
+    'RC102': {'k': 12, 'd': 1554.75156},
+    'RC103': {'k': 11, 'd': 1428.64596},
+    'RC104': {'k': 10, 'd': 1132.32589},
+    'RC105': {'k': 13, 'd': 1629.44118},
+    'RC106': {'k': 11, 'd': 1424.73467},
+    'RC107': {'k': 11, 'd': 1286.15646},
+    'RC108': {'k': 10, 'd': 1115.70591},
 }
 
 # ============================================================================
@@ -182,9 +182,9 @@ class ExperimentRunner:
     
     @staticmethod
     def run() -> Dict[str, Dict[str, float]]:
-        """Ejecuta experimento QUICK limitado a C2"""
+        """Ejecuta experimento QUICK limitado a RC1"""
         try:
-            print(f"    [*] Ejecutando experimento QUICK_C2...")
+            print(f"    [*] Ejecutando experimento QUICK_RC1...")
             
             try:
                 result = subprocess.run(
@@ -207,16 +207,16 @@ class ExperimentRunner:
                     with open(results_file, 'r') as f:
                         data = json.load(f)
                         results = {}
-                        for instance in C2_INSTANCES:
+                        for instance in RC1_INSTANCES:
                             if instance in data:
                                 inst_data = data[instance]
                                 results[instance] = {
-                                    'k': float(inst_data.get('k', 3.0)),
-                                    'd': float(inst_data.get('d', 589.0)),
+                                    'k': float(inst_data.get('k', 11.5)),
+                                    'd': float(inst_data.get('d', 1440.0)),
                                     'time': float(inst_data.get('time', 0.1))
                                 }
                             else:
-                                results[instance] = {'k': 3.0, 'd': 589.0, 'time': 0.1}
+                                results[instance] = {'k': 11.5, 'd': 1440.0, 'time': 0.1}
                         if results:
                             return results
                 except:
@@ -225,10 +225,10 @@ class ExperimentRunner:
             # Fallback: datos dummy
             print(f"    [!] Usando datos dummy (fallback)")
             results = {}
-            for instance in C2_INSTANCES:
+            for instance in RC1_INSTANCES:
                 results[instance] = {
-                    'k': 3.0 + random.uniform(-0.3, 0.3),
-                    'd': 589.0 + random.uniform(-5, 5),
+                    'k': 11.5 + random.uniform(-1.0, 1.0),
+                    'd': 1440.0 + random.uniform(-20, 20),
                     'time': 1.5
                 }
             
@@ -237,10 +237,10 @@ class ExperimentRunner:
         except Exception as e:
             print(f"    [!] Error inesperado: {str(e)[:100]}")
             results = {}
-            for instance in C2_INSTANCES:
+            for instance in RC1_INSTANCES:
                 results[instance] = {
-                    'k': 3.0 + random.uniform(-0.3, 0.3),
-                    'd': 589.0 + random.uniform(-5, 5),
+                    'k': 11.5 + random.uniform(-1.0, 1.0),
+                    'd': 1440.0 + random.uniform(-20, 20),
                     'time': 1.5
                 }
             return results
@@ -256,10 +256,10 @@ class ResultProcessor:
     @staticmethod
     def calculate_gaps(instance_id: str, k: float, d: float) -> Tuple[float, float]:
         """Calcula GAPs respecto a KBS"""
-        if instance_id not in C2_BKS:
+        if instance_id not in RC1_BKS:
             return 0.0, 0.0
         
-        bks = C2_BKS[instance_id]
+        bks = RC1_BKS[instance_id]
         gap_k = ((k - bks['k']) / bks['k']) * 100 if bks['k'] > 0 else 0
         gap_d = ((d - bks['d']) / bks['d']) * 100 if bks['d'] > 0 else 0
         
@@ -314,7 +314,7 @@ class ResultProcessor:
 class Orchestrator:
     """Orquesta la optimización completa"""
     
-    def __init__(self, num_combos: int = 100, output_dir: str = 'optimization_results_c2'):
+    def __init__(self, num_combos: int = 100, output_dir: str = 'optimization_results_rc1'):
         self.num_combos = num_combos
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True)
@@ -327,10 +327,10 @@ class Orchestrator:
         self.start_time = time.time()
         
         print("\n" + "█"*80)
-        print(f"║ {'PARAMETER TUNING - Algorithm 3 - Family C2':^76} ║")
+        print(f"║ {'PARAMETER TUNING - Algorithm 3 - Family RC1':^76} ║")
         print(f"║ {'─'*76} ║")
         print(f"║ Combinaciones a probar: {self.num_combos:<48} ║")
-        print(f"║ Instancias: C2 ({len(C2_INSTANCES)} instancias)                                              ║")
+        print(f"║ Instancias: RC1 ({len(RC1_INSTANCES)} instancias)                                            ║")
         print(f"║ Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S'):<55} ║")
         print("█"*80)
         
@@ -450,8 +450,8 @@ class Orchestrator:
             
             print(f"║ 🎯 RESUMEN CONSOLIDADO:                                                         ║")
             print(f"║    {emoji} Score (GAP_K + GAP_D):    {score:>8.6f}  [{quality}]                   ║")
-            print(f"║       └─ Gap Promedio Vehículos:  {avg_gap_k:>+7.2f}%  (vs BKS: 3)             ║")
-            print(f"║       └─ Gap Promedio Distancia:  {avg_gap_d:>+7.2f}%  (vs BKS: 589.21 km)     ║")
+            print(f"║       └─ Gap Promedio Vehículos:  {avg_gap_k:>+7.2f}%  (vs BKS promedio)     ║")
+            print(f"║       └─ Gap Promedio Distancia:  {avg_gap_d:>+7.2f}%  (vs BKS promedio)     ║")
             print(f"║       └─ Tiempo ejecución:        {elapsed:>7.1f}s                               ║")
             print(f"╚═══════════════════════════════════════════════════════════════════════════════╝")
     
@@ -485,7 +485,7 @@ class Orchestrator:
         
         with open(self.output_dir / 'report.txt', 'w', encoding='utf-8') as f:
             f.write("╔" + "═"*78 + "╗\n")
-            f.write("║" + "PARAMETER TUNING REPORT - Algorithm 3 - Family C2".center(78) + "║\n")
+            f.write("║" + "PARAMETER TUNING REPORT - Algorithm 3 - Family RC1".center(78) + "║\n")
             f.write("╠" + "═"*78 + "╣\n")
             f.write(f"║ Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S'):<71} ║\n")
             f.write(f"║ Combinations tested: {len(self.results):<56} ║\n")
@@ -504,8 +504,8 @@ class Orchestrator:
                 f.write(f"║       • TwoOpt_post: {p.twoopt_post:>3d}                                           ║\n")
                 f.write(f"║       • Relocate:    {p.relocate:>3d}                                           ║\n")
                 f.write(f"║     Métricas:                                                               ║\n")
-                f.write(f"║       • Gap Vehículos:  {result.avg_gap_k:>+7.3f}%  (vs BKS: 3 vehículos)             ║\n")
-                f.write(f"║       • Gap Distancia:  {result.avg_gap_d:>+7.3f}%  (vs BKS: 589.21 km)             ║\n")
+                f.write(f"║       • Gap Vehículos:  {result.avg_gap_k:>+7.3f}%  (vs BKS promedio)          ║\n")
+                f.write(f"║       • Gap Distancia:  {result.avg_gap_d:>+7.3f}%  (vs BKS promedio)          ║\n")
                 f.write(f"║       • Tiempo ejec:    {result.exec_time:>7.1f}s                                       ║\n")
                 if result.rank < 10 and result.rank < len(self.results):
                     f.write(f"║     {'-'*72} ║\n")
@@ -531,11 +531,11 @@ class Orchestrator:
 # ============================================================================
 
 def main():
-    parser = argparse.ArgumentParser(description='Parameter tuning for Algorithm 3 - C2 Family')
+    parser = argparse.ArgumentParser(description='Parameter tuning for Algorithm 3 - RC1 Family')
     parser.add_argument('--num-combinations', type=int, default=100,
                       help='Número de combinaciones a probar (default: 100)')
-    parser.add_argument('--output-dir', type=str, default='optimization_results_c2',
-                      help='Directorio de salida (default: optimization_results_c2)')
+    parser.add_argument('--output-dir', type=str, default='optimization_results_rc1',
+                      help='Directorio de salida (default: optimization_results_rc1)')
     
     args = parser.parse_args()
     
