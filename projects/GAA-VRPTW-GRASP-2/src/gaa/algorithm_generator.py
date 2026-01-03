@@ -90,15 +90,15 @@ class AlgorithmGenerator:
         - NearestNeighbor constructor + ILS perturbation
         - DoubleBridge(strength=3) + While(80) iteraciones
         
-        ALGORITMO 1: GRASP PURO (A OPTIMIZAR)
-        - Múltiples iteraciones de construcción
-        - Mejora intensiva con TwoOpt/OrOpt
-        - Actualmente: D=1391.51, t=3.41s
+        ALGORITMO 1: GRASP PURO (ITER-5 - REVERTIR ITER-4A)
+        - Revertir cambios ITER-4A que causaron empeoramiento
+        - DoubleBridge(3.5) fue demasiado agresiva
+        - Mantener ITER-3 baseline: D=1391.51, t=3.41s
         
-        ALGORITMO 3: GRASP ADAPTATIVO (A OPTIMIZAR)
-        - Secuencia de operadores complementarios
-        - Criterio adaptativo de parada
-        - Actualmente: D=1504.34, t=0.69s
+        ALGORITMO 3: GRASP ADAPTATIVO (ITER-5 FINE-TUNE ITER-4B)
+        - Mantener fix CRITICAL de ITER-4B (strength=1.0→3.0)
+        - Fine-tune operadores: OrOpt(12→15), TwoOpt(45→40)
+        - Objetivo: D ~1300-1350 (mejor que Algo1)
         
         Args:
             seed: Seed para reproducibilidad
@@ -110,25 +110,26 @@ class AlgorithmGenerator:
         algorithms = []
         
         # ========================================================================
-        # ALGORITMO 1: GRASP Puro (ITER-4A - OPTIMIZADO)
+        # ALGORITMO 1: GRASP Puro (ITER-5 - REVERTIR A ITER-3)
         # ========================================================================
-        # ITER-4A: Mejorado aprendiendo de Algo2's ILS cycle exitoso
-        # - Perturbación más fuerte (strength: 2.0 → 3.5)
-        # - While más iteraciones (75 → 80)
-        # - TwoOpt pre-perturbación reducido (52 → 40)
-        # - OrOpt más controlado (28 → 18)
-        # - TwoOpt post-perturbación mejorado (32 → 40)
-        # Objetivo: D 1391.51 → < 1240 (-10%)
+        # ITER-5: Lección aprendida de ITER-4 - strength=3.5 fue TOO AGGRESSIVE
+        # Revertir cambios ITER-4A que empeoraron Algo1 (D 1391.51 → 1536.86)
+        # - Perturbación: 3.5 → 2.0 (revertir: strength incorrecta para este algo)
+        # - While: 80 → 75 (revertir: volver a baseline)
+        # - TwoOpt pre-perturb: 40 → 52 (revertir: mantener trabajo pre-mejora)
+        # - OrOpt: 18 → 28 (revertir: balance mejor)
+        # - TwoOpt post-perturb: 40 → 32 (revertir: correcto balance)
+        # Objetivo: D 1536.86 → 1391.51 (restore ITER-3)
         algo1 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
-                max_iterations=80,  # +5 iteraciones: 75→80
+                max_iterations=75,  # Revertir: 80→75
                 body=Seq(body=[
-                    LocalSearch(operator='TwoOpt', max_iterations=40),  # -23%: 52→40
-                    LocalSearch(operator='OrOpt', max_iterations=18),   # -36%: 28→18
-                    Perturbation(operator='DoubleBridge', strength=3.5),  # +75%: 2.0→3.5 (KEY)
-                    LocalSearch(operator='TwoOpt', max_iterations=40),  # +25%: 32→40
-                    LocalSearch(operator='Relocate', max_iterations=18)  # sin cambio: 18→18
+                    LocalSearch(operator='TwoOpt', max_iterations=52),  # Revertir: 40→52
+                    LocalSearch(operator='OrOpt', max_iterations=28),   # Revertir: 18→28
+                    Perturbation(operator='DoubleBridge', strength=2.0),  # Revertir: 3.5→2.0 (CRITICAL)
+                    LocalSearch(operator='TwoOpt', max_iterations=32),  # Revertir: 40→32
+                    LocalSearch(operator='Relocate', max_iterations=18)  # sin cambio
                 ])
             )
         ])
@@ -137,7 +138,7 @@ class AlgorithmGenerator:
         # ========================================================================
         # ALGORITMO 2: GRASP + Perturbación (CONTROL - NO CAMBIAR)
         # ========================================================================
-        # ITER-3: CONFIGURACIÓN GANADORA COMPROBADA
+        # ITER-3/4/5: CONFIGURACIÓN GANADORA COMPROBADA
         algo2 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
@@ -153,24 +154,25 @@ class AlgorithmGenerator:
         algorithms.append(algo2)
         
         # ========================================================================
-        # ALGORITMO 3: GRASP ADAPTATIVO (ITER-4B - OPTIMIZADO)
+        # ALGORITMO 3: GRASP ADAPTATIVO (ITER-5 - FINE-TUNE ITER-4B)
         # ========================================================================
-        # ITER-4B: Reparación crítica - strength=1.0 es DEMASIADO DÉBIL
-        # - DoubleBridge strength: 1.0 → 3.0 (+200%) ← CRÍTICO
-        # - While iterations: 68 → 90 (+32%)
-        # - TwoOpt post-perturbación mejorado (35 → 45)
-        # - OrOpt reducido (20 → 12) para mejor balance
-        # Objetivo: D 1504.34 → < 1250 (-15%)
+        # ITER-5: Mantener éxitos ITER-4B, fine-tune parámetros
+        # ITER-4B fue parcialmente exitoso: strength=1.0→3.0 fue CRITICAL FIX
+        # - Mantener DoubleBridge(3.0) - fue corrección necesaria
+        # - Mantener While(90) - permitió mejor exploración
+        # - Fine-tune OrOpt: 12 → 15 (mejor balance)
+        # - Fine-tune TwoOpt post-perturb: 45 → 40 (reducir overhead)
+        # Objetivo: D 1408.04 → ~1300-1350 (mantener mejora vs Algo1)
         algo3 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
-                max_iterations=90,  # +32%: 68→90
+                max_iterations=90,  # Mantener: 90 (ITER-4B éxito)
                 body=Seq(body=[
-                    LocalSearch(operator='TwoOpt', max_iterations=50),  # sin cambio: 50→50
-                    LocalSearch(operator='OrOpt', max_iterations=12),   # -40%: 20→12
-                    Perturbation(operator='DoubleBridge', strength=3.0),  # +200%: 1.0→3.0 (CRITICAL)
-                    LocalSearch(operator='TwoOpt', max_iterations=45),  # +29%: 35→45
-                    LocalSearch(operator='Relocate', max_iterations=15)  # sin cambio: 15→15
+                    LocalSearch(operator='TwoOpt', max_iterations=50),  # Mantener: 50
+                    LocalSearch(operator='OrOpt', max_iterations=15),   # Fine-tune: 12→15 (balance)
+                    Perturbation(operator='DoubleBridge', strength=3.0),  # Mantener: 3.0 (CRITICAL FIX)
+                    LocalSearch(operator='TwoOpt', max_iterations=40),  # Fine-tune: 45→40 (reducir)
+                    LocalSearch(operator='Relocate', max_iterations=15)  # Mantener: 15
                 ])
             )
         ])
