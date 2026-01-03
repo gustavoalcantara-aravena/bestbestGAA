@@ -131,6 +131,7 @@ class NearestNeighbor(ConstructiveOperator):
         """
         n = instance.n_customers
         unvisited = set(range(1, n + 1))
+        routes = []  # ✅ ACCUMULATE ALL ROUTES
         route_sequence = [0]
         current = 0
         total_load = 0
@@ -149,9 +150,11 @@ class NearestNeighbor(ConstructiveOperator):
             # Check if can visit nearest (capacity)
             demand = instance.get_customer(nearest).demand
             if total_load + demand > instance.Q_capacity:
-                # Start new route
+                # Start new route - ✅ ACCUMULATE PREVIOUS ROUTE
                 route_sequence.append(0)
-                route = Route(vehicle_id=0, sequence=route_sequence, instance=instance)
+                route = Route(vehicle_id=len(routes), sequence=route_sequence, instance=instance)
+                routes.append(route)  # ✅ ADD TO ROUTES LIST
+                
                 total_load = 0
                 current = 0
                 route_sequence = [0]
@@ -162,10 +165,12 @@ class NearestNeighbor(ConstructiveOperator):
             current = nearest
             total_load += demand
         
+        # ✅ CLOSE AND ADD FINAL ROUTE
         route_sequence.append(0)
-        route = Route(vehicle_id=0, sequence=route_sequence, instance=instance)
+        route = Route(vehicle_id=len(routes), sequence=route_sequence, instance=instance)
+        routes.append(route)  # ✅ ADD FINAL ROUTE
         
-        return Solution(instance=instance, routes=[route])
+        return Solution(instance=instance, routes=routes)  # ✅ RETURN ALL ROUTES
 
 
 class TimeOrientedNN(ConstructiveOperator):
@@ -449,10 +454,16 @@ class RandomizedInsertion(ConstructiveOperator):
             candidates = []
             
             for cust in uninserted:
+                cust_demand = instance.get_customer(cust).demand
                 best_cost = float('inf')
                 best_slot = None
                 
                 for r_idx, route in enumerate(routes):
+                    # ✅ CHECK CAPACITY BEFORE EVALUATING INSERTION
+                    route_load = sum(instance.get_customer(c).demand for c in route.sequence[1:-1])
+                    if route_load + cust_demand > instance.Q_capacity:
+                        continue  # Skip this route - customer doesn't fit
+                    
                     for pos in range(1, len(route.sequence)):
                         prev_cust = route.sequence[pos - 1]
                         next_cust = route.sequence[pos]
@@ -466,6 +477,7 @@ class RandomizedInsertion(ConstructiveOperator):
                             best_cost = cost
                             best_slot = (r_idx, pos)
                 
+                # ✅ ALWAYS CONSIDER NEW ROUTE AS OPTION
                 candidates.append((cust, best_cost, best_slot))
             
             # Build RCL (Restricted Candidate List)
@@ -476,15 +488,20 @@ class RandomizedInsertion(ConstructiveOperator):
             
             rcl = [c for c in candidates if c[1] <= threshold]
             
+            # ✅ HANDLE EMPTY RCL
+            if not rcl:
+                rcl = [candidates[0]]  # At least include the best option
+            
             # Randomly select from RCL
             selected = random.choice(rcl)
-            cust, cost, (r_idx, pos) = selected
+            cust, cost, best_slot = selected
             
-            if pos == 0:
-                # New route
+            if best_slot is None:
+                # New route (customer doesn't fit in any existing route)
                 new_route = Route(vehicle_id=len(routes), sequence=[0, cust, 0], instance=instance)
                 routes.append(new_route)
             else:
+                r_idx, pos = best_slot
                 routes[r_idx].add_customer(cust, pos)
             
             uninserted.discard(cust)

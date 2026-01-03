@@ -331,6 +331,11 @@ class ExperimentExecutor:
                         int(k_final) == int(k_bks) and d_final is not None and d_bks is not None):
                         result['gap_distance'] = float(d_final) - float(d_bks)
                         result['gap_percent'] = ((float(d_final) - float(d_bks)) / float(d_bks)) * 100
+                        
+                        # HIT: within 5% of BKS when K matches
+                        result['hit'] = (result['gap_percent'] <= 5.0)
+                    else:
+                        result['hit'] = False
             
             self.raw_results.append(result)
         
@@ -353,6 +358,13 @@ class ExperimentExecutor:
                 'iterations_executed': iterations,
                 'reached_K_BKS': (k_final == k_bks) if (k_final is not None and k_bks is not None) else None
             }
+            
+            # HIT for parameter-based calls
+            if result['gap_percent'] is not None and result['gap_percent'] <= 5.0:
+                result['hit'] = True
+            else:
+                result['hit'] = False
+                
             self.raw_results.append(result)
     
     def save_raw_results(self):
@@ -485,6 +497,11 @@ class QuickExperiment:
                         d_final = solution.total_distance
                         elapsed = time.time() - start_time
                         
+                        # VALIDATE FEASIBILITY
+                        feasible = solution.feasible
+                        if not feasible:
+                            print(f"[WARNING] INFEASIBLE solution for {algo_name} on {instance_id}: K={k_final}, D={d_final}")
+                        
                         metrics = {
                             'algorithm': algo_name,
                             'instance_id': instance_id,
@@ -492,6 +509,7 @@ class QuickExperiment:
                             'k_final': k_final,
                             'd_final': d_final,
                             'time_sec': elapsed,
+                            'feasible': feasible,
                             'status': 'success'
                         }
                         executor.add_result(metric_dict=metrics)
@@ -685,6 +703,11 @@ class FullExperiment:
                         d_final = solution.total_distance
                         elapsed = time.time() - start_time
                         
+                        # VALIDATE FEASIBILITY
+                        feasible = solution.feasible
+                        if not feasible:
+                            print(f"[WARNING] INFEASIBLE solution for {algo_name} on {instance_id}: K={k_final}, D={d_final}")
+                        
                         metrics = {
                             'algorithm': algo_name,
                             'instance_id': instance_id,
@@ -692,6 +715,7 @@ class FullExperiment:
                             'k_final': k_final,
                             'd_final': d_final,
                             'time_sec': elapsed,
+                            'feasible': feasible,
                             'status': 'success'
                         }
                         executor.add_result(metric_dict=metrics)

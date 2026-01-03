@@ -52,38 +52,53 @@ class CrossExchange(LocalSearchInterOperator):
         if len(seq1) <= 3 or len(seq2) <= 3:
             return False
         
-        # Try exchanging segments of different lengths
-        for seg_len1 in range(1, len(seq1) - 2):
-            for start1 in range(1, len(seq1) - seg_len1):
-                for seg_len2 in range(1, len(seq2) - 2):
-                    for start2 in range(1, len(seq2) - seg_len2):
-                        # Try exchange
-                        seg1 = seq1[start1:start1 + seg_len1]
-                        seg2 = seq2[start2:start2 + seg_len2]
-                        
-                        # Create test sequences
-                        test_seq1 = seq1[:start1] + seg2 + seq1[start1 + seg_len1:]
-                        test_seq2 = seq2[:start2] + seg1 + seq2[start2 + seg_len2:]
-                        
-                        # Calculate cost change (simplified check)
-                        old_cost = route1.total_distance + route2.total_distance
-                        
-                        # Temporarily swap
-                        route1.sequence = test_seq1
-                        route2.sequence = test_seq2
-                        route1._distance_cache.clear()
-                        route2._distance_cache.clear()
-                        
-                        new_cost = route1.total_distance + route2.total_distance
-                        
-                        if new_cost < old_cost and route1.is_feasible and route2.is_feasible:
-                            return True
-                        
-                        # Restore
-                        route1.sequence = seq1
-                        route2.sequence = seq2
-                        route1._distance_cache.clear()
-                        route2._distance_cache.clear()
+        # SIMPLIFIED: Only try single-customer exchanges (not segments)
+        # This reduces complexity from O(n^4) to O(n^2)
+        for i in range(1, len(seq1) - 1):  # Exclude depot
+            for j in range(1, len(seq2) - 1):  # Exclude depot
+                # Try swapping customers seq1[i] and seq2[j]
+                cust1 = seq1[i]
+                cust2 = seq2[j]
+                
+                # Test swap
+                test_seq1 = seq1[:i] + [cust2] + seq1[i+1:]
+                test_seq2 = seq2[:j] + [cust1] + seq2[j+1:]
+                
+                # Quick check: validate capacity only (fast)
+                load1 = sum(route1.instance.get_customer(c).demand for c in test_seq1[1:-1])
+                load2 = sum(route1.instance.get_customer(c).demand for c in test_seq2[1:-1])
+                
+                if load1 <= route1.instance.Q_capacity and load2 <= route1.instance.Q_capacity:
+                    # Only calculate distances if capacity is OK
+                    route1.sequence = test_seq1
+                    route2.sequence = test_seq2
+                    route1._distance_cache.clear()
+                    route2._distance_cache.clear()
+                    
+                    old_cost = seq1 + seq2  # Just a placeholder marker
+                    new_cost = route1.total_distance + route2.total_distance
+                    
+                    # Restore to check old cost
+                    route1.sequence = seq1
+                    route2.sequence = seq2
+                    route1._distance_cache.clear()
+                    route2._distance_cache.clear()
+                    old_cost = route1.total_distance + route2.total_distance
+                    
+                    # If new is better AND both feasible, accept
+                    route1.sequence = test_seq1
+                    route2.sequence = test_seq2
+                    route1._distance_cache.clear()
+                    route2._distance_cache.clear()
+                    
+                    if new_cost < old_cost and route1.is_feasible and route2.is_feasible:
+                        return True
+                    
+                    # Restore
+                    route1.sequence = seq1
+                    route2.sequence = seq2
+                    route1._distance_cache.clear()
+                    route2._distance_cache.clear()
         
         return False
 

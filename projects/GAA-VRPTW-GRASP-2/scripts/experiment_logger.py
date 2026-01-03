@@ -283,7 +283,7 @@ class ExperimentLogger:
         
         with open(csv_file, 'w', newline='') as f:
             fieldnames = ['algorithm', 'instance_id', 'family', 'k_final', 
-                         'd_final', 'time_sec', 'status', 'error']
+                         'd_final', 'time_sec', 'hit', 'status', 'error']
             writer = csv.DictWriter(f, fieldnames=fieldnames, restval='')
             writer.writeheader()
             
@@ -295,6 +295,7 @@ class ExperimentLogger:
                     'k_final': result.k_final,
                     'd_final': result.d_final,
                     'time_sec': result.time_sec,
+                    'hit': result.__dict__.get('hit', 'N/A'),
                     'status': result.status,
                     'error': result.error if hasattr(result, 'error') else ''
                 }
@@ -333,6 +334,10 @@ class ExperimentLogger:
             d_values = [r.d_final for r in results]
             times = [r.time_sec for r in results]
             
+            # Count HITs (within 5% of BKS with matching K)
+            hits = sum(1 for r in results if hasattr(r, 'hit') and r.hit)
+            hit_rate = (hits / len(results) * 100) if results else 0
+            
             algo_stats[algo] = {
                 'count': len(results),
                 'k_avg': statistics.mean(k_values),
@@ -342,7 +347,9 @@ class ExperimentLogger:
                 'd_min': min(d_values),
                 'd_max': max(d_values),
                 'time_avg': statistics.mean(times),
-                'time_total': sum(times)
+                'time_total': sum(times),
+                'hits': hits,
+                'hit_rate': hit_rate
             }
             
             stats = algo_stats[algo]
@@ -354,6 +361,7 @@ class ExperimentLogger:
                                f"min={stats['d_min']:.2f}, max={stats['d_max']:.2f}")
             summary_lines.append(f"  Time:            avg={stats['time_avg']:.3f}s, "
                                f"total={stats['time_total']:.1f}s")
+            summary_lines.append(f"  HIT Rate (within 5% gap): {stats['hits']}/{stats['count']} ({stats['hit_rate']:.1f}%)")
         
         # Analysis per family
         summary_lines.append("\n" + "-" * 80)
@@ -376,6 +384,12 @@ class ExperimentLogger:
         summary_lines.append("\n" + "-" * 80)
         summary_lines.append("BEST SOLUTIONS")
         summary_lines.append("-" * 80)
+        
+        # HIT Summary
+        total_hits = sum(1 for r in successful if hasattr(r, 'hit') and r.hit)
+        total_rate = (total_hits / len(successful) * 100) if successful else 0
+        summary_lines.append(f"\nHIT RATE (within 5% gap from BKS with K match):")
+        summary_lines.append(f"  Total: {total_hits}/{len(successful)} ({total_rate:.1f}%)")
         
         # Best K
         best_k = min(successful, key=lambda r: r.k_final)

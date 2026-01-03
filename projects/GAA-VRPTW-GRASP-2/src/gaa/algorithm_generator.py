@@ -83,28 +83,136 @@ class AlgorithmGenerator:
     
     def generate_three_algorithms(self, seed: int = 42) -> List[ASTNode]:
         """
-        Generate three different algorithms for demo/experimentation.
-        Uses ramped half-and-half with seed for reproducibility.
+        Generate three complementary algorithms optimizing GRASP principles:
+        
+        ALGORITMO 1: GRASP PURO (construcción aleatoria + mejora intensiva)
+        - Múltiples iteraciones de construcción con alpha variable
+        - Mejora agresiva con TwoOpt/OrOpt
+        - Rápida convergencia a soluciones sólidas
+        
+        ALGORITMO 2: GRASP + PERTURBACIÓN (ILS-like: escape óptimos locales)
+        - Construcción + mejora + perturbación iterada
+        - Equilibrio exploración/explotación
+        - Mejor calidad que GRASP puro
+        
+        ALGORITMO 3: GRASP ADAPTATIVO (VND-like: múltiples operadores)
+        - Secuencia de operadores de mejora complementarios
+        - Criterio de parada adaptativo (no mejora)
+        - Máxima diversidad de búsqueda local
         
         Args:
-            seed: Random seed (ensures reproducibility)
+            seed: Seed para reproducibilidad
         
         Returns:
-            List of 3 ASTNode algorithms
+            Lista de 3 algoritmos ASTNode optimizados
         """
         random.seed(seed)
         algorithms = []
         
-        # Generate with varying depths and methods
-        configs = [
-            (2, 'grow'),
-            (3, 'full'),
-            (3, 'grow'),
-        ]
+        # ========================================================================
+        # ALGORITMO 1: GRASP Puro (Múltiples construcciones + mejora)
+        # ========================================================================
+        # Estrategia: Genera muchas soluciones iniciales diferentes (randomización)
+        # y mejora cada una agresivamente. GRASP clásico.
+        algo1 = Seq(body=[
+            # FASE 1: Construcción randomizada
+            GreedyConstruct(
+                heuristic='RandomizedInsertion',
+                alpha=0.15  # RCL: 15% - balancea quality/time
+            ),
+            # FASE 2: Mejora intensiva
+            While(
+                max_iterations=150,  # GRASP: múltiples iteraciones
+                body=Seq(body=[
+                    LocalSearch(
+                        operator='TwoOpt',
+                        max_iterations=60  # Agresivo
+                    ),
+                    LocalSearch(
+                        operator='OrOpt',
+                        max_iterations=40
+                    )
+                ])
+            )
+        ])
+        algorithms.append(algo1)
         
-        for depth, method in configs:
-            algo = self.generate_algorithm(depth=depth, method=method)
-            algorithms.append(algo)
+        # ========================================================================
+        # ALGORITMO 2: GRASP + Perturbación (ILS: Iterated Local Search)
+        # ========================================================================
+        # Estrategia: Mejora local → perturba → mejora local → repite
+        # PERTURBAR es crucial para escapar óptimos locales
+        algo2 = Seq(body=[
+            # CONSTRUCCIÓN: NearestNeighbor (rápido, determinista)
+            GreedyConstruct(heuristic='NearestNeighbor'),
+            # MEJORA ITERADA CON PERTURBACIÓN
+            While(
+                max_iterations=80,  # Menos que Algo1 porque mejora es mejor
+                body=Seq(body=[
+                    # Mejora agresiva
+                    LocalSearch(
+                        operator='TwoOpt',
+                        max_iterations=50
+                    ),
+                    # Perturbación: escapa óptimos locales
+                    Perturbation(
+                        operator='DoubleBridge',
+                        strength=3  # Moderada (no destruye completamente)
+                    ),
+                    # Re-mejora después de perturbar
+                    LocalSearch(
+                        operator='TwoOpt',
+                        max_iterations=35
+                    ),
+                    # Operador complementario
+                    LocalSearch(
+                        operator='Relocate',
+                        max_iterations=20
+                    )
+                ])
+            )
+        ])
+        algorithms.append(algo2)
+        
+        # ========================================================================
+        # ALGORITMO 3: GRASP Adaptativo (VND: Variable Neighborhood Descent)
+        # ========================================================================
+        # Estrategia: Secuencia de operadores, cada uno hasta no mejorar
+        # VND es el más sofisticado pero también el más lento
+        algo3 = Seq(body=[
+            # CONSTRUCCIÓN: RandomizedInsertion (balance)
+            GreedyConstruct(
+                heuristic='RandomizedInsertion',
+                alpha=0.20  # Más exploratorio que Algo1
+            ),
+            # VND: MÚLTIPLES OPERADORES HASTA NO MEJORAR
+            ApplyUntilNoImprove(
+                max_no_improve=20,  # Criterio adaptativo
+                body=Seq(body=[
+                    # Operador 1: TwoOpt (muy efectivo)
+                    LocalSearch(
+                        operator='TwoOpt',
+                        max_iterations=80
+                    ),
+                    # Operador 2: OrOpt (complementario)
+                    LocalSearch(
+                        operator='OrOpt',
+                        max_iterations=50
+                    ),
+                    # Operador 3: Relocate (diferente estructura)
+                    LocalSearch(
+                        operator='Relocate',
+                        max_iterations=40
+                    ),
+                    # Perturbación LEVE para preparar siguiente iteración
+                    Perturbation(
+                        operator='Relocate',
+                        strength=1  # MUY leve
+                    )
+                ])
+            )
+        ])
+        algorithms.append(algo3)
         
         return algorithms
     
