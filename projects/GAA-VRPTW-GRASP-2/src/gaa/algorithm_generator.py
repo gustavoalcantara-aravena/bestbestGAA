@@ -110,18 +110,25 @@ class AlgorithmGenerator:
         algorithms = []
         
         # ========================================================================
-        # ALGORITMO 1: GRASP Puro (A OPTIMIZAR)
+        # ALGORITMO 1: GRASP Puro (ITER-4A - OPTIMIZADO)
         # ========================================================================
+        # ITER-4A: Mejorado aprendiendo de Algo2's ILS cycle exitoso
+        # - Perturbación más fuerte (strength: 2.0 → 3.5)
+        # - While más iteraciones (75 → 80)
+        # - TwoOpt pre-perturbación reducido (52 → 40)
+        # - OrOpt más controlado (28 → 18)
+        # - TwoOpt post-perturbación mejorado (32 → 40)
+        # Objetivo: D 1391.51 → < 1240 (-10%)
         algo1 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
-                max_iterations=75,  
+                max_iterations=80,  # +5 iteraciones: 75→80
                 body=Seq(body=[
-                    LocalSearch(operator='TwoOpt', max_iterations=52),
-                    LocalSearch(operator='OrOpt', max_iterations=28),
-                    Perturbation(operator='DoubleBridge', strength=2.0),
-                    LocalSearch(operator='TwoOpt', max_iterations=32),
-                    LocalSearch(operator='Relocate', max_iterations=18)
+                    LocalSearch(operator='TwoOpt', max_iterations=40),  # -23%: 52→40
+                    LocalSearch(operator='OrOpt', max_iterations=18),   # -36%: 28→18
+                    Perturbation(operator='DoubleBridge', strength=3.5),  # +75%: 2.0→3.5 (KEY)
+                    LocalSearch(operator='TwoOpt', max_iterations=40),  # +25%: 32→40
+                    LocalSearch(operator='Relocate', max_iterations=18)  # sin cambio: 18→18
                 ])
             )
         ])
