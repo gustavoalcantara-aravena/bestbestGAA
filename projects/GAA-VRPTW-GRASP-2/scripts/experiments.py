@@ -605,6 +605,26 @@ class QuickExperiment:
         except Exception as e:
             print(f"[WARNING] Error generando reporte: {e}")
         
+        # Generate GAP comparison visualizations automatically
+        print("\n[INFO] Generando gráficas de comparación GAP...")
+        try:
+            import subprocess
+            result = subprocess.run(
+                [sys.executable, "plot_gap_comparison.py"],
+                cwd=Path(__file__).parent.parent,
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
+            if result.returncode == 0:
+                # Print the output from plot_gap_comparison.py
+                if result.stdout:
+                    print(result.stdout)
+            else:
+                print(f"[WARNING] Error generando gráficas GAP: {result.stderr}")
+        except Exception as e:
+            print(f"[WARNING] Error en generación automática de gráficas: {e}")
+        
         print(f"\n[SUMMARY] {completed}/{total_experiments} completados")
         print(f"[RESULTS] {executor.results_dir}\n")
         
@@ -810,6 +830,26 @@ class FullExperiment:
             )
         except Exception as e:
             print(f"[WARNING] Error generando reporte: {e}")
+        
+        # Generate GAP comparison visualizations automatically
+        print("\n[INFO] Generando gráficas de comparación GAP...")
+        try:
+            import subprocess
+            result = subprocess.run(
+                [sys.executable, "plot_gap_comparison.py"],
+                cwd=Path(__file__).parent.parent,
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
+            if result.returncode == 0:
+                # Print the output from plot_gap_comparison.py
+                if result.stdout:
+                    print(result.stdout)
+            else:
+                print(f"[WARNING] Error generando gráficas GAP: {result.stderr}")
+        except Exception as e:
+            print(f"[WARNING] Error en generación automática de gráficas: {e}")
         
         print(f"\n[SUMMARY] {completed}/{total_experiments} completados")
         print(f"[RESULTS] {executor.results_dir}\n")

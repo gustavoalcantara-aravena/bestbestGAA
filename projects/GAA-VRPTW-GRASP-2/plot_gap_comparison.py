@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 import seaborn as sns
+import glob
+from datetime import datetime
 
 # Configurar estilo
 sns.set_style("whitegrid")
@@ -32,11 +34,20 @@ BKS = {
     'RC205': 1297.65, 'RC206': 1143.32, 'RC207': 1061.14, 'RC208': 880.59,
 }
 
-# Cargar resultados del FULL experiment
-results_path = Path('output/vrptw_experiments_FULL_03-01-26_02-18-27/results/raw_results.csv')
-if not results_path.exists():
-    print(f"Error: No se encontró {results_path}")
+# Buscar el archivo CSV más reciente en output/*/results/raw_results.csv
+output_dir = Path('output')
+csv_files = sorted(output_dir.glob('*/results/raw_results.csv'), key=lambda x: x.stat().st_mtime, reverse=True)
+
+if not csv_files:
+    print(f"Error: No se encontraron archivos raw_results.csv en {output_dir}")
     exit(1)
+
+results_path = csv_files[0]
+plots_dir = results_path.parent.parent / 'plots'
+plots_dir.mkdir(exist_ok=True, parents=True)
+
+print(f"📊 Cargando CSV más reciente: {results_path}")
+print(f"📁 Guardando gráficas en: {plots_dir}\n")
 
 raw_df = pd.read_csv(results_path)
 print(f"Datos cargados: {len(raw_df)} filas")
@@ -131,8 +142,8 @@ for i, (family, group) in enumerate(df.groupby('family')):
                    alpha=0.1, color='gray', zorder=0)
 
 plt.tight_layout()
-plt.savefig('output/vrptw_experiments_FULL_03-01-26_02-18-27/plots/01_gap_comparison_all_instances.png', dpi=300, bbox_inches='tight')
-print("\n✅ Guardado: 01_gap_comparison_all_instances.png")
+plt.savefig(plots_dir / '01_gap_comparison_all_instances.png', dpi=300, bbox_inches='tight')
+print("[OK] Guardado: 01_gap_comparison_all_instances.png")
 plt.close()
 
 # ============================================================
@@ -160,8 +171,8 @@ ax.legend(fontsize=11, loc='upper left', framealpha=0.95)
 ax.grid(axis='y', alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('output/vrptw_experiments_FULL_03-01-26_02-18-27/plots/02_gap_evolution_lines.png', dpi=300, bbox_inches='tight')
-print("✅ Guardado: 02_gap_evolution_lines.png")
+plt.savefig(plots_dir / '02_gap_evolution_lines.png', dpi=300, bbox_inches='tight')
+print("[OK] Guardado: 02_gap_evolution_lines.png")
 plt.close()
 
 # ============================================================
@@ -206,8 +217,8 @@ ax.legend(fontsize=11, loc='upper left')
 ax.grid(axis='y', alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('output/vrptw_experiments_FULL_03-01-26_02-18-27/plots/03_gap_boxplot_by_family.png', dpi=300, bbox_inches='tight')
-print("✅ Guardado: 03_gap_boxplot_by_family.png")
+plt.savefig(plots_dir / '03_gap_boxplot_by_family.png', dpi=300, bbox_inches='tight')
+print("[OK] Guardado: 03_gap_boxplot_by_family.png")
 plt.close()
 
 # ============================================================
@@ -231,8 +242,8 @@ ax.set_xlabel('Algoritmo', fontsize=12, fontweight='bold')
 ax.set_ylabel('Instancia', fontsize=12, fontweight='bold')
 
 plt.tight_layout()
-plt.savefig('output/vrptw_experiments_FULL_03-01-26_02-18-27/plots/04_gap_heatmap.png', dpi=300, bbox_inches='tight')
-print("✅ Guardado: 04_gap_heatmap.png")
+plt.savefig(plots_dir / '04_gap_heatmap.png', dpi=300, bbox_inches='tight')
+print("[OK] Guardado: 04_gap_heatmap.png")
 plt.close()
 
 # ============================================================
@@ -264,8 +275,8 @@ for idx, family in enumerate(['C1', 'C2', 'R1', 'R2', 'RC1', 'RC2']):
 plt.suptitle('Comparación de GAP por Familia Solomon VRPTW', 
              fontsize=14, fontweight='bold', y=1.00)
 plt.tight_layout()
-plt.savefig('output/vrptw_experiments_FULL_03-01-26_02-18-27/plots/05_gap_by_family_grid.png', dpi=300, bbox_inches='tight')
-print("✅ Guardado: 05_gap_by_family_grid.png")
+plt.savefig(plots_dir / '05_gap_by_family_grid.png', dpi=300, bbox_inches='tight')
+print("[OK] Guardado: 05_gap_by_family_grid.png")
 plt.close()
 
 # ============================================================
@@ -326,5 +337,5 @@ for family in ['C1', 'C2', 'R1', 'R2', 'RC1', 'RC2']:
     print(f"  ✅ MEJOR: Algoritmo {best_algo}")
 
 print("\n" + "="*80)
-print("Gráficos generados en: output/vrptw_experiments_FULL_03-01-26_02-18-27/plots/")
+print("Gráficos generados en: " + str(plots_dir))
 print("="*80)
