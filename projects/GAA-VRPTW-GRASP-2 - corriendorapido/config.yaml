@@ -1,0 +1,145 @@
+# VRPTW-GRASP Project Configuration
+# Version: 1.0.0
+# Generated: 2026-01-02
+
+# ============================================================================
+# GRASP PARAMETERS
+# ============================================================================
+
+grasp:
+  # Restricted Candidate List - Parameter alpha
+  alpha: 0.15
+  
+  # Maximum iterations for GRASP
+  max_iterations: 100
+  
+  # Stopping criterion
+  stopping_criterion: 'iterations'
+  max_time_seconds: 3600
+  target_quality: null
+  
+  # Verbose output level
+  verbose_level: 1
+  
+  # Random seed for reproducibility
+  random_seed: 42
+
+# ============================================================================
+# GAA (GENERACIÓN AUTOMÁTICA DE ALGORITMOS) PARAMETERS
+# ============================================================================
+
+gaa:
+  # Number of algorithms to generate
+  num_algorithms: 3
+  
+  # Random seed for GAA generation (must match GRASP seed for reproducibility)
+  random_seed: 42
+  
+  # AST Configuration
+  ast:
+    max_nodes: 10
+    max_depth: 5
+    probabilities:
+      constructive: 0.3
+      local_search: 0.4
+      perturbation: 0.2
+      repair: 0.1
+
+# ============================================================================
+# VRPTW PROBLEM PARAMETERS
+# ============================================================================
+
+vrptw:
+  # Vehicle capacity
+  vehicle_capacity: 200
+  
+  # Maximum time for a route
+  max_route_time: 480
+  
+  # Service time for each customer
+  default_service_time: 0.5
+  
+  # Distance metric
+  distance_metric: 'euclidean'
+  
+  # Time scaling factor
+  time_scale: 1.0
+
+# ============================================================================
+# SOLOMON DATASETS CONFIGURATION
+# ============================================================================
+
+datasets:
+  base_path: './datasets'
+  families: ['C1', 'C2', 'R1', 'R2', 'RC1', 'RC2']
+  instances_per_family:
+    C1: 9
+    C2: 8
+    R1: 12
+    R2: 11
+    RC1: 8
+    RC2: 8
+
+# ============================================================================
+# EXPERIMENTAL DESIGN PARAMETERS
+# ============================================================================
+
+experiments:
+  plan: 'QUICK'
+  replications: 2
+  seed_base: 42
+  output_dir: './output'
+  output_format: 'csv'
+
+# ============================================================================
+# FITNESS FUNCTION CONFIGURATION
+# ============================================================================
+
+fitness:
+  penalties:
+    capacity_violation: 1000.0
+    time_window_violation: 1000.0
+    unserved_customer: 10000.0
+  
+  objective_type: 'hierarchical'
+  weights:
+    num_routes: 1.0
+    total_distance: 0.1
+
+# ============================================================================
+# EVALUATION METRICS CONFIGURATION
+# ============================================================================
+
+metrics:
+  calculate_statistics: true
+  compare_vs_bks: true
+  bks_file: 'best_known_solutions.json'
+  metrics_to_compute:
+    - 'num_routes'
+    - 'total_distance'
+    - 'avg_route_length'
+    - 'avg_route_time'
+    - 'vehicle_utilization'
+    - 'time_utilization'
+    - 'gap_vs_bks'
+    - 'execution_time'
+
+# ============================================================================
+# LOGGING AND OUTPUT CONFIGURATION
+# ============================================================================
+
+logging:
+  level: 'INFO'
+  file: './output/experiment.log'
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+# ============================================================================
+# ADVANCED PARAMETERS (Optional)
+# ============================================================================
+
+advanced:
+  num_threads: null
+  cache_distances: true
+  enable_profiling: false
+  validate_instances: true
+  validate_solutions: true

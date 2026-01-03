@@ -112,26 +112,17 @@ class AlgorithmGenerator:
         # ========================================================================
         # ALGORITMO 1: GRASP Puro (Múltiples construcciones + mejora)
         # ========================================================================
-        # Estrategia: Genera muchas soluciones iniciales diferentes (randomización)
-        # y mejora cada una agresivamente. GRASP clásico.
+        # ITERACIÓN 3: Algoritmo 1 sin ThreeOpt, más TwoOpt/OrOpt puro
         algo1 = Seq(body=[
-            # FASE 1: Construcción randomizada
-            GreedyConstruct(
-                heuristic='RandomizedInsertion',
-                alpha=0.15  # RCL: 15% - balancea quality/time
-            ),
-            # FASE 2: Mejora intensiva
+            GreedyConstruct(heuristic='NearestNeighbor'),
             While(
-                max_iterations=150,  # GRASP: múltiples iteraciones
+                max_iterations=75,  # Más iteraciones, menos costosas
                 body=Seq(body=[
-                    LocalSearch(
-                        operator='TwoOpt',
-                        max_iterations=60  # Agresivo
-                    ),
-                    LocalSearch(
-                        operator='OrOpt',
-                        max_iterations=40
-                    )
+                    LocalSearch(operator='TwoOpt', max_iterations=52),
+                    LocalSearch(operator='OrOpt', max_iterations=28),
+                    Perturbation(operator='DoubleBridge', strength=2.0),
+                    LocalSearch(operator='TwoOpt', max_iterations=32),
+                    LocalSearch(operator='Relocate', max_iterations=18)
                 ])
             )
         ])
@@ -140,14 +131,14 @@ class AlgorithmGenerator:
         # ========================================================================
         # ALGORITMO 2: GRASP + Perturbación (ILS: Iterated Local Search)
         # ========================================================================
-        # Estrategia: Mejora local → perturba → mejora local → repite
-        # PERTURBAR es crucial para escapar óptimos locales
+        # Estrategia: Mejora local → perturba → mejora local → repite (LA ESTRUCTURA GANADORA)
+        # Constructor determinista rápido + perturbación moderada + re-mejora
         algo2 = Seq(body=[
-            # CONSTRUCCIÓN: NearestNeighbor (rápido, determinista)
+            # CONSTRUCCIÓN: NearestNeighbor (rápido, determinista, buena calidad)
             GreedyConstruct(heuristic='NearestNeighbor'),
-            # MEJORA ITERADA CON PERTURBACIÓN
+            # MEJORA ITERADA CON PERTURBACIÓN (estructura probada exitosa)
             While(
-                max_iterations=80,  # Menos que Algo1 porque mejora es mejor
+                max_iterations=80,  # Iteraciones controladas
                 body=Seq(body=[
                     # Mejora agresiva
                     LocalSearch(
@@ -157,7 +148,7 @@ class AlgorithmGenerator:
                     # Perturbación: escapa óptimos locales
                     Perturbation(
                         operator='DoubleBridge',
-                        strength=3  # Moderada (no destruye completamente)
+                        strength=3  # Moderada
                     ),
                     # Re-mejora después de perturbar
                     LocalSearch(
@@ -174,41 +165,17 @@ class AlgorithmGenerator:
         ])
         algorithms.append(algo2)
         
-        # ========================================================================
-        # ALGORITMO 3: GRASP Adaptativo (VND: Variable Neighborhood Descent)
-        # ========================================================================
-        # Estrategia: Secuencia de operadores, cada uno hasta no mejorar
-        # VND es el más sofisticado pero también el más lento
+        # ITERACIÓN 3: Algoritmo 3 con perturbación muy controlada
         algo3 = Seq(body=[
-            # CONSTRUCCIÓN: RandomizedInsertion (balance)
-            GreedyConstruct(
-                heuristic='RandomizedInsertion',
-                alpha=0.20  # Más exploratorio que Algo1
-            ),
-            # VND: MÚLTIPLES OPERADORES HASTA NO MEJORAR
-            ApplyUntilNoImprove(
-                max_no_improve=20,  # Criterio adaptativo
+            GreedyConstruct(heuristic='NearestNeighbor'),
+            While(
+                max_iterations=68,
                 body=Seq(body=[
-                    # Operador 1: TwoOpt (muy efectivo)
-                    LocalSearch(
-                        operator='TwoOpt',
-                        max_iterations=80
-                    ),
-                    # Operador 2: OrOpt (complementario)
-                    LocalSearch(
-                        operator='OrOpt',
-                        max_iterations=50
-                    ),
-                    # Operador 3: Relocate (diferente estructura)
-                    LocalSearch(
-                        operator='Relocate',
-                        max_iterations=40
-                    ),
-                    # Perturbación LEVE para preparar siguiente iteración
-                    Perturbation(
-                        operator='Relocate',
-                        strength=1  # MUY leve
-                    )
+                    LocalSearch(operator='TwoOpt', max_iterations=50),
+                    LocalSearch(operator='OrOpt', max_iterations=20),
+                    Perturbation(operator='DoubleBridge', strength=1.0),  # MUY leve
+                    LocalSearch(operator='TwoOpt', max_iterations=35),
+                    LocalSearch(operator='Relocate', max_iterations=15)
                 ])
             )
         ])

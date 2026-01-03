@@ -273,8 +273,8 @@ class ExperimentExecutor:
             'C2': [f'C2{i:02d}' for i in range(1, 9)],   # C201-C208
             'R1': [f'R1{i:02d}' for i in range(1, 13)],  # R101-R112
             'R2': [f'R2{i:02d}' for i in range(1, 12)],  # R201-R211
-            'RC1': [f'RC1{i:1d}' for i in range(1, 9)],  # RC101-RC108
-            'RC2': [f'RC2{i:1d}' for i in range(1, 9)],  # RC201-RC208
+            'RC1': [f'RC1{i:02d}' for i in range(1, 9)],  # RC101-RC108
+            'RC2': [f'RC2{i:02d}' for i in range(1, 9)],  # RC201-RC208
         }
         
         result = {}
