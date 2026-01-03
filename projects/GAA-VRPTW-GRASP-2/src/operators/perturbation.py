@@ -388,10 +388,9 @@ class RepairCapacity(RepairOperator):
         best_route = None
         best_pos = None
         best_cost = float('inf')
+        cust_demand = solution.instance.get_customer(customer_id).demand
         
         for route in solution.routes:
-            cust_demand = solution.instance.get_customer(customer_id).demand
-            
             # Check if customer fits in route
             if route.total_load + cust_demand <= solution.instance.Q_capacity:
                 for pos in range(1, len(route.sequence)):
@@ -409,6 +408,14 @@ class RepairCapacity(RepairOperator):
         
         if best_route is not None:
             best_route.add_customer(customer_id, best_pos)
+        else:
+            # No route found: create new route
+            new_route = Route(
+                vehicle_id=len(solution.routes),
+                sequence=[0, customer_id, 0],
+                instance=solution.instance
+            )
+            solution.routes.append(new_route)
 
 
 class RepairTimeWindows(RepairOperator):
@@ -521,6 +528,14 @@ class RepairTimeWindows(RepairOperator):
         
         if best_route is not None:
             best_route.add_customer(customer_id, best_pos)
+        else:
+            # No feasible position found: create new route
+            new_route = Route(
+                vehicle_id=len(solution.routes),
+                sequence=[0, customer_id, 0],
+                instance=solution.instance
+            )
+            solution.routes.append(new_route)
 
 
 class GreedyRepair(RepairOperator):

@@ -107,10 +107,10 @@ class SavingsHeuristic(ConstructiveOperator):
 
 class NearestNeighbor(ConstructiveOperator):
     """
-    Nearest neighbor heuristic.
+    Nearest neighbor heuristic - FIXED VERSION.
     
     Greedy: Start from depot, always go to nearest unvisited customer.
-    Does NOT consider time windows.
+    Creates multiple routes respecting capacity constraints.
     
     Complexity: O(n²)
     """
@@ -121,51 +121,59 @@ class NearestNeighbor(ConstructiveOperator):
     
     def apply(self, instance: Instance) -> Solution:
         """
-        Build solution using nearest neighbor.
+        Build solution using nearest neighbor with proper multi-route handling.
         
         Args:
             instance: Problem instance
             
         Returns:
-            Feasible solution (may not be)
+            Feasible solution with multiple routes
         """
         n = instance.n_customers
         unvisited = set(range(1, n + 1))
-        route_sequence = [0]
-        current = 0
-        total_load = 0
+        routes = []  # List of completed routes
+        vehicle_count = 0
         
         while unvisited:
-            # Find nearest unvisited customer
-            nearest = None
-            min_dist = float('inf')
+            # Start new route from depot
+            current_route = [0]
+            current = 0
+            total_load = 0
+            route_unvisited = unvisited.copy()
             
-            for cand in unvisited:
-                dist = instance.get_distance(current, cand)
-                if dist < min_dist:
-                    min_dist = dist
-                    nearest = cand
+            while route_unvisited:
+                # Find nearest unvisited customer that fits
+                nearest = None
+                min_dist = float('inf')
+                
+                for cand in route_unvisited:
+                    dist = instance.get_distance(current, cand)
+                    demand = instance.get_customer(cand).demand
+                    
+                    # Check if customer can be added (capacity constraint)
+                    if total_load + demand <= instance.Q_capacity and dist < min_dist:
+                        min_dist = dist
+                        nearest = cand
+                
+                # If no customer fits, close this route
+                if nearest is None:
+                    break
+                
+                # Add customer to current route
+                current_route.append(nearest)
+                current = nearest
+                demand = instance.get_customer(nearest).demand
+                total_load += demand
+                route_unvisited.remove(nearest)
+                unvisited.remove(nearest)
             
-            # Check if can visit nearest (capacity)
-            demand = instance.get_customer(nearest).demand
-            if total_load + demand > instance.Q_capacity:
-                # Start new route
-                route_sequence.append(0)
-                route = Route(vehicle_id=0, sequence=route_sequence, instance=instance)
-                total_load = 0
-                current = 0
-                route_sequence = [0]
-            
-            # Add to current route
-            route_sequence.append(nearest)
-            unvisited.remove(nearest)
-            current = nearest
-            total_load += demand
+            # Complete route and add to solution
+            current_route.append(0)
+            route = Route(vehicle_id=vehicle_count, sequence=current_route, instance=instance)
+            routes.append(route)
+            vehicle_count += 1
         
-        route_sequence.append(0)
-        route = Route(vehicle_id=0, sequence=route_sequence, instance=instance)
-        
-        return Solution(instance=instance, routes=[route])
+        return Solution(instance=instance, routes=routes)
 
 
 class TimeOrientedNN(ConstructiveOperator):
@@ -408,12 +416,13 @@ class RegretInsertion(ConstructiveOperator):
 
 class RandomizedInsertion(ConstructiveOperator):
     """
-    Randomized insertion heuristic (GRASP-style).
+    Randomized insertion heuristic (GRASP-style) - FIXED VERSION.
     
     Build solution using insertion with random element (RCL - Restricted Candidate List).
+    Properly handles capacity constraints and multi-route solutions.
     This is the PREFERRED constructor for GRASP phase.
     
-    Complexity: O(n)
+    Complexity: O(n²)
     """
     
     def __init__(self, alpha: float = 0.15, seed: Optional[int] = None):
@@ -432,27 +441,47 @@ class RandomizedInsertion(ConstructiveOperator):
     
     def apply(self, instance: Instance) -> Solution:
         """
-        Build solution using randomized insertion.
+        Build solution using randomized insertion with capacity validation.
         
         Args:
             instance: Problem instance
             
         Returns:
-            Feasible solution
+            Feasible solution with proper multi-route handling
         """
         n = instance.n_customers
         uninserted = set(range(1, n + 1))
-        routes = [Route(vehicle_id=0, sequence=[0, 0], instance=instance)]
+        routes = []
+        vehicle_count = 0
+        
+        # Start with first customer
+        if uninserted:
+            first_cust = random.choice(list(uninserted))
+            routes.append(Route(vehicle_id=0, sequence=[0, first_cust, 0], instance=instance))
+            uninserted.remove(first_cust)
+            vehicle_count += 1
         
         while uninserted:
-            # Find insertion costs for all customers
+            # Find best insertion candidates for all customers
             candidates = []
             
             for cust in uninserted:
                 best_cost = float('inf')
-                best_slot = None
+                best_route_idx = None
+                best_pos = None
                 
+                cust_demand = instance.get_customer(cust).demand
+                
+                # Try inserting in each existing route
                 for r_idx, route in enumerate(routes):
+                    # Check if customer fits in this route (capacity)
+                    route_load = sum(instance.get_customer(c).demand 
+                                   for c in route.sequence[1:-1])  # Exclude depot
+                    
+                    if route_load + cust_demand > instance.Q_capacity:
+                        continue  # Customer doesn't fit in this route
+                    
+                    # Try all insertion positions
                     for pos in range(1, len(route.sequence)):
                         prev_cust = route.sequence[pos - 1]
                         next_cust = route.sequence[pos]
@@ -464,9 +493,29 @@ class RandomizedInsertion(ConstructiveOperator):
                         
                         if cost < best_cost:
                             best_cost = cost
-                            best_slot = (r_idx, pos)
+                            best_route_idx = r_idx
+                            best_pos = pos
                 
-                candidates.append((cust, best_cost, best_slot))
+                # Also consider creating a new route
+                new_route_cost = (2 * instance.get_distance(0, cust))
+                if new_route_cost < best_cost:
+                    best_cost = new_route_cost
+                    best_route_idx = -1  # Signal: create new route
+                    best_pos = None
+                
+                candidates.append((cust, best_cost, best_route_idx, best_pos))
+            
+            if not candidates:
+                # No customers can be inserted - create new route for next customer
+                if uninserted:
+                    next_cust = random.choice(list(uninserted))
+                    new_route = Route(vehicle_id=vehicle_count, 
+                                    sequence=[0, next_cust, 0], 
+                                    instance=instance)
+                    routes.append(new_route)
+                    uninserted.remove(next_cust)
+                    vehicle_count += 1
+                continue
             
             # Build RCL (Restricted Candidate List)
             candidates.sort(key=lambda x: x[1])
@@ -476,17 +525,29 @@ class RandomizedInsertion(ConstructiveOperator):
             
             rcl = [c for c in candidates if c[1] <= threshold]
             
+            if not rcl:
+                rcl = candidates[:max(1, len(candidates) // 3)]
+            
             # Randomly select from RCL
             selected = random.choice(rcl)
-            cust, cost, (r_idx, pos) = selected
+            cust, cost, route_idx, pos = selected
             
-            if pos == 0:
-                # New route
-                new_route = Route(vehicle_id=len(routes), sequence=[0, cust, 0], instance=instance)
+            # Insert customer
+            if route_idx == -1:
+                # Create new route
+                new_route = Route(vehicle_id=vehicle_count, 
+                                sequence=[0, cust, 0], 
+                                instance=instance)
                 routes.append(new_route)
+                vehicle_count += 1
             else:
-                routes[r_idx].add_customer(cust, pos)
+                # Insert in existing route
+                route = routes[route_idx]
+                new_sequence = route.sequence[:pos] + [cust] + route.sequence[pos:]
+                routes[route_idx] = Route(vehicle_id=route.vehicle_id, 
+                                        sequence=new_sequence, 
+                                        instance=instance)
             
-            uninserted.discard(cust)
+            uninserted.remove(cust)
         
         return Solution(instance=instance, routes=routes)

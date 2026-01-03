@@ -99,7 +99,7 @@ class GRASP:
         if self.verbose:
             print(f"\n{'='*60}")
             print(f"  GRASP for {instance.name}")
-            print(f"  α={self.alpha}, max_iter={self.max_iterations}")
+            print(f"  alpha={self.alpha}, max_iter={self.max_iterations}")
             print(f"{'='*60}")
         
         start_time = time.time()
@@ -115,13 +115,13 @@ class GRASP:
             # Check time limit
             if time_limit is not None and elapsed_time > time_limit:
                 if self.verbose:
-                    print(f"⏱️  Time limit reached ({elapsed_time:.2f}s)")
+                    print(f"[TIME] Time limit reached ({elapsed_time:.2f}s)")
                 break
             
             # Phase 1: Greedy Randomized Construction
             solution = self._construct_solution(instance)
             
-            # Ensure feasibility
+            # Repair infeasible solution
             if not solution.feasible:
                 solution = self._repair_solution(solution)
             
@@ -158,15 +158,15 @@ class GRASP:
             })
             
             if self.verbose:
-                status = "✓" if improved else " "
+                status = "[OK]" if improved else "[NO]"
                 print(f"  [{iteration+1:3d}] K={current_fitness[0]}, D={current_fitness[1]:.2f}  " +
-                      f"Best: K={self.best_fitness[0]}, D={self.best_fitness[1]:.2f}  [{status}]  " +
+                      f"Best: K={self.best_fitness[0]}, D={self.best_fitness[1]:.2f}  {status}  " +
                       f"({elapsed_time:.2f}s)")
             
             # Check early stopping
             if iterations_no_improvement >= self.max_iterations_no_improvement:
                 if self.verbose:
-                    print(f"⏸️  No improvement for {self.max_iterations_no_improvement} iterations")
+                    print(f"[STOP] No improvement for {self.max_iterations_no_improvement} iterations")
                 break
         
         elapsed_time = time.time() - start_time

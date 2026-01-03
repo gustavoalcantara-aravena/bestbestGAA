@@ -27,11 +27,12 @@ def create_small_instance(n_customers: int = 10) -> Instance:
         Q_capacity=200,
     )
     
-    # Depot at origin
-    instance.depot = Customer(
+    # Depot at origin (index 0)
+    depot = Customer(
         id=0, x=0, y=0, demand=0,
         ready_time=0, due_date=1000, service_time=0,
     )
+    instance.customers.append(depot)
     
     # Random customers in [0, 100] x [0, 100]
     import random
@@ -168,11 +169,11 @@ class TestVND(unittest.TestCase):
         from src.operators import RandomRemoval
         
         vnd = VariableNeighborhoodDescent(verbose=False)
-        perturbation = RandomRemoval(k=3)
+        perturbation = RandomRemoval(num_remove=3)
         
         result = vnd.search_with_shaking(
             deepcopy(self.initial_solution),
-            perturbation_op=perturbation,
+            perturbation_operator=perturbation,
             max_iterations=5,
         )
         
@@ -394,7 +395,7 @@ class TestPhase4Integration(unittest.TestCase):
         self.assertGreater(len(grasp.iteration_log), 1)
         
         # Later iterations should have better fitness
-        first_fitness = grasp.iteration_log[0]['fitness']
+        first_fitness = grasp.iteration_log[0]['best_fitness']
         last_fitness = grasp.iteration_log[-1]['best_fitness']
         
         self.assertLessEqual(last_fitness, first_fitness)

@@ -476,8 +476,11 @@ class GreedyConstruct(ASTNode):
     - "InsertionI1"
     - "RegretInsertion"
     - "RandomizedInsertion"
+    
+    The alpha parameter controls randomization in GRASP-based constructors.
     """
     heuristic: str  # Constructive operator name
+    alpha: float = 0.25  # GRASP randomization parameter (optional, default 0.25)
     
     def execute(self, instance, solution):
         """Execute constructive heuristic."""
@@ -492,16 +495,17 @@ class GreedyConstruct(ASTNode):
     def to_dict(self) -> Dict[str, Any]:
         return {
             'type': 'GreedyConstruct',
-            'heuristic': self.heuristic
+            'heuristic': self.heuristic,
+            'alpha': self.alpha
         }
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'GreedyConstruct':
-        return cls(heuristic=data['heuristic'])
+        return cls(heuristic=data['heuristic'], alpha=data.get('alpha', 0.25))
     
     def to_pseudocode(self, indent: int = 0) -> str:
         ind = "  " * indent
-        return f"{ind}Construct({self.heuristic})"
+        return f"{ind}Construct({self.heuristic}, alpha={self.alpha})"
     
     def size(self) -> int:
         return 1
@@ -510,7 +514,7 @@ class GreedyConstruct(ASTNode):
         return 0
     
     def clone(self) -> 'GreedyConstruct':
-        return GreedyConstruct(heuristic=self.heuristic)
+        return GreedyConstruct(heuristic=self.heuristic, alpha=self.alpha)
 
 
 @dataclass

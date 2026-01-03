@@ -1,15 +1,35 @@
 {
-  "algorithm_id": "GAA_Algorithm_2",
-  "seed": 42,
-  "version": "1.0",
-  "components": {
-    "construction": "ConstructionHeuristic_2",
-    "local_search": "LocalSearch_2",
-    "parameters": {
-      "alpha": 0.32,
-      "beta": 0.28,
-      "max_iterations": 200
-    }
+  "id": 2,
+  "name": "GAA_Algorithm_2",
+  "ast": {
+    "type": "Seq",
+    "body": [
+      {
+        "type": "GreedyConstruct",
+        "heuristic": "NearestNeighbor",
+        "alpha": 0.21
+      },
+      {
+        "type": "While",
+        "condition": "IterBudget",
+        "max_iterations": 150,
+        "body": {
+          "type": "LocalSearch",
+          "operator": "ThreeOpt",
+          "max_iterations": 200
+        }
+      }
+    ]
   },
-  "description": "Auto-generated GAA algorithm #2 with seed=42"
+  "pattern": "iterative-simple",
+  "seed": 42,
+  "timestamp": "2026-01-03T00:18:38.315178",
+  "stats": {
+    "depth": 3,
+    "size": 4,
+    "num_constructive": 1,
+    "num_improvement": 1,
+    "num_perturbation": 0,
+    "num_control": 2
+  }
 }

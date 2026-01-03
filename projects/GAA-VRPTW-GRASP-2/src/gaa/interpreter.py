@@ -10,8 +10,8 @@ import logging
 
 # Try importing models, but make them optional
 try:
-    from src.models.instance import Instance
-    from src.models.solution import Solution
+    from src.core.loader import SolomonLoader
+    from src.core.models import Instance, Solution
 except ImportError:
     Instance = None
     Solution = None
@@ -24,23 +24,23 @@ from src.gaa.ast_nodes import (
 # Try importing operators, but make them optional
 try:
     from src.operators.constructive import (
-        GreedyConstructor, RandomInsertionHeuristic, SavingsHeuristic,
-        TimeOrientedNearestNeighbor, InsertionI1, RegretInsertion
+        NearestNeighbor, RandomizedInsertion, SavingsHeuristic,
+        TimeOrientedNN, InsertionI1, RegretInsertion
     )
-    from src.operators.local_search import (
-        TwoOptOperator, OrOptOperator, RelocateOperator, ThreeOptOperator,
-        CrossExchangeOperator, TwoOptStarOperator, SwapCustomersOperator,
-        RelocateInterOperator
+    from src.operators.local_search_intra import (
+        TwoOpt, OrOpt, Relocate, ThreeOpt
+    )
+    from src.operators.local_search_inter import (
+        CrossExchange, TwoOptStar, SwapCustomers, RelocateInter
     )
     from src.operators.perturbation import (
-        EjectionChainOperator, RuinRecreateOperator, RandomRemovalOperator,
-        RouteEliminationOperator
+        EjectionChain, RuinRecreate, RandomRemoval, RouteElimination
     )
-    from src.operators.repair import (
-        CapacityRepairOperator, TimeWindowRepairOperator, GreedyRepairOperator
+    from src.operators.perturbation import (
+        RepairCapacity, RepairTimeWindows, GreedyRepair
     )
     OPERATORS_AVAILABLE = True
-except ImportError:
+except ImportError as e:
     OPERATORS_AVAILABLE = False
 
 
@@ -61,41 +61,41 @@ class OperatorRegistry:
     def __init__(self):
         # Constructive operators
         self.constructors = {
-            'NearestNeighbor': GreedyConstructor(),
-            'RandomizedInsertion': RandomInsertionHeuristic(),
+            'NearestNeighbor': NearestNeighbor(),
+            'RandomizedInsertion': RandomizedInsertion(),
             'SavingsHeuristic': SavingsHeuristic(),
-            'TimeOrientedNN': TimeOrientedNearestNeighbor(),
+            'TimeOrientedNN': TimeOrientedNN(),
             'InsertionI1': InsertionI1(),
             'RegretInsertion': RegretInsertion(),
         }
         
-        # Local search operators
+        # Local search operators (intra-route)
         self.local_search = {
             # Intra-route
-            'TwoOpt': TwoOptOperator(),
-            'OrOpt': OrOptOperator(),
-            'Relocate': RelocateOperator(),
-            'ThreeOpt': ThreeOptOperator(),
+            'TwoOpt': TwoOpt(),
+            'OrOpt': OrOpt(),
+            'Relocate': Relocate(),
+            'ThreeOpt': ThreeOpt(),
             # Inter-route
-            'CrossExchange': CrossExchangeOperator(),
-            'TwoOptStar': TwoOptStarOperator(),
-            'SwapCustomers': SwapCustomersOperator(),
-            'RelocateInter': RelocateInterOperator(),
+            'CrossExchange': CrossExchange(),
+            'TwoOptStar': TwoOptStar(),
+            'SwapCustomers': SwapCustomers(),
+            'RelocateInter': RelocateInter(),
         }
         
         # Perturbation operators
         self.perturbation = {
-            'EjectionChain': EjectionChainOperator(),
-            'RuinRecreate': RuinRecreateOperator(),
-            'RandomRemoval': RandomRemovalOperator(),
-            'RouteElimination': RouteEliminationOperator(),
+            'EjectionChain': EjectionChain(),
+            'RuinRecreate': RuinRecreate(),
+            'RandomRemoval': RandomRemoval(),
+            'RouteElimination': RouteElimination(),
         }
         
         # Repair operators
         self.repair = {
-            'RepairCapacity': CapacityRepairOperator(),
-            'RepairTimeWindows': TimeWindowRepairOperator(),
-            'GreedyRepair': GreedyRepairOperator(),
+            'RepairCapacity': RepairCapacity(),
+            'RepairTimeWindows': RepairTimeWindows(),
+            'GreedyRepair': GreedyRepair(),
         }
     
     def get_constructor(self, name: str):
@@ -217,11 +217,11 @@ class ASTInterpreter:
         """Execute while loop."""
         iteration = 0
         while iteration < node.max_iterations:
-            prev_cost = solution.cost
+            prev_distance = solution.total_distance
             solution = self._execute_node(node.body, instance, solution)
             
             # Check for improvement
-            if solution.cost < prev_cost:
+            if solution.total_distance < prev_distance:
                 iteration = 0  # Reset counter
             else:
                 iteration += 1
@@ -244,7 +244,7 @@ class ASTInterpreter:
             current = self._execute_node(node.body, instance, current)
             
             # Keep best
-            if current.cost < best_solution.cost:
+            if current.total_distance < best_solution.total_distance:
                 best_solution = current.clone()
         
         return best_solution
@@ -271,7 +271,7 @@ class ASTInterpreter:
             current = solution.clone()
             current = self._execute_node(alt, instance, current)
             
-            if current.cost < best.cost:
+            if current.total_distance < best.total_distance:
                 best = current.clone()
         
         return best
@@ -282,10 +282,10 @@ class ASTInterpreter:
         no_improve_count = 0
         
         while no_improve_count < node.max_no_improve:
-            prev_cost = solution.cost
+            prev_distance = solution.total_distance
             solution = self._execute_node(node.body, instance, solution)
             
-            if solution.cost < prev_cost:
+            if solution.total_distance < prev_distance:
                 no_improve_count = 0
             else:
                 no_improve_count += 1
@@ -297,12 +297,59 @@ class ASTInterpreter:
         """Execute constructive heuristic."""
         self.stats['operator_calls'] += 1
         
-        constructor = self.registry.get_constructor(node.heuristic)
-        new_solution = constructor.construct(instance)
+        # Create constructor with parameters from AST node
+        if node.heuristic == 'RandomizedInsertion':
+            constructor = RandomizedInsertion(alpha=node.alpha)
+        elif node.heuristic == 'NearestNeighbor':
+            constructor = NearestNeighbor()
+        elif node.heuristic == 'SavingsHeuristic':
+            constructor = SavingsHeuristic()
+        elif node.heuristic == 'TimeOrientedNN':
+            constructor = TimeOrientedNN()
+        elif node.heuristic == 'InsertionI1':
+            constructor = InsertionI1()
+        elif node.heuristic == 'RegretInsertion':
+            constructor = RegretInsertion()
+        else:
+            raise ValueError(f"Unknown constructor: {node.heuristic}")
         
-        if new_solution.cost < solution.cost:
-            self.stats['improvements'] += 1
-            return new_solution
+        new_solution = constructor.apply(instance)
+        
+        # Always use the constructed solution (overwrites initial empty solution)
+        # Then repair if needed to ensure feasibility
+        repaired_solution = self._repair_solution_if_needed(new_solution, instance)
+        
+        return repaired_solution
+    
+    def _repair_solution_if_needed(self, solution: Solution, instance: Instance) -> Solution:
+        """
+        Repair solution if it's incomplete or infeasible.
+        
+        Args:
+            solution: Solution to check and potentially repair
+            instance: Problem instance
+            
+        Returns:
+            Repaired solution (feasible or at least complete)
+        """
+        # Check if solution has all customers inserted
+        inserted_customers = set()
+        for route in solution.routes:
+            for cust_id in route.sequence[1:-1]:  # Exclude depot
+                inserted_customers.add(cust_id)
+        
+        expected_customers = set(range(1, instance.n_customers + 1))
+        missing_customers = expected_customers - inserted_customers
+        
+        # If solution is incomplete, use repair operator
+        if missing_customers or not all(r.is_feasible for r in solution.routes):
+            try:
+                from src.operators.repair_solution import GreedyRepairOperator
+                repair_op = GreedyRepairOperator()
+                solution = repair_op.apply(solution)
+            except ImportError:
+                logger.warning("Repair operator not available, returning as-is")
+        
         return solution
     
     def _execute_local_search(self, node: LocalSearch, instance: Instance,
@@ -313,10 +360,10 @@ class ASTInterpreter:
         operator = self.registry.get_local_search(node.operator)
         
         for _ in range(node.max_iterations):
-            prev_cost = solution.cost
-            solution = operator.apply(solution, instance)
+            prev_distance = solution.total_distance
+            solution = operator.apply(solution)
             
-            if solution.cost >= prev_cost:
+            if solution.total_distance >= prev_distance:
                 break  # No improvement, stop
         
         return solution
@@ -347,27 +394,27 @@ class ASTInterpreter:
         Returns True if solution is good (feasible and reasonable cost).
         """
         # Check feasibility
-        if not solution.is_feasible:
+        if not solution.feasible:
             return False
         
         # Check cost relative to instance
         # (can be customized based on instance characteristics)
-        return solution.cost < float('inf')
+        return solution.total_distance < float('inf')
     
     def _generate_start_solution(self, instance: Instance) -> Solution:
         """Generate a random starting solution."""
         # Use randomized nearest neighbor
         constructor = self.registry.get_constructor('RandomizedInsertion')
-        return constructor.construct(instance)
+        return constructor.apply(instance)
     
     def _verify_solution(self, solution: Solution, instance: Instance) -> None:
         """Verify solution is valid."""
-        if not solution.is_feasible:
+        if not solution.feasible:
             # Try repair
             repairer = self.registry.get_repair('GreedyRepair')
-            solution = repairer.repair(solution, instance)
+            solution = repairer.apply(solution)
         
-        if solution.is_feasible:
+        if solution.feasible:
             self.stats['feasible_solutions'] += 1
         else:
             logger.warning("Solution is infeasible after execution")

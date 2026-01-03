@@ -173,7 +173,7 @@ class IteratedLocalSearch:
             })
             
             if self.verbose:
-                status = "✓✓" if improved_best else ("✓" if accept else "✗")
+                status = "[OK]" if improved_best else ("[OK]" if accept else "[NO]")
                 print(f"  [{iteration+1:3d}] K={improved.num_vehicles}, D={improved.total_distance:.2f}  " +
                       f"Best: K={self.best_fitness[0]}, D={self.best_fitness[1]:.2f}  " +
                       f"[{status}]  ({elapsed_time:.2f}s)")
@@ -181,7 +181,7 @@ class IteratedLocalSearch:
             # Early stopping
             if perturbations_no_improvement >= self.max_perturbations_no_improvement:
                 if self.verbose:
-                    print(f"⏸️  No improvement for {self.max_perturbations_no_improvement} perturbations")
+                    print(f"[STOP] No improvement for {self.max_perturbations_no_improvement} perturbations")
                 break
         
         elapsed_time = time.time() - start_time

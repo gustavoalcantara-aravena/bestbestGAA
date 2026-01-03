@@ -90,7 +90,7 @@ class VariableNeighborhoodDescent:
                 current = improved
                 
                 if self.verbose:
-                    print(f"✓ Improved: {old_fitness} → {current.fitness}")
+                    print(f"[OK] Improved: {old_fitness} -> {current.fitness}")
                 
                 # Log improvement
                 self.search_log.append({
@@ -105,7 +105,7 @@ class VariableNeighborhoodDescent:
                 k = 0
             else:
                 if self.verbose:
-                    print(f"✗ No improvement")
+                    print(f"[NO] No improvement")
                 
                 # Log no improvement
                 self.search_log.append({

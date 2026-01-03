@@ -74,27 +74,42 @@ class SolomonLoader:
         if len(lines) < 2:
             raise ValueError(f"Invalid file format: expected at least 2 lines in {filepath}")
         
-        # Parse header (first line)
-        header = lines[0].split()
-        try:
-            # Try to extract vehicle count and capacity
-            if len(header) >= 2:
-                try:
-                    k_vehicles = int(header[0])
-                    q_capacity = float(header[1])
-                except (ValueError, IndexError):
-                    # Alternative format: instance name in header
-                    k_vehicles = int(header[-2])
-                    q_capacity = float(header[-1])
-            else:
-                raise ValueError("Header must contain at least vehicle count and capacity")
-        except (ValueError, IndexError) as e:
-            raise ValueError(f"Cannot parse header: {header}. Error: {e}")
+        # Check if first line is a header (contains non-numeric values)
+        first_line_parts = lines[0].split()
+        start_line = 0
+        
+        # If first line looks like header (contains non-numeric first element), skip it
+        if first_line_parts and not first_line_parts[0].isdigit() and first_line_parts[0] != '0':
+            # This is likely a header row, skip it
+            k_vehicles = 25  # Default Solomon vehicles
+            q_capacity = 200.0  # Default Solomon capacity
+            start_line = 1
+        else:
+            # Try to extract vehicle count and capacity from first line
+            header = first_line_parts
+            try:
+                if len(header) >= 2:
+                    try:
+                        k_vehicles = int(header[0])
+                        q_capacity = float(header[1])
+                    except (ValueError, IndexError):
+                        # Alternative format: instance name in header
+                        k_vehicles = int(header[-2])
+                        q_capacity = float(header[-1])
+                else:
+                    raise ValueError("Header must contain at least vehicle count and capacity")
+            except (ValueError, IndexError) as e:
+                raise ValueError(f"Cannot parse header: {header}. Error: {e}")
         
         # Parse customers (remaining lines)
         customers = []
-        for line_no, line in enumerate(lines[1:], start=2):
-            parts = line.split()
+        for line_no, line in enumerate(lines[start_line:], start=start_line+1):
+            # Try both comma-separated (CSV) and space-separated formats
+            if ',' in line:
+                parts = [p.strip() for p in line.split(',')]
+            else:
+                parts = line.split()
+            
             if not parts:  # Skip empty lines
                 continue
             
@@ -104,13 +119,17 @@ class SolomonLoader:
                 )
             
             try:
-                customer_id = int(parts[0])
+                original_id = int(float(parts[0]))  # Original ID from file (1-101)
                 x = float(parts[1])
                 y = float(parts[2])
                 demand = float(parts[3])
                 ready_time = float(parts[4])
                 due_date = float(parts[5])
                 service_time = float(parts[6])
+                
+                # Renumber: original ID 1 becomes customer_id 0 (depot)
+                # original ID 2 becomes customer_id 1, etc.
+                customer_id = original_id - 1
                 
                 customer = Customer(
                     id=customer_id,
