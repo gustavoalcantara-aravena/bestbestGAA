@@ -701,6 +701,447 @@ class ResultVisualizer:
         print(f"  [OK] Saved: {output_path.name}")
 
 
+    def generate_gap_plots_from_json(self, json_path: str):
+        """
+        Generate GAP comparison plots from JSON data.
+        
+        Args:
+            json_path: Path to gap_data.json file
+        """
+        if not Path(json_path).exists():
+            print(f"[WARNING] JSON file not found: {json_path}")
+            return
+        
+        try:
+            with open(json_path, 'r') as f:
+                gap_data = json.load(f)
+        except Exception as e:
+            print(f"[ERROR] Failed to load JSON: {e}")
+            return
+        
+        if not MATPLOTLIB_AVAILABLE:
+            print("[ERROR] Cannot generate plots without matplotlib")
+            return
+        
+        print(f"[INFO] Generating GAP plots from JSON...")
+        
+        # GAP COMPARISON PLOTS (5 types)
+        self._plot_gap_comparison_bars(gap_data)           # 01_gap_comparison_all_instances
+        self._plot_gap_evolution_lines(gap_data)           # 02_gap_evolution_lines
+        self._plot_gap_boxplot_by_family(gap_data)         # 03_gap_boxplot_by_family
+        self._plot_gap_heatmap(gap_data)                   # 04_gap_heatmap
+        self._plot_gap_by_family_grid(gap_data)            # 05_gap_by_family_grid
+        
+        print(f"[INFO] GAP plots generation complete! (5 comparison plots)")
+    
+    def _plot_gap_comparison_bars(self, gap_data: Dict):
+        """Gráfico 01: Comparación de GAP por instancia (barras)"""
+        instances = list(gap_data['instances'].keys())
+        instances.sort()
+        
+        algo1_gaps = []
+        algo2_gaps = []
+        algo3_gaps = []
+        
+        for inst in instances:
+            inst_data = gap_data['instances'][inst]
+            algo1_gaps.append(inst_data['algorithms'].get('algo1', {}).get('gap_percent', 0))
+            algo2_gaps.append(inst_data['algorithms'].get('algo2', {}).get('gap_percent', 0))
+            algo3_gaps.append(inst_data['algorithms'].get('algo3', {}).get('gap_percent', 0))
+        
+        fig, ax = plt.subplots(figsize=(24, 8))
+        
+        x_pos = np.arange(len(instances))
+        width = 0.25
+        
+        ax.bar(x_pos - width, algo1_gaps, width, label='Algoritmo 1', alpha=0.8, color='#FF6B6B')
+        ax.bar(x_pos, algo2_gaps, width, label='Algoritmo 2', alpha=0.8, color='#4ECDC4')
+        ax.bar(x_pos + width, algo3_gaps, width, label='Algoritmo 3', alpha=0.8, color='#FFE66D')
+        
+        ax.axhline(y=0, color='red', linestyle='--', linewidth=2, label='BKS', alpha=0.7)
+        
+        ax.set_xlabel('Instancia (Solomon VRPTW)', fontsize=12, fontweight='bold')
+        ax.set_ylabel('GAP a BKS (%)', fontsize=12, fontweight='bold')
+        ax.set_title('Comparación GAP: 3 Algoritmos vs Best Known Solutions\nTodas las Instancias Solomon', 
+                     fontsize=14, fontweight='bold', pad=20)
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(instances, rotation=45, ha='right')
+        ax.legend(fontsize=11, loc='upper left')
+        ax.grid(axis='y', alpha=0.3)
+        
+        # Colorear fondo por familia
+        families = [gap_data['instances'][inst]['family'] for inst in instances]
+        unique_families = []
+        family_changes = []
+        for i, fam in enumerate(families):
+            if fam not in unique_families:
+                unique_families.append(fam)
+                family_changes.append(i)
+        
+        for i in range(len(family_changes)):
+            start = family_changes[i]
+            end = family_changes[i + 1] if i + 1 < len(family_changes) else len(instances)
+            if i % 2 == 0:
+                ax.axvspan(start - 0.5, end - 0.5, alpha=0.1, color='gray', zorder=0)
+        
+        plt.tight_layout()
+        output_path = self.plots_dir / '01_gap_comparison_all_instances.png'
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  [OK] Saved: {output_path.name}")
+    
+    def _plot_gap_evolution_lines(self, gap_data: Dict):
+        """Gráfico 02: Evolución de GAP (líneas)"""
+        instances = list(gap_data['instances'].keys())
+        instances.sort()
+        
+        algo1_gaps = []
+        algo2_gaps = []
+        algo3_gaps = []
+        
+        for inst in instances:
+            inst_data = gap_data['instances'][inst]
+            algo1_gaps.append(inst_data['algorithms'].get('algo1', {}).get('gap_percent', 0))
+            algo2_gaps.append(inst_data['algorithms'].get('algo2', {}).get('gap_percent', 0))
+            algo3_gaps.append(inst_data['algorithms'].get('algo3', {}).get('gap_percent', 0))
+        
+        fig, ax = plt.subplots(figsize=(24, 8))
+        
+        x_pos = np.arange(len(instances))
+        
+        ax.plot(x_pos, algo1_gaps, 'o-', linewidth=2.5, markersize=6, 
+                label='Algoritmo 1', color='#FF6B6B', alpha=0.8)
+        ax.plot(x_pos, algo2_gaps, 's-', linewidth=2.5, markersize=6, 
+                label='Algoritmo 2', color='#4ECDC4', alpha=0.8)
+        ax.plot(x_pos, algo3_gaps, '^-', linewidth=2.5, markersize=6, 
+                label='Algoritmo 3', color='#FFE66D', alpha=0.8)
+        
+        ax.axhline(y=0, color='red', linestyle='--', linewidth=2.5, label='BKS (GAP=0)', alpha=0.7)
+        
+        ax.set_xlabel('Instancia (Solomon VRPTW)', fontsize=12, fontweight='bold')
+        ax.set_ylabel('GAP a BKS (%)', fontsize=12, fontweight='bold')
+        ax.set_title('Evolución de GAP por Instancia: Comparación 3 Algoritmos\nTodas las Instancias Solomon', 
+                     fontsize=14, fontweight='bold', pad=20)
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(instances, rotation=45, ha='right')
+        ax.legend(fontsize=11, loc='upper left', framealpha=0.95)
+        ax.grid(axis='y', alpha=0.3)
+        
+        plt.tight_layout()
+        output_path = self.plots_dir / '02_gap_evolution_lines.png'
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  [OK] Saved: {output_path.name}")
+    
+    def _plot_gap_boxplot_by_family(self, gap_data: Dict):
+        """Gráfico 03: GAP por familia (boxplot)"""
+        # Agrupar por familia
+        families_dict = {}
+        for inst, inst_data in gap_data['instances'].items():
+            family = inst_data['family']
+            if family not in families_dict:
+                families_dict[family] = {'algo1': [], 'algo2': [], 'algo3': []}
+            
+            for algo_num in [1, 2, 3]:
+                gap = inst_data['algorithms'].get(f'algo{algo_num}', {}).get('gap_percent')
+                if gap is not None:
+                    families_dict[family][f'algo{algo_num}'].append(gap)
+        
+        families = sorted(families_dict.keys())
+        
+        fig, ax = plt.subplots(figsize=(14, 8))
+        
+        positions = np.arange(len(families))
+        width = 0.25
+        
+        gap_data_algo1 = [families_dict[fam]['algo1'] for fam in families]
+        gap_data_algo2 = [families_dict[fam]['algo2'] for fam in families]
+        gap_data_algo3 = [families_dict[fam]['algo3'] for fam in families]
+        
+        bp1 = ax.boxplot(gap_data_algo1, positions=positions - width, widths=width, 
+                          patch_artist=True, label='Algoritmo 1')
+        bp2 = ax.boxplot(gap_data_algo2, positions=positions, widths=width, 
+                          patch_artist=True, label='Algoritmo 2')
+        bp3 = ax.boxplot(gap_data_algo3, positions=positions + width, widths=width, 
+                          patch_artist=True, label='Algoritmo 3')
+        
+        for patch in bp1['boxes']:
+            patch.set_facecolor('#FF6B6B')
+            patch.set_alpha(0.7)
+        for patch in bp2['boxes']:
+            patch.set_facecolor('#4ECDC4')
+            patch.set_alpha(0.7)
+        for patch in bp3['boxes']:
+            patch.set_facecolor('#FFE66D')
+            patch.set_alpha(0.7)
+        
+        ax.axhline(y=0, color='red', linestyle='--', linewidth=2, label='BKS', alpha=0.7)
+        ax.set_xlabel('Familia Solomon', fontsize=12, fontweight='bold')
+        ax.set_ylabel('GAP a BKS (%)', fontsize=12, fontweight='bold')
+        ax.set_title('Distribución de GAP por Familia: 3 Algoritmos (Boxplot)', 
+                     fontsize=14, fontweight='bold', pad=20)
+        ax.set_xticks(positions)
+        ax.set_xticklabels(families)
+        ax.legend(fontsize=11, loc='upper left')
+        ax.grid(axis='y', alpha=0.3)
+        
+        plt.tight_layout()
+        output_path = self.plots_dir / '03_gap_boxplot_by_family.png'
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  [OK] Saved: {output_path.name}")
+    
+    def _plot_gap_heatmap(self, gap_data: Dict):
+        """Gráfico 04: Heatmap de GAP"""
+        import pandas as pd
+        
+        instances = sorted(gap_data['instances'].keys())
+        
+        gap_matrix_data = {
+            'Algo 1': [],
+            'Algo 2': [],
+            'Algo 3': [],
+        }
+        
+        for inst in instances:
+            inst_data = gap_data['instances'][inst]
+            gap_matrix_data['Algo 1'].append(inst_data['algorithms'].get('algo1', {}).get('gap_percent', 0))
+            gap_matrix_data['Algo 2'].append(inst_data['algorithms'].get('algo2', {}).get('gap_percent', 0))
+            gap_matrix_data['Algo 3'].append(inst_data['algorithms'].get('algo3', {}).get('gap_percent', 0))
+        
+        gap_matrix = pd.DataFrame(gap_matrix_data, index=instances)
+        
+        fig, ax = plt.subplots(figsize=(12, 16))
+        
+        sns.heatmap(gap_matrix, annot=True, fmt='.1f', cmap='RdYlGn_r', center=0,
+                    cbar_kws={'label': 'GAP a BKS (%)'}, ax=ax, linewidths=0.5, linecolor='gray')
+        
+        ax.set_title('Heatmap: GAP de cada Algoritmo vs Instancia\n(Rojo=Peor, Verde=Mejor)', 
+                     fontsize=14, fontweight='bold', pad=20)
+        ax.set_xlabel('Algoritmo', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Instancia', fontsize=12, fontweight='bold')
+        
+        plt.tight_layout()
+        output_path = self.plots_dir / '04_gap_heatmap.png'
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  [OK] Saved: {output_path.name}")
+    
+    def _plot_gap_by_family_grid(self, gap_data: Dict):
+        """Gráfico 05: GAP por familia (grid 2x3)"""
+        # Agrupar por familia
+        families_dict = {}
+        for inst, inst_data in gap_data['instances'].items():
+            family = inst_data['family']
+            if family not in families_dict:
+                families_dict[family] = {'instances': [], 'algo1': [], 'algo2': [], 'algo3': []}
+            
+            families_dict[family]['instances'].append(inst)
+            for algo_num in [1, 2, 3]:
+                gap = inst_data['algorithms'].get(f'algo{algo_num}', {}).get('gap_percent', 0)
+                families_dict[family][f'algo{algo_num}'].append(gap)
+        
+        families = sorted(families_dict.keys())
+        
+        fig, axes = plt.subplots(2, 3, figsize=(18, 10))
+        axes = axes.flatten()
+        
+        for idx, family in enumerate(families):
+            family_data = families_dict[family]
+            
+            x = np.arange(len(family_data['instances']))
+            width = 0.25
+            
+            ax = axes[idx]
+            ax.bar(x - width, family_data['algo1'], width, label='Algo 1', color='#FF6B6B', alpha=0.8)
+            ax.bar(x, family_data['algo2'], width, label='Algo 2', color='#4ECDC4', alpha=0.8)
+            ax.bar(x + width, family_data['algo3'], width, label='Algo 3', color='#FFE66D', alpha=0.8)
+            
+            ax.axhline(y=0, color='red', linestyle='--', linewidth=1.5, alpha=0.7)
+            ax.set_title(f'Familia {family} ({len(family_data["instances"])} instancias)', 
+                        fontsize=11, fontweight='bold')
+            ax.set_xlabel('Instancia', fontsize=10)
+            ax.set_ylabel('GAP (%)', fontsize=10)
+            ax.set_xticks(x)
+            ax.set_xticklabels([inst.replace(family, '') for inst in family_data['instances']], rotation=45)
+            ax.grid(axis='y', alpha=0.3)
+            ax.legend(fontsize=9)
+        
+        plt.suptitle('Comparación de GAP por Familia Solomon VRPTW', 
+                     fontsize=14, fontweight='bold', y=1.00)
+        plt.tight_layout()
+        output_path = self.plots_dir / '05_gap_by_family_grid.png'
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  [OK] Saved: {output_path.name}")
+    
+    def generate_gap_plots_from_json(self, json_path: str):
+        """
+        Generate all GAP plots from JSON data file
+        
+        Args:
+            json_path: Path to gap_data.json
+        """
+        json_path = Path(json_path)
+        if not json_path.exists():
+            print(f"[ERROR] JSON not found: {json_path}")
+            return
+        
+        with open(json_path) as f:
+            gap_data = json.load(f)
+        
+        print(f"\n[GAP PLOTS] Generating from JSON: {json_path.name}")
+        
+        instances_data = gap_data.get('instances', {})
+        if not instances_data:
+            print("[WARNING] No instance data in JSON")
+            return
+        
+        # Extract data into sorted lists
+        instance_ids = sorted(instances_data.keys())
+        families = [instances_data[inst]['family'] for inst in instance_ids]
+        
+        algo_gaps = {'1': [], '2': [], '3': []}
+        algo_distances = {'1': [], '2': [], '3': []}
+        
+        for instance_id in instance_ids:
+            inst_data = instances_data[instance_id]
+            for algo_num in ['1', '2', '3']:
+                algo_key = f'algo{algo_num}'
+                if algo_key in inst_data.get('algorithms', {}):
+                    algo_info = inst_data['algorithms'][algo_key]
+                    gap = algo_info.get('gap_percent')
+                    distance = algo_info.get('distance')
+                    if gap is not None:
+                        algo_gaps[algo_num].append(gap)
+                    if distance is not None:
+                        algo_distances[algo_num].append(distance)
+        
+        # ============================================================
+        # GRÁFICO 1: GAP por instancia (todas)
+        # ============================================================
+        fig, ax = plt.subplots(figsize=(24, 8))
+        
+        x_pos = np.arange(len(instance_ids))
+        width = 0.25
+        
+        bars1 = ax.bar(x_pos - width, algo_gaps['1'], width, label='Algoritmo 1', alpha=0.8, color='#FF6B6B')
+        bars2 = ax.bar(x_pos, algo_gaps['2'], width, label='Algoritmo 2', alpha=0.8, color='#4ECDC4')
+        bars3 = ax.bar(x_pos + width, algo_gaps['3'], width, label='Algoritmo 3', alpha=0.8, color='#FFE66D')
+        
+        ax.axhline(y=0, color='red', linestyle='--', linewidth=2, label='BKS', alpha=0.7)
+        ax.set_xlabel('Instancia (Solomon VRPTW)', fontsize=12, fontweight='bold')
+        ax.set_ylabel('GAP a BKS (%)', fontsize=12, fontweight='bold')
+        ax.set_title('Comparación GAP: 3 Algoritmos vs Best Known Solutions\n56 Instancias Solomon', 
+                     fontsize=14, fontweight='bold', pad=20)
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(instance_ids, rotation=45, ha='right')
+        ax.legend(fontsize=11, loc='upper left')
+        ax.grid(axis='y', alpha=0.3)
+        
+        plt.tight_layout()
+        output_path = self.plots_dir / '06_gap_comparison_all_instances.png'
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  [OK] Saved: {output_path.name}")
+        
+        # ============================================================
+        # GRÁFICO 2: Líneas de GAP
+        # ============================================================
+        fig, ax = plt.subplots(figsize=(24, 8))
+        
+        ax.plot(x_pos, algo_gaps['1'], 'o-', linewidth=2.5, markersize=6, 
+                label='Algoritmo 1', color='#FF6B6B', alpha=0.8)
+        ax.plot(x_pos, algo_gaps['2'], 's-', linewidth=2.5, markersize=6, 
+                label='Algoritmo 2', color='#4ECDC4', alpha=0.8)
+        ax.plot(x_pos, algo_gaps['3'], '^-', linewidth=2.5, markersize=6, 
+                label='Algoritmo 3', color='#FFE66D', alpha=0.8)
+        
+        ax.axhline(y=0, color='red', linestyle='--', linewidth=2.5, label='BKS (GAP=0)', alpha=0.7)
+        ax.set_xlabel('Instancia (Solomon VRPTW)', fontsize=12, fontweight='bold')
+        ax.set_ylabel('GAP a BKS (%)', fontsize=12, fontweight='bold')
+        ax.set_title('Evolución de GAP por Instancia: Comparación 3 Algoritmos\n56 Instancias Solomon', 
+                     fontsize=14, fontweight='bold', pad=20)
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(instance_ids, rotation=45, ha='right')
+        ax.legend(fontsize=11, loc='upper left', framealpha=0.95)
+        ax.grid(axis='y', alpha=0.3)
+        
+        plt.tight_layout()
+        output_path = self.plots_dir / '07_gap_evolution_lines.png'
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  [OK] Saved: {output_path.name}")
+        
+        # ============================================================
+        # GRÁFICO 3: Boxplot por familia
+        # ============================================================
+        fig, ax = plt.subplots(figsize=(14, 8))
+        
+        unique_families = sorted(set(families))
+        positions = np.arange(len(unique_families))
+        width = 0.25
+        
+        gap_by_family = {algo: [] for algo in ['1', '2', '3']}
+        for family in unique_families:
+            for algo in ['1', '2', '3']:
+                family_gaps = [algo_gaps[algo][i] for i, f in enumerate(families) if f == family]
+                gap_by_family[algo].append(family_gaps)
+        
+        bp1 = ax.boxplot(gap_by_family['1'], positions=positions - width, widths=width, 
+                          patch_artist=True, label='Algoritmo 1')
+        bp2 = ax.boxplot(gap_by_family['2'], positions=positions, widths=width, 
+                          patch_artist=True, label='Algoritmo 2')
+        bp3 = ax.boxplot(gap_by_family['3'], positions=positions + width, widths=width, 
+                          patch_artist=True, label='Algoritmo 3')
+        
+        for patch in bp1['boxes']:
+            patch.set_facecolor('#FF6B6B')
+            patch.set_alpha(0.7)
+        for patch in bp2['boxes']:
+            patch.set_facecolor('#4ECDC4')
+            patch.set_alpha(0.7)
+        for patch in bp3['boxes']:
+            patch.set_facecolor('#FFE66D')
+            patch.set_alpha(0.7)
+        
+        ax.axhline(y=0, color='red', linestyle='--', linewidth=2, label='BKS', alpha=0.7)
+        ax.set_xlabel('Familia Solomon', fontsize=12, fontweight='bold')
+        ax.set_ylabel('GAP a BKS (%)', fontsize=12, fontweight='bold')
+        ax.set_title('Distribución de GAP por Familia: 3 Algoritmos\n(Boxplot)', 
+                     fontsize=14, fontweight='bold', pad=20)
+        ax.set_xticks(positions)
+        ax.set_xticklabels(unique_families)
+        ax.legend(fontsize=11, loc='upper left')
+        ax.grid(axis='y', alpha=0.3)
+        
+        plt.tight_layout()
+        output_path = self.plots_dir / '08_gap_boxplot_by_family.png'
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"  [OK] Saved: {output_path.name}")
+        
+        # ============================================================
+        # GRÁFICO 4: Estadísticas resumidas
+        # ============================================================
+        print(f"\n[GAP STATISTICS]")
+        for algo_num in ['1', '2', '3']:
+            gaps = algo_gaps[algo_num]
+            distances = algo_distances[algo_num]
+            if gaps:
+                print(f"\nAlgoritmo {algo_num}:")
+                print(f"  Promedio GAP: {np.mean(gaps):.2f}%")
+                print(f"  Mediana GAP: {np.median(gaps):.2f}%")
+                print(f"  Desv. Est.: {np.std(gaps):.2f}%")
+                print(f"  Min GAP: {np.min(gaps):.2f}%")
+                print(f"  Max GAP: {np.max(gaps):.2f}%")
+                print(f"  Promedio Distance: {np.mean(distances):.2f}")
+                print(f"  Instancias mejor que BKS: {sum(1 for g in gaps if g < 0)}")
+
+
+
+
+
 def generate_visualizations(results_csv_path: str, plots_dir: str):
     """
     Generate all visualizations from experiment results.
@@ -716,3 +1157,20 @@ def generate_visualizations(results_csv_path: str, plots_dir: str):
     
     visualizer = ResultVisualizer(results_csv_path, plots_dir)
     visualizer.generate_all()
+
+
+def generate_gap_plots(json_path: str, plots_dir: str):
+    """
+    Generate GAP comparison plots from JSON data.
+    
+    Args:
+        json_path: Path to gap_data.json file
+        plots_dir: Directory to save plots
+    """
+    if not MATPLOTLIB_AVAILABLE:
+        print("[WARNING] matplotlib/seaborn required for visualization")
+        print("Install with: pip install matplotlib seaborn numpy")
+        return
+    
+    visualizer = ResultVisualizer("", plots_dir)
+    visualizer.generate_gap_plots_from_json(json_path)

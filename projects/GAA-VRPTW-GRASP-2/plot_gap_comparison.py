@@ -10,6 +10,7 @@ from pathlib import Path
 import seaborn as sns
 import glob
 from datetime import datetime
+import json
 
 # Configurar estilo
 sns.set_style("whitegrid")
@@ -33,6 +34,21 @@ BKS = {
     'RC201': 1406.91, 'RC202': 1365.64, 'RC203': 1057.46, 'RC204': 798.46, 
     'RC205': 1297.65, 'RC206': 1143.32, 'RC207': 1061.14, 'RC208': 880.59,
 }
+
+# Cargar BKS con K desde JSON
+BKS_FULL = {}
+try:
+    with open('best_known_solutions.json', 'r') as f:
+        bks_data = json.load(f)
+        for family_data in bks_data['families'].values():
+            for instance in family_data['instances']:
+                BKS_FULL[instance['id']] = {
+                    'k_bks': instance['k_bks'],
+                    'd_bks': instance['d_bks']
+                }
+except:
+    print("[WARNING] No se pudo cargar best_known_solutions.json, usando datos aproximados")
+    BKS_FULL = {}
 
 # Buscar el archivo CSV más reciente en output/*/results/raw_results.csv
 output_dir = Path('output')
@@ -280,6 +296,93 @@ print("[OK] Guardado: 05_gap_by_family_grid.png")
 plt.close()
 
 # ============================================================
+# GRÁFICO 6: BKS K vs K Logrado por cada Algoritmo
+# ============================================================
+fig, ax = plt.subplots(figsize=(24, 8))
+
+x_pos = np.arange(len(df))
+width = 0.2
+
+# Extraer K_BKS para cada instancia
+df['k_bks'] = df['instance'].apply(lambda x: BKS_FULL.get(x, {}).get('k_bks', 0) if BKS_FULL else 0)
+
+# Necesitamos obtener K_final para cada algoritmo desde raw_df
+df['k_algo1'] = df['instance'].apply(
+    lambda x: raw_df[(raw_df['instance_id'] == x) & (raw_df['algorithm'] == 'GAA_Algorithm_1')]['k_final'].values[0] if len(raw_df[(raw_df['instance_id'] == x) & (raw_df['algorithm'] == 'GAA_Algorithm_1')]) > 0 else 0
+)
+df['k_algo2'] = df['instance'].apply(
+    lambda x: raw_df[(raw_df['instance_id'] == x) & (raw_df['algorithm'] == 'GAA_Algorithm_2')]['k_final'].values[0] if len(raw_df[(raw_df['instance_id'] == x) & (raw_df['algorithm'] == 'GAA_Algorithm_2')]) > 0 else 0
+)
+df['k_algo3'] = df['instance'].apply(
+    lambda x: raw_df[(raw_df['instance_id'] == x) & (raw_df['algorithm'] == 'GAA_Algorithm_3')]['k_final'].values[0] if len(raw_df[(raw_df['instance_id'] == x) & (raw_df['algorithm'] == 'GAA_Algorithm_3')]) > 0 else 0
+)
+
+# Crear barras
+bars_bks = ax.bar(x_pos - 1.5*width, df['k_bks'], width, label='BKS', alpha=0.9, color='#2ecc71', edgecolor='black', linewidth=1)
+bars1 = ax.bar(x_pos - 0.5*width, df['k_algo1'], width, label='Algoritmo 1', alpha=0.8, color='#FF6B6B')
+bars2 = ax.bar(x_pos + 0.5*width, df['k_algo2'], width, label='Algoritmo 2', alpha=0.8, color='#4ECDC4')
+bars3 = ax.bar(x_pos + 1.5*width, df['k_algo3'], width, label='Algoritmo 3', alpha=0.8, color='#FFE66D')
+
+ax.set_xlabel('Instancia (Solomon VRPTW)', fontsize=12, fontweight='bold')
+ax.set_ylabel('Número de Vehículos (K)', fontsize=12, fontweight='bold')
+ax.set_title('Comparación: Vehículos BKS vs Vehículos Utilizados por cada Algoritmo\n56 Instancias Solomon', 
+             fontsize=14, fontweight='bold', pad=20)
+ax.set_xticks(x_pos)
+ax.set_xticklabels(df['instance'], rotation=45, ha='right')
+ax.legend(fontsize=11, loc='upper left')
+ax.grid(axis='y', alpha=0.3)
+
+# Colorear fondo por familia
+for i, (family, group) in enumerate(df.groupby('family')):
+    group_indices = group.index
+    if i % 2 == 0:
+        ax.axvspan(group_indices[0] - 0.5, group_indices[-1] + 0.5, 
+                   alpha=0.1, color='gray', zorder=0)
+
+plt.tight_layout()
+plt.savefig(plots_dir / '06_k_bks_vs_algorithms.png', dpi=300, bbox_inches='tight')
+print("[OK] Guardado: 06_k_bks_vs_algorithms.png")
+plt.close()
+
+# ============================================================
+# GRÁFICO 7: BKS Distancia vs Distancia Lograda por cada Algoritmo
+# ============================================================
+fig, ax = plt.subplots(figsize=(24, 8))
+
+x_pos = np.arange(len(df))
+width = 0.2
+
+# Extraer D_BKS para cada instancia
+df['d_bks'] = df['instance'].apply(lambda x: BKS_FULL.get(x, {}).get('d_bks', 0) if BKS_FULL else 0)
+
+# Crear barras
+bars_bks = ax.bar(x_pos - 1.5*width, df['d_bks'], width, label='BKS', alpha=0.9, color='#2ecc71', edgecolor='black', linewidth=1)
+bars1 = ax.bar(x_pos - 0.5*width, df['distance_algo1'], width, label='Algoritmo 1', alpha=0.8, color='#FF6B6B')
+bars2 = ax.bar(x_pos + 0.5*width, df['distance_algo2'], width, label='Algoritmo 2', alpha=0.8, color='#4ECDC4')
+bars3 = ax.bar(x_pos + 1.5*width, df['distance_algo3'], width, label='Algoritmo 3', alpha=0.8, color='#FFE66D')
+
+ax.set_xlabel('Instancia (Solomon VRPTW)', fontsize=12, fontweight='bold')
+ax.set_ylabel('Distancia Total (km)', fontsize=12, fontweight='bold')
+ax.set_title('Comparación: Distancia BKS vs Distancia Total Lograda por cada Algoritmo\n56 Instancias Solomon', 
+             fontsize=14, fontweight='bold', pad=20)
+ax.set_xticks(x_pos)
+ax.set_xticklabels(df['instance'], rotation=45, ha='right')
+ax.legend(fontsize=11, loc='upper left')
+ax.grid(axis='y', alpha=0.3)
+
+# Colorear fondo por familia
+for i, (family, group) in enumerate(df.groupby('family')):
+    group_indices = group.index
+    if i % 2 == 0:
+        ax.axvspan(group_indices[0] - 0.5, group_indices[-1] + 0.5, 
+                   alpha=0.1, color='gray', zorder=0)
+
+plt.tight_layout()
+plt.savefig(plots_dir / '07_distance_bks_vs_algorithms.png', dpi=300, bbox_inches='tight')
+print("[OK] Guardado: 07_distance_bks_vs_algorithms.png")
+plt.close()
+
+# ============================================================
 # Tabla resumen de estadísticas
 # ============================================================
 print("\n" + "="*80)
@@ -334,7 +437,7 @@ for family in ['C1', 'C2', 'R1', 'R2', 'RC1', 'RC2']:
     # Mejor algoritmo
     means = [family_data['gap_algo1'].mean(), family_data['gap_algo2'].mean(), family_data['gap_algo3'].mean()]
     best_algo = np.argmin(means) + 1
-    print(f"  ✅ MEJOR: Algoritmo {best_algo}")
+    print(f"  [MEJOR] Algoritmo {best_algo}")
 
 print("\n" + "="*80)
 print("Gráficos generados en: " + str(plots_dir))

@@ -85,23 +85,28 @@ class AlgorithmGenerator:
         """
         Generate three complementary algorithms optimizing GRASP principles:
         
-        ALGORITMO 2: ALGORITMO DE CONTROL (ITER-3/ITER-6 - NO MODIFICAR)
-        - GANADOR: D=1172.18, t=0.18s, K=0 (perfecto)
+        ALGORITMO 2: ALGORITMO DE CONTROL (INMUTABLE)
+        - CONTROL baseline: D=1172.18, t=0.18s
         - NearestNeighbor constructor + ILS perturbation
         - DoubleBridge(strength=3) + While(80) iteraciones
         
-        ALGORITMO 1: GRASP PURO (ITER-6 - OPTIMIZACIÓN EXPLORATIVA)
-        - Mejorar sobre ITER-3 sin caer en ITER-4A disaster
-        - Estrategia: Incrementos moderados en parámetros clave
-        - TwoOpt+ (52→60), While+ (75→85), OrOpt- (28→24)
-        - DoubleBridge: 2.0→2.5 (mejor que ITER-3, pero < ITER-4A 3.5)
-        - Objetivo: D 1391.51 → <1350 (-3%)
+        ALGORITMO 1: GRASP EXPLORATIVO (ITER-7)
+        - Exploración similar a Algo 3 pero con variaciones
+        - While: 95 (vs 100 en Algo 3, menos iteraciones)
+        - TwoOpt pre: 48 (vs 45 en Algo 3, más agresivo)
+        - DoubleBridge: 1.5 (igual a Algo 3)
+        - TwoOpt post: 38 (vs 40 en Algo 3, menos)
+        - Relocate: 32 (vs 35 en Algo 3, menos)
+        - Objetivo: Balance entre exploración y explotación
         
-        ALGORITMO 3: GRASP ADAPTATIVO (ITER-6 - EXPLORACIÓN AGRESIVA)
-        - Mantener fix CRITICAL de ITER-4B (strength=3.0, While=90)
-        - Exploración más agresiva: TwoOpt+ (50→55), OrOpt+ (15→20)
-        - Reducción: TwoOpt post (40→35), Relocate+ (15→18)
-        - Objetivo: D 1408.04 → <1300 (-7%)
+        ALGORITMO 3: GRASP MUY EXPLORATIVO (ITER-7)
+        - Máxima exploración vs BKS
+        - While: 100 (máximo)
+        - TwoOpt pre: 45 (menos que Algo 1)
+        - DoubleBridge: 1.5 (perturbación moderada)
+        - TwoOpt post: 40 (más que Algo 1)
+        - Relocate: 35 (máximo)
+        - Objetivo: Máxima mejora sin over-optimization
         
         Args:
             seed: Seed para reproducibilidad
@@ -113,27 +118,24 @@ class AlgorithmGenerator:
         algorithms = []
         
         # ========================================================================
-        # ALGORITMO 1: GRASP Puro (ITER-6 - OPTIMIZACIÓN MODERADA)
+        # ALGORITMO 1: GRASP Explorativo (ITER-7 - Balance)
         # ========================================================================
-        # ITER-6: Aprendizaje de ITER-4A failure + ITER-3 baseline
-        # Incrementos cuidadosos para explorar mejora sin shock
-        # - TwoOpt pre-perturb: 52→60 (más prep antes perturb)
-        # - While: 75→85 (más iteraciones, pero conservador)
-        # - OrOpt: 28→24 (reducir, enfoque en TwoOpt)
-        # - DoubleBridge: 2.0→2.5 (moderado, entre ITER-3 y ITER-4A)
-        # - TwoOpt post-perturb: 32→35 (mejora post-perturb)
-        # - Relocate: 18→20 (pequeño incremento)
-        # Objetivo: D 1391.51 → ~1350 (mejor que ITER-3)
+        # Similar a Algo 3 pero con variaciones estratégicas
+        # - While: 95 (iteraciones altas pero < Algo 3)
+        # - TwoOpt pre: 48 (pre-perturbación agresiva, > Algo 3)
+        # - DoubleBridge: 1.5 (igual a Algo 3, perturbación moderada)
+        # - TwoOpt post: 38 (post-perturbación moderada)
+        # - Relocate: 32 (ajustes finales moderados)
+        # Balance: Más TwoOpt pre, menos relocate
         algo1 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
-                max_iterations=85,  # Incremento: 75→85 (exploratorio)
+                max_iterations=95,  # Balance: 95 iteraciones
                 body=Seq(body=[
-                    LocalSearch(operator='TwoOpt', max_iterations=60),  # Incremento: 52→60 (pre-prep)
-                    LocalSearch(operator='OrOpt', max_iterations=24),   # Reducción: 28→24 (TwoOpt focus)
-                    Perturbation(operator='DoubleBridge', strength=2.5),  # Incremento: 2.0→2.5 (moderado)
-                    LocalSearch(operator='TwoOpt', max_iterations=35),  # Incremento: 32→35 (post-perturb)
-                    LocalSearch(operator='Relocate', max_iterations=20)  # Incremento: 18→20 (ajuste)
+                    LocalSearch(operator='TwoOpt', max_iterations=48),  # Agresivo pre: 48
+                    Perturbation(operator='DoubleBridge', strength=1.5),  # Moderado: 1.5
+                    LocalSearch(operator='TwoOpt', max_iterations=38),  # Post: 38
+                    LocalSearch(operator='Relocate', max_iterations=32)  # Ajustes: 32
                 ])
             )
         ])
@@ -142,7 +144,7 @@ class AlgorithmGenerator:
         # ========================================================================
         # ALGORITMO 2: GRASP + Perturbación (CONTROL - INMUTABLE)
         # ========================================================================
-        # ITER-6: SIN CAMBIOS - Control absoluto
+        # SIN CAMBIOS - Control absoluto para comparación
         algo2 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
@@ -158,27 +160,24 @@ class AlgorithmGenerator:
         algorithms.append(algo2)
         
         # ========================================================================
-        # ALGORITMO 3: GRASP ADAPTATIVO (ITER-6 - EXPLORACIÓN AGRESIVA)
+        # ALGORITMO 3: GRASP MUY EXPLORATIVO (ITER-7 - Máxima exploración)
         # ========================================================================
-        # ITER-6: Mantener CRITICAL FIX de ITER-4B, exploración más agresiva
-        # Basado en éxito de ITER-4B (Algo3: 1504.34 → 1408.04)
-        # - Mantener DoubleBridge(3.0) - fue CRITICAL FIX (1.0→3.0)
-        # - Mantener While(90) - más iteraciones que ITER-3
-        # - TwoOpt pre: 50→55 (más prep pre-perturb)
-        # - OrOpt: 15→20 (incremento agresivo, balance)
-        # - TwoOpt post: 40→35 (reducción post-perturb, evitar stagnation)
-        # - Relocate: 15→18 (movimientos finales)
-        # Objetivo: D 1408.04 → ~1280 (mejor que Algo1)
+        # Exploración agresiva con DoubleBridge moderado
+        # - While: 100 (máximas iteraciones)
+        # - TwoOpt pre: 45 (prep pre-perturbación)
+        # - DoubleBridge: 1.5 (perturbación moderada, explorativa)
+        # - TwoOpt post: 40 (mejora post-perturbación)
+        # - Relocate: 35 (máximos ajustes finales)
+        # Objetivo: Máxima exploración del espacio de soluciones
         algo3 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
-                max_iterations=90,  # Mantener: 90 (éxito ITER-4B)
+                max_iterations=100,  # Máximas iteraciones
                 body=Seq(body=[
-                    LocalSearch(operator='TwoOpt', max_iterations=55),  # Incremento: 50→55 (pre-prep)
-                    LocalSearch(operator='OrOpt', max_iterations=20),   # Incremento: 15→20 (agresivo)
-                    Perturbation(operator='DoubleBridge', strength=3.0),  # Mantener: 3.0 (CRITICAL)
-                    LocalSearch(operator='TwoOpt', max_iterations=35),  # Reducción: 40→35 (evitar stagnation)
-                    LocalSearch(operator='Relocate', max_iterations=18)  # Incremento: 15→18 (ajuste)
+                    LocalSearch(operator='TwoOpt', max_iterations=45),  # Pre-prep: 45
+                    Perturbation(operator='DoubleBridge', strength=1.5),  # Moderado: 1.5
+                    LocalSearch(operator='TwoOpt', max_iterations=40),  # Post: 40
+                    LocalSearch(operator='Relocate', max_iterations=35)  # Máximos: 35
                 ])
             )
         ])
