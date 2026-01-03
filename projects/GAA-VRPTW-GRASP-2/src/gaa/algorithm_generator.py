@@ -173,7 +173,7 @@ class AlgorithmGenerator:
                 body=Seq(body=[
                     LocalSearch(operator='TwoOpt', max_iterations=50),
                     LocalSearch(operator='OrOpt', max_iterations=20),
-                    Perturbation(operator='DoubleBridge', strength=1.0),  # MUY leve
+                    Perturbation(operator='DoubleBridge', strength=1),  # MUY leve
                     LocalSearch(operator='TwoOpt', max_iterations=35),
                     LocalSearch(operator='Relocate', max_iterations=15)
                 ])
