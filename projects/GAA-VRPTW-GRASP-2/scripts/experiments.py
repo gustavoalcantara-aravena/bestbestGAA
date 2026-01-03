@@ -420,7 +420,7 @@ class QuickExperiment:
         )
     
     @staticmethod
-    def run():
+    def run(iteration: str = 'ITER-3'):
         """Execute QUICK experiment with REAL Solomon datasets"""
         config = QuickExperiment.get_config()
         
@@ -432,11 +432,11 @@ class QuickExperiment:
         
         # Generate algorithms using proper GAA framework
         print("\n" + "=" * 70)
-        print("[GAA] Generando 3 algoritmos automáticamente con estructura AST")
+        print(f"[GAA] Generando 3 algoritmos - Iteración: {iteration}")
         print("=" * 70)
         
         gaa_generator = AlgorithmGenerator(seed=config.seed)
-        gaa_algorithms = gaa_generator.generate_three_algorithms()
+        gaa_algorithms = gaa_generator.generate_three_algorithms(iteration=iteration)
         gaa_generator.save_algorithms(gaa_algorithms)
         
         print(f"[OK] {len(gaa_algorithms)} algoritmos GAA generados")
@@ -626,7 +626,7 @@ class FullExperiment:
         )
     
     @staticmethod
-    def run():
+    def run(iteration: str = 'ITER-3'):
         """Execute FULL experiment with REAL Solomon datasets"""
         config = FullExperiment.get_config()
         
@@ -638,11 +638,11 @@ class FullExperiment:
         
         # Generate algorithms using proper GAA framework
         print("\n" + "=" * 70)
-        print("[GAA] Generando 3 algoritmos automáticamente con estructura AST")
+        print(f"[GAA] Generando 3 algoritmos - Iteración: {iteration}")
         print("=" * 70)
         
         gaa_generator = AlgorithmGenerator(seed=config.seed)
-        gaa_algorithms = gaa_generator.generate_three_algorithms()
+        gaa_algorithms = gaa_generator.generate_three_algorithms(iteration=iteration)
         gaa_generator.save_algorithms(gaa_algorithms)
         
         print(f"[OK] {len(gaa_algorithms)} algoritmos GAA generados")
@@ -823,19 +823,30 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run QUICK or FULL experiments')
     parser.add_argument('--mode', choices=['QUICK', 'FULL'], default='QUICK',
                        help='QUICK: R1 family (12 instances), FULL: all families (56 instances)')
+    parser.add_argument('--iter', choices=['ITER-3', 'ITER-4'], default='ITER-3',
+                       help='ITER-3: baseline algorithms, ITER-4: improved Algo2 for C2')
     
     args = parser.parse_args()
+    
+    # Store iteration in global config or pass it through
+    import sys
+    if len(sys.argv) > 1:
+        iteration = args.iter
+    else:
+        iteration = 'ITER-3'
     
     if args.mode == 'QUICK':
         print("\n" + "="*70)
         print("  QUICK EXPERIMENT: R1 family (12 instances)")
-        print("  Algoritmos: GRASP, VND, ILS con DATASETS REALES")
+        print(f"  Iteration: {args.iter}")
+        print("  Algoritmos: GAA con DATASETS REALES")
         print("="*70)
-        QuickExperiment.run()
+        QuickExperiment.run(iteration=args.iter)
     else:
         print("\n" + "="*70)
         print("  FULL EXPERIMENT: All 6 families (56 instances)")
-        print("  Algoritmos: GRASP, VND, ILS con DATASETS REALES")
+        print(f"  Iteration: {args.iter}")
+        print("  Algoritmos: GAA con DATASETS REALES")
         print("="*70)
-        FullExperiment.run()
+        FullExperiment.run(iteration=args.iter)
 
