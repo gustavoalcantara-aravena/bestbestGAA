@@ -480,7 +480,7 @@ class Orchestrator:
             json.dump([r.to_dict() for r in self.results], f, indent=2)
         
         # Reporte en texto
-        with open(self.output_dir / 'report.txt', 'w') as f:
+        with open(self.output_dir / 'report.txt', 'w', encoding='utf-8') as f:
             f.write("╔" + "═"*78 + "╗\n")
             f.write("║" + "PARAMETER TUNING REPORT - Algorithm 3 - Family C1".center(78) + "║\n")
             f.write("╠" + "═"*78 + "╣\n")
