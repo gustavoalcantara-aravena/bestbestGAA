@@ -153,18 +153,24 @@ class AlgorithmGenerator:
         algorithms.append(algo2)
         
         # ========================================================================
-        # ALGORITMO 3: GRASP ADAPTATIVO (A OPTIMIZAR)
+        # ALGORITMO 3: GRASP ADAPTATIVO (ITER-4B - OPTIMIZADO)
         # ========================================================================
+        # ITER-4B: Reparación crítica - strength=1.0 es DEMASIADO DÉBIL
+        # - DoubleBridge strength: 1.0 → 3.0 (+200%) ← CRÍTICO
+        # - While iterations: 68 → 90 (+32%)
+        # - TwoOpt post-perturbación mejorado (35 → 45)
+        # - OrOpt reducido (20 → 12) para mejor balance
+        # Objetivo: D 1504.34 → < 1250 (-15%)
         algo3 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
-                max_iterations=68,
+                max_iterations=90,  # +32%: 68→90
                 body=Seq(body=[
-                    LocalSearch(operator='TwoOpt', max_iterations=50),
-                    LocalSearch(operator='OrOpt', max_iterations=20),
-                    Perturbation(operator='DoubleBridge', strength=1),
-                    LocalSearch(operator='TwoOpt', max_iterations=35),
-                    LocalSearch(operator='Relocate', max_iterations=15)
+                    LocalSearch(operator='TwoOpt', max_iterations=50),  # sin cambio: 50→50
+                    LocalSearch(operator='OrOpt', max_iterations=12),   # -40%: 20→12
+                    Perturbation(operator='DoubleBridge', strength=3.0),  # +200%: 1.0→3.0 (CRITICAL)
+                    LocalSearch(operator='TwoOpt', max_iterations=45),  # +29%: 35→45
+                    LocalSearch(operator='Relocate', max_iterations=15)  # sin cambio: 15→15
                 ])
             )
         ])
