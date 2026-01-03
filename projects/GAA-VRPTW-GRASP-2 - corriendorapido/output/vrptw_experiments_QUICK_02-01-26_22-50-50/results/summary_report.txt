@@ -1,0 +1,53 @@
+================================================================================
+EXPERIMENT RESULTS SUMMARY
+================================================================================
+
+[GENERAL STATISTICS]
+  Total experiments: 24
+  Algorithms: GRASP, VND
+  Families: R1
+
+[ALGORITHM PERFORMANCE]
+
+  GRASP:
+    Instances: 12
+    Avg Distance: 1190.10
+    Min Distance: 992.04
+    Max Distance: 1491.73
+    Std Dev:      164.26
+    Avg Time:     25.18s
+
+  VND:
+    Instances: 12
+    Avg Distance: 1190.10
+    Min Distance: 992.04
+    Max Distance: 1491.73
+    Std Dev:      164.26
+    Avg Time:     25.27s
+
+[FAMILY PERFORMANCE]
+
+  R1:
+    Instances: 24
+    Avg Distance: 1190.10
+    Min Distance: 992.04
+    Max Distance: 1491.73
+    Std Dev:      160.65
+
+[BEST & WORST RESULTS]
+
+  Best 5 Solutions:
+    GRASP                R104       Distance:   992.04
+    VND                  R104       Distance:   992.04
+    GRASP                R108       Distance:  1003.36
+    VND                  R108       Distance:  1003.36
+    GRASP                R112       Distance:  1026.56
+
+  Worst 5 Solutions:
+    VND                  R105       Distance:  1277.83
+    GRASP                R102       Distance:  1464.69
+    VND                  R102       Distance:  1464.69
+    GRASP                R101       Distance:  1491.73
+    VND                  R101       Distance:  1491.73
+
+================================================================================

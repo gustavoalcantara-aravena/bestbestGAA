@@ -1,0 +1,49 @@
+{
+  "generation_timestamp": "2026-01-03T06:19:26.615215",
+  "total_algorithms": 3,
+  "seed_used": 42,
+  "algorithms": [
+    {
+      "id": 1,
+      "name": "GAA_Algorithm_1",
+      "pattern": "iterative-simple",
+      "file": "GAA_Algorithm_1.json",
+      "stats": {
+        "depth": 3,
+        "size": 4,
+        "num_constructive": 1,
+        "num_improvement": 1,
+        "num_perturbation": 0,
+        "num_control": 2
+      }
+    },
+    {
+      "id": 2,
+      "name": "GAA_Algorithm_2",
+      "pattern": "iterative-simple",
+      "file": "GAA_Algorithm_2.json",
+      "stats": {
+        "depth": 3,
+        "size": 4,
+        "num_constructive": 1,
+        "num_improvement": 1,
+        "num_perturbation": 0,
+        "num_control": 2
+      }
+    },
+    {
+      "id": 3,
+      "name": "GAA_Algorithm_3",
+      "pattern": "iterative-simple",
+      "file": "GAA_Algorithm_3.json",
+      "stats": {
+        "depth": 3,
+        "size": 4,
+        "num_constructive": 1,
+        "num_improvement": 1,
+        "num_perturbation": 0,
+        "num_control": 2
+      }
+    }
+  ]
+}

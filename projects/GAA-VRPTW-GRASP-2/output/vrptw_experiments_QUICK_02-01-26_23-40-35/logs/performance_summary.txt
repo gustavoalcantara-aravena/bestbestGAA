@@ -1,0 +1,63 @@
+================================================================================
+PERFORMANCE SUMMARY - COMPARATIVE ANALYSIS
+================================================================================
+
+Timestamp: 2026-01-02T23:46:51.534061
+Total executions: 36
+Successful executions: 36
+
+--------------------------------------------------------------------------------
+PERFORMANCE BY ALGORITHM
+--------------------------------------------------------------------------------
+
+GRASP
+  Executions:      12
+  K (vehicles):    avg=13.50, min=10, max=19
+  D (distance):    avg=1190.10, min=992.04, max=1491.73
+  Time:            avg=10.063s, total=120.8s
+
+ILS
+  Executions:      12
+  K (vehicles):    avg=8.67, min=7, max=11
+  D (distance):    avg=851.39, min=791.54, max=951.16
+  Time:            avg=11.212s, total=134.5s
+
+VND
+  Executions:      12
+  K (vehicles):    avg=13.50, min=10, max=19
+  D (distance):    avg=1190.10, min=992.04, max=1491.73
+  Time:            avg=10.068s, total=120.8s
+
+--------------------------------------------------------------------------------
+PERFORMANCE BY FAMILY
+--------------------------------------------------------------------------------
+
+R1
+  Instances:       36
+  Avg K:           11.89
+  Avg D:           1077.20
+
+--------------------------------------------------------------------------------
+BEST SOLUTIONS
+--------------------------------------------------------------------------------
+
+Best K (fewest vehicles):
+  Algorithm:  ILS
+  Instance:   R101 (R1)
+  K:          7
+  D:          791.54
+  Time:       13.995s
+
+Best D (with K = 7):
+  Algorithm:  ILS
+  Instance:   R101 (R1)
+  K:          7
+  D:          791.54
+  Time:       13.995s
+
+Most efficient (best K/time ratio):
+  Algorithm:  ILS
+  Instance:   R101 (R1)
+  K/time:     0.50
+
+================================================================================

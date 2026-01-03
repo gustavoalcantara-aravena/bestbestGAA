@@ -1,0 +1,94 @@
+================================================================================
+PERFORMANCE SUMMARY - COMPARATIVE ANALYSIS
+================================================================================
+
+Timestamp: 2026-01-03T05:53:43.409251
+Total executions: 168
+Successful executions: 168
+
+--------------------------------------------------------------------------------
+PERFORMANCE BY ALGORITHM
+--------------------------------------------------------------------------------
+
+GAA_Algorithm_1
+  Executions:      56
+  K (vehicles):    avg=8.89, min=8, max=10
+  D (distance):    avg=1536.86, min=1212.66, max=1893.69
+  Time:            avg=5.158s, total=288.8s
+  HIT Rate (within 5% gap): 0/56 (0.0%)
+
+GAA_Algorithm_2
+  Executions:      56
+  K (vehicles):    avg=8.89, min=8, max=10
+  D (distance):    avg=1182.19, min=1103.20, max=1257.72
+  Time:            avg=0.253s, total=14.2s
+  HIT Rate (within 5% gap): 0/56 (0.0%)
+
+GAA_Algorithm_3
+  Executions:      56
+  K (vehicles):    avg=11.36, min=7, max=20
+  D (distance):    avg=1408.04, min=979.44, max=2181.38
+  Time:            avg=1.045s, total=58.5s
+  HIT Rate (within 5% gap): 0/56 (0.0%)
+
+--------------------------------------------------------------------------------
+PERFORMANCE BY FAMILY
+--------------------------------------------------------------------------------
+
+C1
+  Instances:       27
+  Avg K:           11.04
+  Avg D:           1435.36
+
+C2
+  Instances:       24
+  Avg K:           9.96
+  Avg D:           1342.66
+
+R1
+  Instances:       36
+  Avg K:           10.11
+  Avg D:           1348.49
+
+R2
+  Instances:       33
+  Avg K:           7.79
+  Avg D:           1189.25
+
+RC1
+  Instances:       24
+  Avg K:           10.75
+  Avg D:           1620.34
+
+RC2
+  Instances:       24
+  Avg K:           9.00
+  Avg D:           1394.17
+
+--------------------------------------------------------------------------------
+BEST SOLUTIONS
+--------------------------------------------------------------------------------
+
+HIT RATE (within 5% gap from BKS with K match):
+  Total: 0/168 (0.0%)
+
+Best K (fewest vehicles):
+  Algorithm:  GAA_Algorithm_3
+  Instance:   R204 (R2)
+  K:          7
+  D:          1018.21
+  Time:       1.455s
+
+Best D (with K = 7):
+  Algorithm:  GAA_Algorithm_3
+  Instance:   R210 (R2)
+  K:          7
+  D:          979.44
+  Time:       1.618s
+
+Most efficient (best K/time ratio):
+  Algorithm:  GAA_Algorithm_1
+  Instance:   RC208 (RC2)
+  K/time:     1.09
+
+================================================================================

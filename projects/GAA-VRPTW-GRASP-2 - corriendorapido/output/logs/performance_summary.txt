@@ -1,0 +1,63 @@
+================================================================================
+RESUMEN DE RENDIMIENTO - ANÁLISIS COMPARATIVO
+================================================================================
+
+Fecha: 2026-01-02T23:32:49.675775
+Total de ejecuciones: 36
+Ejecuciones exitosas: 36
+
+--------------------------------------------------------------------------------
+RENDIMIENTO POR ALGORITMO
+--------------------------------------------------------------------------------
+
+GRASP
+  Ejecuciones:     12
+  K (vehículos):   avg=13.50, min=10, max=19
+  D (distancia):   avg=1190.10, min=992.04, max=1491.73
+  Tiempo:          avg=9.840s, total=118.1s
+
+ILS
+  Ejecuciones:     12
+  K (vehículos):   avg=8.67, min=7, max=11
+  D (distancia):   avg=851.39, min=791.54, max=951.16
+  Tiempo:          avg=11.025s, total=132.3s
+
+VND
+  Ejecuciones:     12
+  K (vehículos):   avg=13.50, min=10, max=19
+  D (distancia):   avg=1190.10, min=992.04, max=1491.73
+  Tiempo:          avg=9.933s, total=119.2s
+
+--------------------------------------------------------------------------------
+RENDIMIENTO POR FAMILIA
+--------------------------------------------------------------------------------
+
+R1
+  Instancias:      36
+  K promedio:      11.89
+  D promedio:      1077.20
+
+--------------------------------------------------------------------------------
+MEJORES SOLUCIONES
+--------------------------------------------------------------------------------
+
+Mejor K (menos vehículos):
+  Algoritmo:  ILS
+  Instancia:  R101 (R1)
+  K:          7
+  D:          791.54
+  Tiempo:     13.835s
+
+Mejor D (con K = 7):
+  Algoritmo:  ILS
+  Instancia:  R101 (R1)
+  K:          7
+  D:          791.54
+  Tiempo:     13.835s
+
+Más eficiente (mejor K/tiempo):
+  Algoritmo:  ILS
+  Instancia:  R101 (R1)
+  K/tiempo:   0.51
+
+================================================================================

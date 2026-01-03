@@ -1,0 +1,61 @@
+================================================================================
+TIMING REPORT
+================================================================================
+Mode: QUICK
+Start: 2026-01-02T23:57:44.084807
+Total Experiments: 36
+  - Algorithms: 3
+  - Instances: 12
+  - Repetitions: 1
+================================================================================
+
+[ERROR] GAA_Algorithm_1 | R101    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R101    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R101    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R102    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R102    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R102    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R103    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R103    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R103    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R104    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R104    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R104    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R105    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R105    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R105    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R106    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R106    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R106    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R107    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R107    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R107    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R108    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R108    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R108    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R109    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R109    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R109    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R110    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R110    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R110    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R111    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R111    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R111    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_1 | R112    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_2 | R112    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+[ERROR] GAA_Algorithm_3 | R112    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+
+================================================================================
+TIMING SUMMARY
+================================================================================
+End: 2026-01-02T23:57:44.102989
+Experiments completed: 0/36
+Total time: 0.02s (0.00 minutes)
+
+Per-experiment statistics:
+  - Average time: 0.00s
+  - Minimum time: 0.00s
+  - Maximum time: 0.00s
+  - Average time per experiment: 0.00s/exp
+================================================================================

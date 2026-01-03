@@ -1,0 +1,53 @@
+2026-01-03 03:23:07 - INFO - [GAA-ALGO] Name: GAA_Algorithm_1 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-03 03:23:07 - INFO - [GAA-ALGO] Name: GAA_Algorithm_2 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-03 03:23:07 - INFO - [GAA-ALGO] Name: GAA_Algorithm_3 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-03 03:23:07 - INFO - ================================================================================
+2026-01-03 03:23:07 - INFO - STARTING EXPERIMENTS - MODE: QUICK
+2026-01-03 03:23:07 - INFO - Total exp: 36 (3 GAA algorithms × 12 instances × 1 repetition)
+2026-01-03 03:23:07 - INFO - Timestamp: 2026-01-03T03:23:07.130953
+2026-01-03 03:23:07 - INFO - ================================================================================
+2026-01-03 03:23:10 - INFO - [OK] GAA_Algorithm_1 | R101    (R1) | K= 8, D=  1502.2, t=  3.31s
+2026-01-03 03:23:10 - INFO - [OK] GAA_Algorithm_2 | R101    (R1) | K= 8, D=  1172.2, t=  0.18s
+2026-01-03 03:23:11 - INFO - [OK] GAA_Algorithm_3 | R101    (R1) | K=20, D=  1919.0, t=  0.49s
+2026-01-03 03:23:14 - INFO - [OK] GAA_Algorithm_1 | R102    (R1) | K= 8, D=  1322.6, t=  3.40s
+2026-01-03 03:23:14 - INFO - [OK] GAA_Algorithm_2 | R102    (R1) | K= 8, D=  1172.2, t=  0.18s
+2026-01-03 03:23:15 - INFO - [OK] GAA_Algorithm_3 | R102    (R1) | K=19, D=  1896.3, t=  0.61s
+2026-01-03 03:23:19 - INFO - [OK] GAA_Algorithm_1 | R103    (R1) | K= 8, D=  1274.5, t=  4.38s
+2026-01-03 03:23:19 - INFO - [OK] GAA_Algorithm_2 | R103    (R1) | K= 8, D=  1172.2, t=  0.17s
+2026-01-03 03:23:20 - INFO - [OK] GAA_Algorithm_3 | R103    (R1) | K=15, D=  1583.5, t=  0.68s
+2026-01-03 03:23:24 - INFO - [OK] GAA_Algorithm_1 | R104    (R1) | K= 8, D=  1436.4, t=  3.67s
+2026-01-03 03:23:24 - INFO - [OK] GAA_Algorithm_2 | R104    (R1) | K= 8, D=  1172.2, t=  0.19s
+2026-01-03 03:23:25 - INFO - [OK] GAA_Algorithm_3 | R104    (R1) | K=11, D=  1239.4, t=  1.03s
+2026-01-03 03:23:29 - INFO - [OK] GAA_Algorithm_1 | R105    (R1) | K= 8, D=  1507.7, t=  3.79s
+2026-01-03 03:23:29 - INFO - [OK] GAA_Algorithm_2 | R105    (R1) | K= 8, D=  1172.2, t=  0.18s
+2026-01-03 03:23:30 - INFO - [OK] GAA_Algorithm_3 | R105    (R1) | K=16, D=  1606.2, t=  0.60s
+2026-01-03 03:23:33 - INFO - [OK] GAA_Algorithm_1 | R106    (R1) | K= 8, D=  1427.2, t=  3.40s
+2026-01-03 03:23:33 - INFO - [OK] GAA_Algorithm_2 | R106    (R1) | K= 8, D=  1172.2, t=  0.18s
+2026-01-03 03:23:34 - INFO - [OK] GAA_Algorithm_3 | R106    (R1) | K=16, D=  1658.1, t=  0.65s
+2026-01-03 03:23:36 - INFO - [OK] GAA_Algorithm_1 | R107    (R1) | K= 8, D=  1371.3, t=  2.52s
+2026-01-03 03:23:36 - INFO - [OK] GAA_Algorithm_2 | R107    (R1) | K= 8, D=  1172.2, t=  0.18s
+2026-01-03 03:23:37 - INFO - [OK] GAA_Algorithm_3 | R107    (R1) | K=14, D=  1472.1, t=  0.72s
+2026-01-03 03:23:40 - INFO - [OK] GAA_Algorithm_1 | R108    (R1) | K= 8, D=  1398.5, t=  2.80s
+2026-01-03 03:23:40 - INFO - [OK] GAA_Algorithm_2 | R108    (R1) | K= 8, D=  1172.2, t=  0.18s
+2026-01-03 03:23:41 - INFO - [OK] GAA_Algorithm_3 | R108    (R1) | K=11, D=  1286.7, t=  0.80s
+2026-01-03 03:23:44 - INFO - [OK] GAA_Algorithm_1 | R109    (R1) | K= 8, D=  1321.8, t=  3.39s
+2026-01-03 03:23:44 - INFO - [OK] GAA_Algorithm_2 | R109    (R1) | K= 8, D=  1172.2, t=  0.17s
+2026-01-03 03:23:45 - INFO - [OK] GAA_Algorithm_3 | R109    (R1) | K=14, D=  1465.5, t=  0.65s
+2026-01-03 03:23:48 - INFO - [OK] GAA_Algorithm_1 | R110    (R1) | K= 8, D=  1412.4, t=  2.88s
+2026-01-03 03:23:48 - INFO - [OK] GAA_Algorithm_2 | R110    (R1) | K= 8, D=  1172.2, t=  0.17s
+2026-01-03 03:23:49 - INFO - [OK] GAA_Algorithm_3 | R110    (R1) | K=12, D=  1367.8, t=  0.70s
+2026-01-03 03:23:52 - INFO - [OK] GAA_Algorithm_1 | R111    (R1) | K= 8, D=  1322.5, t=  3.12s
+2026-01-03 03:23:52 - INFO - [OK] GAA_Algorithm_2 | R111    (R1) | K= 8, D=  1172.2, t=  0.17s
+2026-01-03 03:23:53 - INFO - [OK] GAA_Algorithm_3 | R111    (R1) | K=13, D=  1328.9, t=  0.73s
+2026-01-03 03:23:57 - INFO - [OK] GAA_Algorithm_1 | R112    (R1) | K= 8, D=  1400.9, t=  3.72s
+2026-01-03 03:23:57 - INFO - [OK] GAA_Algorithm_2 | R112    (R1) | K= 8, D=  1172.2, t=  0.17s
+2026-01-03 03:23:58 - INFO - [OK] GAA_Algorithm_3 | R112    (R1) | K=11, D=  1228.3, t=  0.74s
+2026-01-03 03:23:58 - INFO - ================================================================================
+2026-01-03 03:23:58 - INFO - EXECUTION COMPLETED
+2026-01-03 03:23:58 - INFO - Experiments completed: 36/36
+2026-01-03 03:23:58 - INFO - Total time:    50.93s (0.85 minutes)
+2026-01-03 03:23:58 - INFO - ================================================================================
+2026-01-03 03:23:58 - INFO - Algorithm specifications saved: output\vrptw_experiments_QUICK_03-01-26_03-23-07\logs\algorithm_specifications.json
+2026-01-03 03:23:58 - INFO - Results saved: output\vrptw_experiments_QUICK_03-01-26_03-23-07\results\raw_results_detailed.csv
+2026-01-03 03:23:58 - INFO - Performance summary saved: output\vrptw_experiments_QUICK_03-01-26_03-23-07\logs\performance_summary.txt
+2026-01-03 03:23:58 - INFO - Best algorithm report saved: output\vrptw_experiments_QUICK_03-01-26_03-23-07\logs\best_algorithm_report.txt

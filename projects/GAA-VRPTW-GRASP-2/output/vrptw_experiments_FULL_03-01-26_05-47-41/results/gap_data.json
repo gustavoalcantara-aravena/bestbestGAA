@@ -1,0 +1,2230 @@
+{
+  "metadata": {
+    "csv_source": "output\\vrptw_experiments_FULL_03-01-26_05-47-41\\results\\raw_results.csv",
+    "total_instances": 56,
+    "algorithms": [
+      "GAA_Algorithm_1",
+      "GAA_Algorithm_2",
+      "GAA_Algorithm_3"
+    ],
+    "timestamp": "2026-01-03T05:53:48.181034"
+  },
+  "instances": {
+    "C101": {
+      "family": "C1",
+      "bks": 828.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1521.98,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 83.61,
+          "time_sec": 5.6889,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1103.2,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 33.09,
+          "time_sec": 0.196,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1835.92,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 121.48,
+          "time_sec": 0.5645,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 15
+        }
+      }
+    },
+    "C102": {
+      "family": "C1",
+      "bks": 828.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1461.37,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 76.29,
+          "time_sec": 5.6623,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1103.2,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 33.09,
+          "time_sec": 0.191,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1868.27,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 125.38,
+          "time_sec": 0.6532,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 14
+        }
+      }
+    },
+    "C103": {
+      "family": "C1",
+      "bks": 828.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1504.5,
+          "d_bks": 828.06,
+          "bks": 828.94,
+          "gap_percent": 81.5,
+          "time_sec": 4.9402,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1103.2,
+          "d_bks": 828.06,
+          "bks": 828.94,
+          "gap_percent": 33.09,
+          "time_sec": 0.2002,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1629.02,
+          "d_bks": 828.06,
+          "bks": 828.94,
+          "gap_percent": 96.52,
+          "time_sec": 0.8475,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 11
+        }
+      }
+    },
+    "C104": {
+      "family": "C1",
+      "bks": 828.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1491.18,
+          "d_bks": 824.78,
+          "bks": 828.94,
+          "gap_percent": 79.89,
+          "time_sec": 5.2497,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1103.2,
+          "d_bks": 824.78,
+          "bks": 828.94,
+          "gap_percent": 33.09,
+          "time_sec": 0.1938,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1451.5,
+          "d_bks": 824.78,
+          "bks": 828.94,
+          "gap_percent": 75.1,
+          "time_sec": 0.7971,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 12
+        }
+      }
+    },
+    "C105": {
+      "family": "C1",
+      "bks": 828.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1466.74,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 76.94,
+          "time_sec": 5.4161,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1103.2,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 33.09,
+          "time_sec": 0.1929,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1813.34,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 118.75,
+          "time_sec": 0.5661,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 14
+        }
+      }
+    },
+    "C106": {
+      "family": "C1",
+      "bks": 828.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1391.51,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 67.87,
+          "time_sec": 6.539,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1103.2,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 33.09,
+          "time_sec": 0.3273,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1772.82,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 113.87,
+          "time_sec": 0.8343,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 14
+        }
+      }
+    },
+    "C107": {
+      "family": "C1",
+      "bks": 828.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1494.31,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 80.27,
+          "time_sec": 7.7476,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1103.2,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 33.09,
+          "time_sec": 0.2547,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1825.73,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 120.25,
+          "time_sec": 0.7333,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 14
+        }
+      }
+    },
+    "C108": {
+      "family": "C1",
+      "bks": 828.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1532.13,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 84.83,
+          "time_sec": 7.3202,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1103.2,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 33.09,
+          "time_sec": 0.3129,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1601.34,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 93.18,
+          "time_sec": 1.0283,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 12
+        }
+      }
+    },
+    "C109": {
+      "family": "C1",
+      "bks": 828.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1503.12,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 81.33,
+          "time_sec": 6.9569,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1103.2,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 33.09,
+          "time_sec": 0.2881,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1661.21,
+          "d_bks": 828.94,
+          "bks": 828.94,
+          "gap_percent": 100.4,
+          "time_sec": 1.0178,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 12
+        }
+      }
+    },
+    "C201": {
+      "family": "C2",
+      "bks": 589.86,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1822.68,
+          "d_bks": 591.56,
+          "bks": 589.86,
+          "gap_percent": 209.0,
+          "time_sec": 7.5518,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1148.78,
+          "d_bks": 591.56,
+          "bks": 589.86,
+          "gap_percent": 94.76,
+          "time_sec": 0.2931,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1188.3,
+          "d_bks": 591.56,
+          "bks": 589.86,
+          "gap_percent": 101.45,
+          "time_sec": 1.3096,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        }
+      }
+    },
+    "C202": {
+      "family": "C2",
+      "bks": 589.86,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1657.41,
+          "d_bks": 591.56,
+          "bks": 589.86,
+          "gap_percent": 180.98,
+          "time_sec": 7.244,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1148.78,
+          "d_bks": 591.56,
+          "bks": 589.86,
+          "gap_percent": 94.76,
+          "time_sec": 0.3172,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1214.26,
+          "d_bks": 591.56,
+          "bks": 589.86,
+          "gap_percent": 105.86,
+          "time_sec": 1.2159,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        }
+      }
+    },
+    "C203": {
+      "family": "C2",
+      "bks": 589.86,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1762.37,
+          "d_bks": 591.17,
+          "bks": 589.86,
+          "gap_percent": 198.78,
+          "time_sec": 7.4434,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1148.78,
+          "d_bks": 591.17,
+          "bks": 589.86,
+          "gap_percent": 94.76,
+          "time_sec": 0.2927,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1204.9,
+          "d_bks": 591.17,
+          "bks": 589.86,
+          "gap_percent": 104.27,
+          "time_sec": 1.1666,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        }
+      }
+    },
+    "C204": {
+      "family": "C2",
+      "bks": 589.86,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1661.8,
+          "d_bks": 590.6,
+          "bks": 589.86,
+          "gap_percent": 181.73,
+          "time_sec": 7.3451,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1148.78,
+          "d_bks": 590.6,
+          "bks": 589.86,
+          "gap_percent": 94.76,
+          "time_sec": 0.2915,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1237.69,
+          "d_bks": 590.6,
+          "bks": 589.86,
+          "gap_percent": 109.83,
+          "time_sec": 1.2147,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        }
+      }
+    },
+    "C205": {
+      "family": "C2",
+      "bks": 589.86,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1744.58,
+          "d_bks": 588.88,
+          "bks": 589.86,
+          "gap_percent": 195.76,
+          "time_sec": 7.462,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1148.78,
+          "d_bks": 588.88,
+          "bks": 589.86,
+          "gap_percent": 94.76,
+          "time_sec": 0.257,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1168.98,
+          "d_bks": 588.88,
+          "bks": 589.86,
+          "gap_percent": 98.18,
+          "time_sec": 1.1563,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        }
+      }
+    },
+    "C206": {
+      "family": "C2",
+      "bks": 589.86,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1734.23,
+          "d_bks": 588.49,
+          "bks": 589.86,
+          "gap_percent": 194.01,
+          "time_sec": 7.3279,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1148.78,
+          "d_bks": 588.49,
+          "bks": 589.86,
+          "gap_percent": 94.76,
+          "time_sec": 0.2515,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1134.35,
+          "d_bks": 588.49,
+          "bks": 589.86,
+          "gap_percent": 92.31,
+          "time_sec": 1.1659,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        }
+      }
+    },
+    "C207": {
+      "family": "C2",
+      "bks": 589.86,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1494.82,
+          "d_bks": 588.29,
+          "bks": 589.86,
+          "gap_percent": 153.42,
+          "time_sec": 4.9157,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1148.78,
+          "d_bks": 588.29,
+          "bks": 589.86,
+          "gap_percent": 94.76,
+          "time_sec": 0.1854,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1211.36,
+          "d_bks": 588.29,
+          "bks": 589.86,
+          "gap_percent": 105.36,
+          "time_sec": 0.8221,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        }
+      }
+    },
+    "C208": {
+      "family": "C2",
+      "bks": 589.86,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1589.45,
+          "d_bks": 588.32,
+          "bks": 589.86,
+          "gap_percent": 169.46,
+          "time_sec": 4.5184,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1148.78,
+          "d_bks": 588.32,
+          "bks": 589.86,
+          "gap_percent": 94.76,
+          "time_sec": 0.1846,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1206.33,
+          "d_bks": 588.32,
+          "bks": 589.86,
+          "gap_percent": 104.51,
+          "time_sec": 0.8457,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 10
+        }
+      }
+    },
+    "R101": {
+      "family": "R1",
+      "bks": 1650.8,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1428.07,
+          "d_bks": 1650.8,
+          "bks": 1650.8,
+          "gap_percent": -13.49,
+          "time_sec": 5.0448,
+          "feasible": false,
+          "k_bks": 19,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1650.8,
+          "bks": 1650.8,
+          "gap_percent": -28.99,
+          "time_sec": 0.3096,
+          "feasible": false,
+          "k_bks": 19,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1918.97,
+          "d_bks": 1650.8,
+          "bks": 1650.8,
+          "gap_percent": 16.25,
+          "time_sec": 0.6284,
+          "feasible": false,
+          "k_bks": 19,
+          "k_final": 20
+        }
+      }
+    },
+    "R102": {
+      "family": "R1",
+      "bks": 1486.12,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1481.74,
+          "d_bks": 1486.86,
+          "bks": 1486.12,
+          "gap_percent": -0.29,
+          "time_sec": 4.0941,
+          "feasible": false,
+          "k_bks": 17,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1486.86,
+          "bks": 1486.12,
+          "gap_percent": -21.12,
+          "time_sec": 0.2312,
+          "feasible": false,
+          "k_bks": 17,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1896.35,
+          "d_bks": 1486.86,
+          "bks": 1486.12,
+          "gap_percent": 27.6,
+          "time_sec": 0.7707,
+          "feasible": false,
+          "k_bks": 17,
+          "k_final": 19
+        }
+      }
+    },
+    "R103": {
+      "family": "R1",
+      "bks": 1292.65,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1401.91,
+          "d_bks": 1292.67,
+          "bks": 1292.65,
+          "gap_percent": 8.45,
+          "time_sec": 3.9099,
+          "feasible": false,
+          "k_bks": 13,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1292.67,
+          "bks": 1292.65,
+          "gap_percent": -9.32,
+          "time_sec": 0.3008,
+          "feasible": false,
+          "k_bks": 13,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1583.53,
+          "d_bks": 1292.67,
+          "bks": 1292.65,
+          "gap_percent": 22.5,
+          "time_sec": 1.0306,
+          "feasible": false,
+          "k_bks": 13,
+          "k_final": 15
+        }
+      }
+    },
+    "R104": {
+      "family": "R1",
+      "bks": 1109.8,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1262.52,
+          "d_bks": 1007.31,
+          "bks": 1109.8,
+          "gap_percent": 13.76,
+          "time_sec": 4.634,
+          "feasible": false,
+          "k_bks": 9,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1007.31,
+          "bks": 1109.8,
+          "gap_percent": 5.62,
+          "time_sec": 0.2286,
+          "feasible": false,
+          "k_bks": 9,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1239.43,
+          "d_bks": 1007.31,
+          "bks": 1109.8,
+          "gap_percent": 11.68,
+          "time_sec": 0.9353,
+          "feasible": false,
+          "k_bks": 9,
+          "k_final": 11
+        }
+      }
+    },
+    "R105": {
+      "family": "R1",
+      "bks": 1377.11,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1398.02,
+          "d_bks": 1377.11,
+          "bks": 1377.11,
+          "gap_percent": 1.52,
+          "time_sec": 3.9578,
+          "feasible": false,
+          "k_bks": 14,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1377.11,
+          "bks": 1377.11,
+          "gap_percent": -14.88,
+          "time_sec": 0.218,
+          "feasible": false,
+          "k_bks": 14,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1606.21,
+          "d_bks": 1377.11,
+          "bks": 1377.11,
+          "gap_percent": 16.64,
+          "time_sec": 0.7636,
+          "feasible": false,
+          "k_bks": 14,
+          "k_final": 16
+        }
+      }
+    },
+    "R106": {
+      "family": "R1",
+      "bks": 1251.43,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1430.23,
+          "d_bks": 1252.03,
+          "bks": 1251.43,
+          "gap_percent": 14.29,
+          "time_sec": 4.5543,
+          "feasible": false,
+          "k_bks": 12,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1252.03,
+          "bks": 1251.43,
+          "gap_percent": -6.33,
+          "time_sec": 0.2497,
+          "feasible": false,
+          "k_bks": 12,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1658.12,
+          "d_bks": 1252.03,
+          "bks": 1251.43,
+          "gap_percent": 32.5,
+          "time_sec": 0.933,
+          "feasible": false,
+          "k_bks": 12,
+          "k_final": 16
+        }
+      }
+    },
+    "R107": {
+      "family": "R1",
+      "bks": 1104.28,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1317.56,
+          "d_bks": 1104.66,
+          "bks": 1104.28,
+          "gap_percent": 19.31,
+          "time_sec": 5.0319,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1104.66,
+          "bks": 1104.28,
+          "gap_percent": 6.15,
+          "time_sec": 0.2537,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1472.15,
+          "d_bks": 1104.66,
+          "bks": 1104.28,
+          "gap_percent": 33.31,
+          "time_sec": 0.9287,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 14
+        }
+      }
+    },
+    "R108": {
+      "family": "R1",
+      "bks": 960.88,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1408.6,
+          "d_bks": 960.88,
+          "bks": 960.88,
+          "gap_percent": 46.6,
+          "time_sec": 4.4969,
+          "feasible": false,
+          "k_bks": 9,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 960.88,
+          "bks": 960.88,
+          "gap_percent": 21.99,
+          "time_sec": 0.254,
+          "feasible": false,
+          "k_bks": 9,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1286.7,
+          "d_bks": 960.88,
+          "bks": 960.88,
+          "gap_percent": 33.91,
+          "time_sec": 1.0002,
+          "feasible": false,
+          "k_bks": 9,
+          "k_final": 11
+        }
+      }
+    },
+    "R109": {
+      "family": "R1",
+      "bks": 1194.73,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1282.98,
+          "d_bks": 1194.73,
+          "bks": 1194.73,
+          "gap_percent": 7.39,
+          "time_sec": 5.0412,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1194.73,
+          "bks": 1194.73,
+          "gap_percent": -1.89,
+          "time_sec": 0.2266,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1465.52,
+          "d_bks": 1194.73,
+          "bks": 1194.73,
+          "gap_percent": 22.67,
+          "time_sec": 0.8794,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 14
+        }
+      }
+    },
+    "R110": {
+      "family": "R1",
+      "bks": 1118.6,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1271.33,
+          "d_bks": 1118.84,
+          "bks": 1118.6,
+          "gap_percent": 13.65,
+          "time_sec": 5.7645,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1118.84,
+          "bks": 1118.6,
+          "gap_percent": 4.79,
+          "time_sec": 0.2717,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1367.82,
+          "d_bks": 1118.84,
+          "bks": 1118.6,
+          "gap_percent": 22.28,
+          "time_sec": 1.0837,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 12
+        }
+      }
+    },
+    "R111": {
+      "family": "R1",
+      "bks": 1096.72,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1392.74,
+          "d_bks": 1096.73,
+          "bks": 1096.72,
+          "gap_percent": 26.99,
+          "time_sec": 3.9516,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1096.73,
+          "bks": 1096.72,
+          "gap_percent": 6.88,
+          "time_sec": 0.2831,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1328.95,
+          "d_bks": 1096.73,
+          "bks": 1096.72,
+          "gap_percent": 21.17,
+          "time_sec": 1.0843,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 13
+        }
+      }
+    },
+    "R112": {
+      "family": "R1",
+      "bks": 948.14,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1351.62,
+          "d_bks": 982.14,
+          "bks": 948.14,
+          "gap_percent": 42.55,
+          "time_sec": 4.6269,
+          "feasible": false,
+          "k_bks": 9,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 982.14,
+          "bks": 948.14,
+          "gap_percent": 23.63,
+          "time_sec": 0.2062,
+          "feasible": false,
+          "k_bks": 9,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1228.3,
+          "d_bks": 982.14,
+          "bks": 948.14,
+          "gap_percent": 29.55,
+          "time_sec": 0.9943,
+          "feasible": false,
+          "k_bks": 9,
+          "k_final": 11
+        }
+      }
+    },
+    "R201": {
+      "family": "R2",
+      "bks": 1252.37,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1295.87,
+          "d_bks": 1252.37,
+          "bks": 1252.37,
+          "gap_percent": 3.47,
+          "time_sec": 4.2073,
+          "feasible": false,
+          "k_bks": 4,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1252.37,
+          "bks": 1252.37,
+          "gap_percent": -6.4,
+          "time_sec": 0.2313,
+          "feasible": false,
+          "k_bks": 4,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1160.14,
+          "d_bks": 1252.37,
+          "bks": 1252.37,
+          "gap_percent": -7.36,
+          "time_sec": 1.408,
+          "feasible": false,
+          "k_bks": 4,
+          "k_final": 8
+        }
+      }
+    },
+    "R202": {
+      "family": "R2",
+      "bks": 1191.7,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1344.3,
+          "d_bks": 1191.7,
+          "bks": 1191.7,
+          "gap_percent": 12.81,
+          "time_sec": 3.5853,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 1191.7,
+          "bks": 1191.7,
+          "gap_percent": -1.64,
+          "time_sec": 0.2115,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1131.94,
+          "d_bks": 1191.7,
+          "bks": 1191.7,
+          "gap_percent": -5.01,
+          "time_sec": 1.445,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        }
+      }
+    },
+    "R203": {
+      "family": "R2",
+      "bks": 939.54,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1339.99,
+          "d_bks": 939.5,
+          "bks": 939.54,
+          "gap_percent": 42.62,
+          "time_sec": 5.1245,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 939.5,
+          "bks": 939.54,
+          "gap_percent": 24.76,
+          "time_sec": 0.2555,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1050.88,
+          "d_bks": 939.5,
+          "bks": 939.54,
+          "gap_percent": 11.85,
+          "time_sec": 1.348,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        }
+      }
+    },
+    "R204": {
+      "family": "R2",
+      "bks": 825.52,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1275.91,
+          "d_bks": 825.52,
+          "bks": 825.52,
+          "gap_percent": 54.56,
+          "time_sec": 4.9781,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 825.52,
+          "bks": 825.52,
+          "gap_percent": 41.99,
+          "time_sec": 0.2549,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1018.21,
+          "d_bks": 825.52,
+          "bks": 825.52,
+          "gap_percent": 23.34,
+          "time_sec": 1.4551,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 7
+        }
+      }
+    },
+    "R205": {
+      "family": "R2",
+      "bks": 994.42,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1313.22,
+          "d_bks": 994.43,
+          "bks": 994.42,
+          "gap_percent": 32.06,
+          "time_sec": 3.1736,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 994.43,
+          "bks": 994.42,
+          "gap_percent": 17.88,
+          "time_sec": 0.2715,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1067.09,
+          "d_bks": 994.43,
+          "bks": 994.42,
+          "gap_percent": 7.31,
+          "time_sec": 1.4716,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 7
+        }
+      }
+    },
+    "R206": {
+      "family": "R2",
+      "bks": 906.14,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1483.19,
+          "d_bks": 906.14,
+          "bks": 906.14,
+          "gap_percent": 63.68,
+          "time_sec": 4.399,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 906.14,
+          "bks": 906.14,
+          "gap_percent": 29.36,
+          "time_sec": 0.2108,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1055.82,
+          "d_bks": 906.14,
+          "bks": 906.14,
+          "gap_percent": 16.52,
+          "time_sec": 1.5058,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        }
+      }
+    },
+    "R207": {
+      "family": "R2",
+      "bks": 890.6,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1335.04,
+          "d_bks": 890.61,
+          "bks": 890.6,
+          "gap_percent": 49.9,
+          "time_sec": 3.4257,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 890.61,
+          "bks": 890.6,
+          "gap_percent": 31.62,
+          "time_sec": 0.2587,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1021.56,
+          "d_bks": 890.61,
+          "bks": 890.6,
+          "gap_percent": 14.7,
+          "time_sec": 1.396,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 7
+        }
+      }
+    },
+    "R208": {
+      "family": "R2",
+      "bks": 726.82,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1292.94,
+          "d_bks": 726.82,
+          "bks": 726.82,
+          "gap_percent": 77.89,
+          "time_sec": 4.7421,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 726.82,
+          "bks": 726.82,
+          "gap_percent": 61.28,
+          "time_sec": 0.2501,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1003.71,
+          "d_bks": 726.82,
+          "bks": 726.82,
+          "gap_percent": 38.1,
+          "time_sec": 1.4548,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 7
+        }
+      }
+    },
+    "R209": {
+      "family": "R2",
+      "bks": 909.23,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1424.69,
+          "d_bks": 909.16,
+          "bks": 909.23,
+          "gap_percent": 56.69,
+          "time_sec": 2.3228,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 909.16,
+          "bks": 909.23,
+          "gap_percent": 28.92,
+          "time_sec": 0.1576,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1064.81,
+          "d_bks": 909.16,
+          "bks": 909.23,
+          "gap_percent": 17.11,
+          "time_sec": 1.0166,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 7
+        }
+      }
+    },
+    "R210": {
+      "family": "R2",
+      "bks": 939.4,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1212.66,
+          "d_bks": 939.37,
+          "bks": 939.4,
+          "gap_percent": 29.09,
+          "time_sec": 4.1562,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 939.37,
+          "bks": 939.4,
+          "gap_percent": 24.78,
+          "time_sec": 0.2284,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 979.44,
+          "d_bks": 939.37,
+          "bks": 939.4,
+          "gap_percent": 4.26,
+          "time_sec": 1.6177,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 7
+        }
+      }
+    },
+    "R211": {
+      "family": "R2",
+      "bks": 885.84,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1500.31,
+          "d_bks": 885.71,
+          "bks": 885.84,
+          "gap_percent": 69.37,
+          "time_sec": 4.0969,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 8
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1172.18,
+          "d_bks": 885.71,
+          "bks": 885.84,
+          "gap_percent": 32.32,
+          "time_sec": 0.2619,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 8
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 979.44,
+          "d_bks": 885.71,
+          "bks": 885.84,
+          "gap_percent": 10.57,
+          "time_sec": 1.5371,
+          "feasible": false,
+          "k_bks": 2,
+          "k_final": 7
+        }
+      }
+    },
+    "RC101": {
+      "family": "R",
+      "bks": 1696.94,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1669.44,
+          "d_bks": 1696.95,
+          "bks": 1696.94,
+          "gap_percent": -1.62,
+          "time_sec": 4.4033,
+          "feasible": false,
+          "k_bks": 14,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1696.95,
+          "bks": 1696.94,
+          "gap_percent": -25.88,
+          "time_sec": 0.2668,
+          "feasible": false,
+          "k_bks": 14,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 2181.38,
+          "d_bks": 1696.95,
+          "bks": 1696.94,
+          "gap_percent": 28.55,
+          "time_sec": 0.6217,
+          "feasible": false,
+          "k_bks": 14,
+          "k_final": 18
+        }
+      }
+    },
+    "RC102": {
+      "family": "R",
+      "bks": 1554.75,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1793.81,
+          "d_bks": 1554.75,
+          "bks": 1554.75,
+          "gap_percent": 15.38,
+          "time_sec": 3.9884,
+          "feasible": false,
+          "k_bks": 12,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1554.75,
+          "bks": 1554.75,
+          "gap_percent": -19.1,
+          "time_sec": 0.3134,
+          "feasible": false,
+          "k_bks": 12,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 2046.38,
+          "d_bks": 1554.75,
+          "bks": 1554.75,
+          "gap_percent": 31.62,
+          "time_sec": 0.78,
+          "feasible": false,
+          "k_bks": 12,
+          "k_final": 15
+        }
+      }
+    },
+    "RC103": {
+      "family": "R",
+      "bks": 1460.99,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1825.31,
+          "d_bks": 1261.67,
+          "bks": 1460.99,
+          "gap_percent": 24.94,
+          "time_sec": 4.1311,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1261.67,
+          "bks": 1460.99,
+          "gap_percent": -13.91,
+          "time_sec": 0.2472,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1769.38,
+          "d_bks": 1261.67,
+          "bks": 1460.99,
+          "gap_percent": 21.11,
+          "time_sec": 0.8029,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 14
+        }
+      }
+    },
+    "RC104": {
+      "family": "R",
+      "bks": 1357.04,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1773.36,
+          "d_bks": 1135.48,
+          "bks": 1357.04,
+          "gap_percent": 30.68,
+          "time_sec": 4.0334,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1135.48,
+          "bks": 1357.04,
+          "gap_percent": -7.32,
+          "time_sec": 0.2279,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1546.36,
+          "d_bks": 1135.48,
+          "bks": 1357.04,
+          "gap_percent": 13.95,
+          "time_sec": 0.9112,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 12
+        }
+      }
+    },
+    "RC105": {
+      "family": "R",
+      "bks": 1629.44,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1637.02,
+          "d_bks": 1629.44,
+          "bks": 1629.44,
+          "gap_percent": 0.46,
+          "time_sec": 5.9987,
+          "feasible": false,
+          "k_bks": 13,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1629.44,
+          "bks": 1629.44,
+          "gap_percent": -22.81,
+          "time_sec": 0.2442,
+          "feasible": false,
+          "k_bks": 13,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 2050.83,
+          "d_bks": 1629.44,
+          "bks": 1629.44,
+          "gap_percent": 25.86,
+          "time_sec": 0.7448,
+          "feasible": false,
+          "k_bks": 13,
+          "k_final": 16
+        }
+      }
+    },
+    "RC106": {
+      "family": "R",
+      "bks": 1446.43,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1891.42,
+          "d_bks": 1424.73,
+          "bks": 1446.43,
+          "gap_percent": 30.76,
+          "time_sec": 4.2594,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1424.73,
+          "bks": 1446.43,
+          "gap_percent": -13.05,
+          "time_sec": 0.3484,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1848.58,
+          "d_bks": 1424.73,
+          "bks": 1446.43,
+          "gap_percent": 27.8,
+          "time_sec": 0.6784,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 14
+        }
+      }
+    },
+    "RC107": {
+      "family": "R",
+      "bks": 1371.16,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1732.16,
+          "d_bks": 1230.48,
+          "bks": 1371.16,
+          "gap_percent": 26.33,
+          "time_sec": 5.1428,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1230.48,
+          "bks": 1371.16,
+          "gap_percent": -8.27,
+          "time_sec": 0.2614,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1659.19,
+          "d_bks": 1230.48,
+          "bks": 1371.16,
+          "gap_percent": 21.01,
+          "time_sec": 0.8142,
+          "feasible": false,
+          "k_bks": 11,
+          "k_final": 13
+        }
+      }
+    },
+    "RC108": {
+      "family": "R",
+      "bks": 1117.75,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1893.69,
+          "d_bks": 1139.82,
+          "bks": 1117.75,
+          "gap_percent": 69.42,
+          "time_sec": 4.3808,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1139.82,
+          "bks": 1117.75,
+          "gap_percent": 12.52,
+          "time_sec": 0.2538,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1508.16,
+          "d_bks": 1139.82,
+          "bks": 1117.75,
+          "gap_percent": 34.93,
+          "time_sec": 0.9597,
+          "feasible": false,
+          "k_bks": 10,
+          "k_final": 12
+        }
+      }
+    },
+    "RC201": {
+      "family": "R",
+      "bks": 1406.91,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1589.86,
+          "d_bks": 1406.94,
+          "bks": 1406.91,
+          "gap_percent": 13.0,
+          "time_sec": 6.0664,
+          "feasible": false,
+          "k_bks": 4,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1406.94,
+          "bks": 1406.91,
+          "gap_percent": -10.6,
+          "time_sec": 0.2439,
+          "feasible": false,
+          "k_bks": 4,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1313.83,
+          "d_bks": 1406.94,
+          "bks": 1406.91,
+          "gap_percent": -6.62,
+          "time_sec": 1.1222,
+          "feasible": false,
+          "k_bks": 4,
+          "k_final": 9
+        }
+      }
+    },
+    "RC202": {
+      "family": "R",
+      "bks": 1365.64,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1653.8,
+          "d_bks": 1365.64,
+          "bks": 1365.64,
+          "gap_percent": 21.1,
+          "time_sec": 4.1498,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1365.64,
+          "bks": 1365.64,
+          "gap_percent": -7.9,
+          "time_sec": 0.269,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1222.09,
+          "d_bks": 1365.64,
+          "bks": 1365.64,
+          "gap_percent": -10.51,
+          "time_sec": 1.1386,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        }
+      }
+    },
+    "RC203": {
+      "family": "R",
+      "bks": 1057.46,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1884.86,
+          "d_bks": 1049.62,
+          "bks": 1057.46,
+          "gap_percent": 78.24,
+          "time_sec": 5.0203,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1049.62,
+          "bks": 1057.46,
+          "gap_percent": 18.94,
+          "time_sec": 0.2677,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1237.8,
+          "d_bks": 1049.62,
+          "bks": 1057.46,
+          "gap_percent": 17.05,
+          "time_sec": 1.2931,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        }
+      }
+    },
+    "RC204": {
+      "family": "R",
+      "bks": 798.46,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1758.71,
+          "d_bks": 798.46,
+          "bks": 798.46,
+          "gap_percent": 120.26,
+          "time_sec": 5.7959,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 798.46,
+          "bks": 798.46,
+          "gap_percent": 57.52,
+          "time_sec": 0.2372,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1185.02,
+          "d_bks": 798.46,
+          "bks": 798.46,
+          "gap_percent": 48.41,
+          "time_sec": 1.2003,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        }
+      }
+    },
+    "RC205": {
+      "family": "R",
+      "bks": 1297.65,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1844.22,
+          "d_bks": 1297.65,
+          "bks": 1297.65,
+          "gap_percent": 42.12,
+          "time_sec": 4.6656,
+          "feasible": false,
+          "k_bks": 4,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1297.65,
+          "bks": 1297.65,
+          "gap_percent": -3.08,
+          "time_sec": 0.2803,
+          "feasible": false,
+          "k_bks": 4,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1150.62,
+          "d_bks": 1297.65,
+          "bks": 1297.65,
+          "gap_percent": -11.33,
+          "time_sec": 1.1766,
+          "feasible": false,
+          "k_bks": 4,
+          "k_final": 9
+        }
+      }
+    },
+    "RC206": {
+      "family": "R",
+      "bks": 1143.32,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1829.39,
+          "d_bks": 1146.32,
+          "bks": 1143.32,
+          "gap_percent": 60.01,
+          "time_sec": 4.762,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1146.32,
+          "bks": 1143.32,
+          "gap_percent": 10.01,
+          "time_sec": 0.277,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1227.54,
+          "d_bks": 1146.32,
+          "bks": 1143.32,
+          "gap_percent": 7.37,
+          "time_sec": 1.2545,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        }
+      }
+    },
+    "RC207": {
+      "family": "R",
+      "bks": 1061.14,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1721.96,
+          "d_bks": 1061.14,
+          "bks": 1061.14,
+          "gap_percent": 62.27,
+          "time_sec": 5.1274,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 1061.14,
+          "bks": 1061.14,
+          "gap_percent": 18.53,
+          "time_sec": 0.2362,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1168.42,
+          "d_bks": 1061.14,
+          "bks": 1061.14,
+          "gap_percent": 10.11,
+          "time_sec": 1.1915,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        }
+      }
+    },
+    "RC208": {
+      "family": "R",
+      "bks": 880.59,
+      "algorithms": {
+        "algo1": {
+          "name": "GAA_Algorithm_1",
+          "distance": 1485.58,
+          "d_bks": 828.14,
+          "bks": 880.59,
+          "gap_percent": 68.7,
+          "time_sec": 8.2675,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo2": {
+          "name": "GAA_Algorithm_2",
+          "distance": 1257.72,
+          "d_bks": 828.14,
+          "bks": 880.59,
+          "gap_percent": 42.83,
+          "time_sec": 0.3368,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        },
+        "algo3": {
+          "name": "GAA_Algorithm_3",
+          "distance": 1124.52,
+          "d_bks": 828.14,
+          "bks": 880.59,
+          "gap_percent": 27.7,
+          "time_sec": 1.192,
+          "feasible": false,
+          "k_bks": 3,
+          "k_final": 9
+        }
+      }
+    }
+  },
+  "summary_by_algorithm": {
+    "1": {
+      "name": "GAA_Algorithm_1",
+      "avg_distance": 1536.86,
+      "std_distance": 192.86,
+      "avg_gap": 63.05,
+      "std_gap": 57.96,
+      "min_gap": -13.49,
+      "max_gap": 209.0,
+      "count_instances": 56
+    },
+    "2": {
+      "name": "GAA_Algorithm_2",
+      "avg_distance": 1182.19,
+      "std_distance": 53.23,
+      "avg_gap": 24.21,
+      "std_gap": 35.57,
+      "min_gap": -28.99,
+      "max_gap": 94.76,
+      "count_instances": 56
+    },
+    "3": {
+      "name": "GAA_Algorithm_3",
+      "avg_distance": 1408.04,
+      "std_distance": 320.69,
+      "avg_gap": 44.56,
+      "std_gap": 42.12,
+      "min_gap": -11.33,
+      "max_gap": 125.38,
+      "count_instances": 56
+    }
+  }
+}

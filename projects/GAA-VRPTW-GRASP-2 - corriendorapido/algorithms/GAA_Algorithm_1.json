@@ -1,0 +1,35 @@
+{
+  "id": 1,
+  "name": "GAA_Algorithm_1",
+  "ast": {
+    "type": "Seq",
+    "body": [
+      {
+        "type": "GreedyConstruct",
+        "heuristic": "RandomizedInsertion",
+        "alpha": 0.14
+      },
+      {
+        "type": "While",
+        "condition": "IterBudget",
+        "max_iterations": 100,
+        "body": {
+          "type": "LocalSearch",
+          "operator": "CrossExchange",
+          "max_iterations": 100
+        }
+      }
+    ]
+  },
+  "pattern": "iterative-simple",
+  "seed": 42,
+  "timestamp": "2026-01-03T00:40:06.911927",
+  "stats": {
+    "depth": 3,
+    "size": 4,
+    "num_constructive": 1,
+    "num_improvement": 1,
+    "num_perturbation": 0,
+    "num_control": 2
+  }
+}

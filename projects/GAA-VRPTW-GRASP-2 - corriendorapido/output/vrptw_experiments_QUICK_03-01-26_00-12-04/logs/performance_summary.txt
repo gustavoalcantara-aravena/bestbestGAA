@@ -1,0 +1,63 @@
+================================================================================
+PERFORMANCE SUMMARY - COMPARATIVE ANALYSIS
+================================================================================
+
+Timestamp: 2026-01-03T00:12:15.616662
+Total executions: 36
+Successful executions: 36
+
+--------------------------------------------------------------------------------
+PERFORMANCE BY ALGORITHM
+--------------------------------------------------------------------------------
+
+GAA_Algorithm_1
+  Executions:      12
+  K (vehicles):    avg=1.00, min=1, max=1
+  D (distance):    avg=714.62, min=686.10, max=744.74
+  Time:            avg=0.172s, total=2.1s
+
+GAA_Algorithm_2
+  Executions:      12
+  K (vehicles):    avg=1.00, min=1, max=1
+  D (distance):    avg=177.67, min=177.67, max=177.67
+  Time:            avg=0.062s, total=0.7s
+
+GAA_Algorithm_3
+  Executions:      12
+  K (vehicles):    avg=14.33, min=11, max=20
+  D (distance):    avg=1504.34, min=1228.30, max=1918.97
+  Time:            avg=0.663s, total=8.0s
+
+--------------------------------------------------------------------------------
+PERFORMANCE BY FAMILY
+--------------------------------------------------------------------------------
+
+R1
+  Instances:       36
+  Avg K:           5.44
+  Avg D:           798.87
+
+--------------------------------------------------------------------------------
+BEST SOLUTIONS
+--------------------------------------------------------------------------------
+
+Best K (fewest vehicles):
+  Algorithm:  GAA_Algorithm_1
+  Instance:   R101 (R1)
+  K:          1
+  D:          702.45
+  Time:       0.169s
+
+Best D (with K = 1):
+  Algorithm:  GAA_Algorithm_2
+  Instance:   R101 (R1)
+  K:          1
+  D:          177.67
+  Time:       0.064s
+
+Most efficient (best K/time ratio):
+  Algorithm:  GAA_Algorithm_1
+  Instance:   R111 (R1)
+  K/time:     5.64
+
+================================================================================

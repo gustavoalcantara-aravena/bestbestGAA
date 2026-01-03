@@ -1,0 +1,14 @@
+================================================================================
+TIMING REPORT
+================================================================================
+Mode: QUICK
+Start: 2026-01-03T00:52:07.744281
+Total Experiments: 36
+  - Algorithms: 3
+  - Instances: 12
+  - Repetitions: 1
+================================================================================
+
+[ERROR] GAA_Algorithm_1 | R101    (R1) | Error: 'ExperimentLogger' object has no attribute 'warning'
+[ERROR] GAA_Algorithm_2 | R101    (R1) | Error: 'ExperimentLogger' object has no attribute 'warning'
+[ERROR] GAA_Algorithm_3 | R101    (R1) | Error: 'ExperimentLogger' object has no attribute 'warning'

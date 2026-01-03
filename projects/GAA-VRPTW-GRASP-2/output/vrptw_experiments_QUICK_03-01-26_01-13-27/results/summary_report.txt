@@ -1,0 +1,61 @@
+================================================================================
+EXPERIMENT RESULTS SUMMARY
+================================================================================
+
+[GENERAL STATISTICS]
+  Total experiments: 36
+  Algorithms: GAA_Algorithm_1, GAA_Algorithm_2, GAA_Algorithm_3
+  Families: R1
+
+[ALGORITHM PERFORMANCE]
+
+  GAA_Algorithm_1:
+    Instances: 12
+    Avg Distance: 1391.51
+    Min Distance: 1274.51
+    Max Distance: 1507.66
+    Std Dev:      72.66
+    Avg Time:     3.35s
+
+  GAA_Algorithm_2:
+    Instances: 12
+    Avg Distance: 1172.18
+    Min Distance: 1172.18
+    Max Distance: 1172.18
+    Std Dev:      0.00
+    Avg Time:     0.18s
+
+  GAA_Algorithm_3:
+    Instances: 12
+    Avg Distance: 1504.34
+    Min Distance: 1228.30
+    Max Distance: 1918.97
+    Std Dev:      235.79
+    Avg Time:     0.69s
+
+[FAMILY PERFORMANCE]
+
+  R1:
+    Instances: 36
+    Avg Distance: 1356.01
+    Min Distance: 1172.18
+    Max Distance: 1918.97
+    Std Dev:      196.71
+
+[BEST & WORST RESULTS]
+
+  Best 5 Solutions:
+    GAA_Algorithm_2      R101       Distance:  1172.18
+    GAA_Algorithm_2      R102       Distance:  1172.18
+    GAA_Algorithm_2      R103       Distance:  1172.18
+    GAA_Algorithm_2      R104       Distance:  1172.18
+    GAA_Algorithm_2      R105       Distance:  1172.18
+
+  Worst 5 Solutions:
+    GAA_Algorithm_3      R103       Distance:  1583.53
+    GAA_Algorithm_3      R105       Distance:  1606.21
+    GAA_Algorithm_3      R106       Distance:  1658.12
+    GAA_Algorithm_3      R102       Distance:  1896.35
+    GAA_Algorithm_3      R101       Distance:  1918.97
+
+================================================================================

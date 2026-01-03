@@ -1,0 +1,48 @@
+================================================================================
+EXPERIMENT RESULTS SUMMARY
+================================================================================
+
+[GENERAL STATISTICS]
+  Total experiments: 36
+  Algorithms: GAA_Algorithm_1, GAA_Algorithm_2, GAA_Algorithm_3
+  Families: R1
+
+[ALGORITHM PERFORMANCE]
+
+  GAA_Algorithm_1:
+    Instances: 12
+    Avg Distance: 0.00
+    Min Distance: 0.00
+    Max Distance: 0.00
+    Std Dev:      0.00
+    Avg Time:     0.16s
+
+  GAA_Algorithm_2:
+    Instances: 12
+    Avg Distance: 0.00
+    Min Distance: 0.00
+    Max Distance: 0.00
+    Std Dev:      0.00
+    Avg Time:     0.06s
+
+  GAA_Algorithm_3:
+    Instances: 12
+    Avg Distance: 0.00
+    Min Distance: 0.00
+    Max Distance: 0.00
+    Std Dev:      0.00
+    Avg Time:     0.07s
+
+[FAMILY PERFORMANCE]
+
+  R1:
+    Instances: 36
+    Avg Distance: 0.00
+    Min Distance: 0.00
+    Max Distance: 0.00
+    Std Dev:      0.00
+
+[BEST & WORST RESULTS]
+
+
+================================================================================

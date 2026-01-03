@@ -1,0 +1,61 @@
+================================================================================
+TIMING REPORT
+================================================================================
+Mode: QUICK
+Start: 2026-01-03T00:14:48.731239
+Total Experiments: 36
+  - Algorithms: 3
+  - Instances: 12
+  - Repetitions: 1
+================================================================================
+
+[OK] GAA_Algorithm_1 | R101    (R1) | K= 1, D=   702.4, t=  0.17s
+[OK] GAA_Algorithm_2 | R101    (R1) | K= 1, D=   177.7, t=  0.07s
+[OK] GAA_Algorithm_3 | R101    (R1) | K=20, D=  1919.0, t=  0.47s
+[OK] GAA_Algorithm_1 | R102    (R1) | K= 1, D=   724.7, t=  0.17s
+[OK] GAA_Algorithm_2 | R102    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R102    (R1) | K=19, D=  1896.3, t=  0.59s
+[OK] GAA_Algorithm_1 | R103    (R1) | K= 1, D=   706.0, t=  0.19s
+[OK] GAA_Algorithm_2 | R103    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R103    (R1) | K=15, D=  1583.5, t=  0.65s
+[OK] GAA_Algorithm_1 | R104    (R1) | K= 1, D=   720.4, t=  0.16s
+[OK] GAA_Algorithm_2 | R104    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R104    (R1) | K=11, D=  1239.4, t=  0.75s
+[OK] GAA_Algorithm_1 | R105    (R1) | K= 1, D=   744.7, t=  0.17s
+[OK] GAA_Algorithm_2 | R105    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R105    (R1) | K=16, D=  1606.2, t=  0.55s
+[OK] GAA_Algorithm_1 | R106    (R1) | K= 1, D=   709.2, t=  0.17s
+[OK] GAA_Algorithm_2 | R106    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R106    (R1) | K=16, D=  1658.1, t=  0.62s
+[OK] GAA_Algorithm_1 | R107    (R1) | K= 1, D=   713.9, t=  0.18s
+[OK] GAA_Algorithm_2 | R107    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R107    (R1) | K=14, D=  1472.1, t=  0.68s
+[OK] GAA_Algorithm_1 | R108    (R1) | K= 1, D=   732.1, t=  0.17s
+[OK] GAA_Algorithm_2 | R108    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R108    (R1) | K=11, D=  1286.7, t=  0.75s
+[OK] GAA_Algorithm_1 | R109    (R1) | K= 1, D=   686.1, t=  0.17s
+[OK] GAA_Algorithm_2 | R109    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R109    (R1) | K=14, D=  1465.5, t=  0.62s
+[OK] GAA_Algorithm_1 | R110    (R1) | K= 1, D=   725.9, t=  0.17s
+[OK] GAA_Algorithm_2 | R110    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R110    (R1) | K=12, D=  1367.8, t=  0.67s
+[OK] GAA_Algorithm_1 | R111    (R1) | K= 1, D=   701.0, t=  0.17s
+[OK] GAA_Algorithm_2 | R111    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R111    (R1) | K=13, D=  1328.9, t=  0.68s
+[OK] GAA_Algorithm_1 | R112    (R1) | K= 1, D=   708.9, t=  0.18s
+[OK] GAA_Algorithm_2 | R112    (R1) | K= 1, D=   177.7, t=  0.06s
+[OK] GAA_Algorithm_3 | R112    (R1) | K=11, D=  1228.3, t=  0.70s
+
+================================================================================
+TIMING SUMMARY
+================================================================================
+End: 2026-01-03T00:14:59.328202
+Experiments completed: 36/36
+Total time: 10.60s (0.18 minutes)
+
+Per-experiment statistics:
+  - Average time: 0.29s
+  - Minimum time: 0.06s
+  - Maximum time: 0.75s
+  - Average time per experiment: 0.29s/exp
+================================================================================

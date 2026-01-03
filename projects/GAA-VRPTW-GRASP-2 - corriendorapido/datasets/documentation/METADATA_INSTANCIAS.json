@@ -1,0 +1,424 @@
+{
+  "dataset_info": {
+    "name": "Solomon VRPTW Benchmark Dataset",
+    "version": "1.0",
+    "year": 1987,
+    "author": "Marius M. Solomon",
+    "total_instances": 56,
+    "reference": "Operations Research, 35(2), 254-265 (1987)"
+  },
+  
+  "instance_metadata": {
+    "C101": {
+      "family": "C1",
+      "type": "Clustered",
+      "time_windows": "Short",
+      "num_customers": 100,
+      "vehicle_capacity": 200,
+      "time_horizon": 1236,
+      "service_time": 90,
+      "window_width_avg": 55,
+      "window_width_range": [45, 69],
+      "demand_total": 2000,
+      "demand_avg": 20,
+      "demand_range": [10, 50],
+      "spatial_distribution": "4_clusters",
+      "difficulty": "medium_high",
+      "bks": {
+        "vehicles": 10,
+        "distance": 828.94,
+        "year": 1997,
+        "method": "Rochat & Taillard"
+      },
+      "lower_bounds": {
+        "vehicles_capacity": 10,
+        "vehicles_time": 8
+      },
+      "characteristics": {
+        "tight_capacity": true,
+        "tight_time_windows": true,
+        "geographic_structure": true,
+        "primary_objective": "minimize_vehicles"
+      },
+      "recommended_algorithms": [
+        "cluster_first_route_second",
+        "large_neighborhood_search",
+        "tabu_search"
+      ]
+    },
+    
+    "C102": {
+      "family": "C1",
+      "type": "Clustered",
+      "time_windows": "Short",
+      "num_customers": 100,
+      "vehicle_capacity": 200,
+      "time_horizon": 1236,
+      "service_time": 90,
+      "window_width_avg": 55,
+      "window_width_range": [45, 69],
+      "demand_total": 2000,
+      "demand_avg": 20,
+      "demand_range": [10, 50],
+      "spatial_distribution": "4_clusters",
+      "difficulty": "medium_high",
+      "bks": {
+        "vehicles": 10,
+        "distance": 828.94,
+        "year": 1997,
+        "method": "Rochat & Taillard"
+      },
+      "lower_bounds": {
+        "vehicles_capacity": 10,
+        "vehicles_time": 8
+      },
+      "characteristics": {
+        "tight_capacity": true,
+        "tight_time_windows": true,
+        "geographic_structure": true,
+        "primary_objective": "minimize_vehicles"
+      },
+      "recommended_algorithms": [
+        "cluster_first_route_second",
+        "large_neighborhood_search",
+        "tabu_search"
+      ]
+    },
+    
+    "C201": {
+      "family": "C2",
+      "type": "Clustered",
+      "time_windows": "Long",
+      "num_customers": 100,
+      "vehicle_capacity": 700,
+      "time_horizon": 3390,
+      "service_time": 90,
+      "window_width_avg": 160,
+      "window_width_range": [160, 160],
+      "demand_total": 2000,
+      "demand_avg": 20,
+      "demand_range": [10, 50],
+      "spatial_distribution": "4_clusters",
+      "difficulty": "low",
+      "bks": {
+        "vehicles": 3,
+        "distance": 591.56,
+        "year": 1999,
+        "method": "Mester & Bräysy"
+      },
+      "lower_bounds": {
+        "vehicles_capacity": 3,
+        "vehicles_time": 3
+      },
+      "characteristics": {
+        "tight_capacity": false,
+        "tight_time_windows": false,
+        "geographic_structure": true,
+        "primary_objective": "minimize_distance"
+      },
+      "recommended_algorithms": [
+        "clarke_wright_savings",
+        "sweep_algorithm",
+        "genetic_algorithm"
+      ]
+    },
+    
+    "R101": {
+      "family": "R1",
+      "type": "Random",
+      "time_windows": "Short",
+      "num_customers": 100,
+      "vehicle_capacity": 200,
+      "time_horizon": 230,
+      "service_time": 10,
+      "window_width_avg": 10,
+      "window_width_range": [10, 10],
+      "demand_total": 1500,
+      "demand_avg": 15.2,
+      "demand_range": [1, 41],
+      "spatial_distribution": "uniform_random",
+      "difficulty": "very_high",
+      "bks": {
+        "vehicles": 19,
+        "distance": 1650.80,
+        "year": 2003,
+        "method": "Bent & Van Hentenryck"
+      },
+      "lower_bounds": {
+        "vehicles_capacity": 8,
+        "vehicles_time": 15
+      },
+      "characteristics": {
+        "tight_capacity": false,
+        "tight_time_windows": true,
+        "geographic_structure": false,
+        "primary_objective": "minimize_vehicles",
+        "extreme_time_constraints": true
+      },
+      "recommended_algorithms": [
+        "temporal_construction",
+        "adaptive_large_neighborhood_search",
+        "constraint_programming_hybrid"
+      ]
+    },
+    
+    "R201": {
+      "family": "R2",
+      "type": "Random",
+      "time_windows": "Long",
+      "num_customers": 100,
+      "vehicle_capacity": 1000,
+      "time_horizon": 1000,
+      "service_time": 10,
+      "window_width_avg": 100,
+      "window_width_range": [57, 139],
+      "demand_total": 1500,
+      "demand_avg": 15.2,
+      "demand_range": [1, 41],
+      "spatial_distribution": "uniform_random",
+      "difficulty": "medium",
+      "bks": {
+        "vehicles": 4,
+        "distance": 1252.37,
+        "year": 1999,
+        "method": "Mester & Bräysy"
+      },
+      "lower_bounds": {
+        "vehicles_capacity": 2,
+        "vehicles_time": 2
+      },
+      "characteristics": {
+        "tight_capacity": false,
+        "tight_time_windows": false,
+        "geographic_structure": false,
+        "primary_objective": "minimize_distance"
+      },
+      "recommended_algorithms": [
+        "sweep_algorithm",
+        "variable_neighborhood_search",
+        "simulated_annealing"
+      ]
+    },
+    
+    "RC101": {
+      "family": "RC1",
+      "type": "Random-Clustered",
+      "time_windows": "Short",
+      "num_customers": 100,
+      "vehicle_capacity": 200,
+      "time_horizon": 240,
+      "service_time": 10,
+      "window_width_avg": 30,
+      "window_width_range": [30, 30],
+      "demand_total": 1800,
+      "demand_avg": 17.8,
+      "demand_range": [3, 40],
+      "spatial_distribution": "semi_clustered",
+      "difficulty": "high",
+      "bks": {
+        "vehicles": 14,
+        "distance": 1696.95,
+        "year": 2003,
+        "method": "Bent & Van Hentenryck"
+      },
+      "lower_bounds": {
+        "vehicles_capacity": 9,
+        "vehicles_time": 12
+      },
+      "characteristics": {
+        "tight_capacity": true,
+        "tight_time_windows": true,
+        "geographic_structure": "partial",
+        "primary_objective": "minimize_vehicles"
+      },
+      "recommended_algorithms": [
+        "hybrid_cluster_random",
+        "adaptive_large_neighborhood_search",
+        "memetic_algorithm"
+      ]
+    },
+    
+    "RC201": {
+      "family": "RC2",
+      "type": "Random-Clustered",
+      "time_windows": "Long",
+      "num_customers": 100,
+      "vehicle_capacity": 1000,
+      "time_horizon": 1500,
+      "service_time": 10,
+      "window_width_avg": 90,
+      "window_width_range": [30, 175],
+      "demand_total": 1800,
+      "demand_avg": 17.8,
+      "demand_range": [3, 40],
+      "spatial_distribution": "semi_clustered",
+      "difficulty": "medium_high",
+      "bks": {
+        "vehicles": 4,
+        "distance": 1406.94,
+        "year": 1999,
+        "method": "Mester & Bräysy"
+      },
+      "lower_bounds": {
+        "vehicles_capacity": 2,
+        "vehicles_time": 2
+      },
+      "characteristics": {
+        "tight_capacity": false,
+        "tight_time_windows": false,
+        "geographic_structure": "partial",
+        "primary_objective": "minimize_distance"
+      },
+      "recommended_algorithms": [
+        "hybrid_approach",
+        "variable_neighborhood_descent",
+        "genetic_algorithm"
+      ]
+    }
+  },
+  
+  "family_configurations": {
+    "C1": {
+      "vehicle_capacity": 200,
+      "service_time": 90,
+      "time_horizon_typical": 1236,
+      "window_width_typical": 55,
+      "objective_weights": {
+        "vehicles": 1000,
+        "distance": 1
+      },
+      "validation_rules": {
+        "max_vehicles_expected": 10,
+        "min_vehicles_expected": 10,
+        "capacity_utilization": "high"
+      }
+    },
+    "C2": {
+      "vehicle_capacity": 700,
+      "service_time": 90,
+      "time_horizon_typical": 3390,
+      "window_width_typical": 160,
+      "objective_weights": {
+        "vehicles": 100,
+        "distance": 1
+      },
+      "validation_rules": {
+        "max_vehicles_expected": 4,
+        "min_vehicles_expected": 3,
+        "capacity_utilization": "low"
+      }
+    },
+    "R1": {
+      "vehicle_capacity": 200,
+      "service_time": 10,
+      "time_horizon_typical": 230,
+      "window_width_typical": 10,
+      "objective_weights": {
+        "vehicles": 1000,
+        "distance": 1
+      },
+      "validation_rules": {
+        "max_vehicles_expected": 20,
+        "min_vehicles_expected": 9,
+        "capacity_utilization": "medium",
+        "time_criticality": "extreme"
+      }
+    },
+    "R2": {
+      "vehicle_capacity": 1000,
+      "service_time": 10,
+      "time_horizon_typical": 1000,
+      "window_width_typical": 100,
+      "objective_weights": {
+        "vehicles": 100,
+        "distance": 1
+      },
+      "validation_rules": {
+        "max_vehicles_expected": 5,
+        "min_vehicles_expected": 2,
+        "capacity_utilization": "low"
+      }
+    },
+    "RC1": {
+      "vehicle_capacity": 200,
+      "service_time": 10,
+      "time_horizon_typical": 240,
+      "window_width_typical": 30,
+      "objective_weights": {
+        "vehicles": 1000,
+        "distance": 1
+      },
+      "validation_rules": {
+        "max_vehicles_expected": 15,
+        "min_vehicles_expected": 10,
+        "capacity_utilization": "high"
+      }
+    },
+    "RC2": {
+      "vehicle_capacity": 1000,
+      "service_time": 10,
+      "time_horizon_typical": 1500,
+      "window_width_typical": 90,
+      "objective_weights": {
+        "vehicles": 100,
+        "distance": 1
+      },
+      "validation_rules": {
+        "max_vehicles_expected": 5,
+        "min_vehicles_expected": 3,
+        "capacity_utilization": "low"
+      }
+    }
+  },
+  
+  "algorithm_parameters": {
+    "distance_calculation": {
+      "method": "euclidean",
+      "formula": "sqrt((x2-x1)^2 + (y2-y1)^2)",
+      "precision": "float"
+    },
+    "time_calculation": {
+      "speed_assumption": "1 distance unit = 1 time unit",
+      "waiting_time": "allowed (if arrival < ready_time)",
+      "late_arrival": "forbidden (arrival must be <= due_date)"
+    },
+    "validation_constraints": {
+      "capacity": {
+        "type": "hard",
+        "rule": "sum(demands_in_route) <= vehicle_capacity"
+      },
+      "time_windows": {
+        "type": "hard",
+        "rule": "arrival_time <= due_date for all customers"
+      },
+      "depot_return": {
+        "type": "hard",
+        "rule": "return_time <= depot.due_date"
+      },
+      "visit_once": {
+        "type": "hard",
+        "rule": "each customer visited exactly once"
+      }
+    }
+  },
+  
+  "performance_benchmarks": {
+    "computation_time_targets": {
+      "C1": "1-5 seconds (heuristic), 10-60 seconds (metaheuristic)",
+      "C2": "0.5-2 seconds (heuristic), 5-30 seconds (metaheuristic)",
+      "R1": "5-30 seconds (heuristic), 30-300 seconds (metaheuristic)",
+      "R2": "2-10 seconds (heuristic), 10-60 seconds (metaheuristic)",
+      "RC1": "3-15 seconds (heuristic), 15-120 seconds (metaheuristic)",
+      "RC2": "2-8 seconds (heuristic), 10-80 seconds (metaheuristic)"
+    },
+    "quality_metrics": {
+      "gap_calculation": "((solution - bks) / bks) * 100",
+      "acceptable_gap": {
+        "excellent": "< 1%",
+        "good": "1-5%",
+        "acceptable": "5-10%",
+        "poor": "> 10%"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+2026-01-03 00:39:09 - INFO - [GAA-ALGO] Name: GAA_Algorithm_1 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-03 00:39:09 - INFO - [GAA-ALGO] Name: GAA_Algorithm_2 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-03 00:39:09 - INFO - [GAA-ALGO] Name: GAA_Algorithm_3 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-03 00:39:09 - INFO - ================================================================================
+2026-01-03 00:39:09 - INFO - STARTING EXPERIMENTS - MODE: QUICK
+2026-01-03 00:39:09 - INFO - Total exp: 36 (3 GAA algorithms × 12 instances × 1 repetition)
+2026-01-03 00:39:09 - INFO - Timestamp: 2026-01-03T00:39:09.633420
+2026-01-03 00:39:09 - INFO - ================================================================================

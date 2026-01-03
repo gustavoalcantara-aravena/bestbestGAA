@@ -1,0 +1,9 @@
+2026-01-02 23:35:44 - INFO - [GAA-ALGO] Nombre: GAA_Algorithm_1 | Patrón: iterative-simple | Profundidad: 3, Tamaño: 4
+2026-01-02 23:35:44 - INFO - [GAA-ALGO] Nombre: GAA_Algorithm_2 | Patrón: iterative-simple | Profundidad: 3, Tamaño: 4
+2026-01-02 23:35:44 - INFO - [GAA-ALGO] Nombre: GAA_Algorithm_3 | Patrón: iterative-simple | Profundidad: 3, Tamaño: 4
+2026-01-02 23:35:44 - INFO - ================================================================================
+2026-01-02 23:35:44 - INFO - INICIANDO EXPERIMENTOS - MODE: QUICK
+2026-01-02 23:35:44 - INFO - Tot. exp: 36 (3 algoritmos GAA × 12 instancias × 1 iteración)
+2026-01-02 23:35:44 - INFO - Timestamp: 2026-01-02T23:35:44.456675
+2026-01-02 23:35:44 - INFO - ================================================================================
+2026-01-02 23:35:56 - INFO - [OK] GRASP    | R101    (R1) | K=19, D=  1491.7, t= 12.53s

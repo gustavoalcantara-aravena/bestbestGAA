@@ -1,0 +1,37 @@
+algorithm,d_final,error,family,instance_id,k_final,status,time_sec
+GRASP,54.007529346594374,,R1,R101,1.0,success,4.8591930866241455
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R101,,failed,2.1696090698242188e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R101,,failed,4.172325134277344e-05
+GRASP,59.09300324849883,,R1,R102,1.0,success,6.156481742858887
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R102,,failed,2.09808349609375e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R102,,failed,5.3882598876953125e-05
+GRASP,67.37639870697338,,R1,R103,1.0,success,4.508338451385498
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R103,,failed,2.1457672119140625e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R103,,failed,2.8848648071289062e-05
+GRASP,59.391764804200186,,R1,R104,1.0,success,3.770864963531494
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R104,,failed,2.0503997802734375e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R104,,failed,2.956390380859375e-05
+GRASP,55.528228979146654,,R1,R105,1.0,success,3.721536159515381
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R105,,failed,5.1021575927734375e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R105,,failed,0.00011587142944335938
+GRASP,59.391764804200186,,R1,R106,1.0,success,3.706831932067871
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R106,,failed,5.125999450683594e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R106,,failed,3.3855438232421875e-05
+GRASP,64.70512723358232,,R1,R107,1.0,success,6.088207244873047
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R107,,failed,9.632110595703125e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R107,,failed,3.314018249511719e-05
+GRASP,64.70512723358232,,R1,R108,1.0,success,6.187610387802124
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R108,,failed,2.002716064453125e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R108,,failed,4.00543212890625e-05
+GRASP,59.13189564301204,,R1,R109,1.0,success,5.92545223236084
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R109,,failed,3.528594970703125e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R109,,failed,3.337860107421875e-05
+GRASP,61.35655527146817,,R1,R110,1.0,success,3.6659302711486816
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R110,,failed,1.9788742065429688e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R110,,failed,4.553794860839844e-05
+GRASP,61.856583317536284,,R1,R111,1.0,success,4.475836753845215
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R111,,failed,1.9550323486328125e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R111,,failed,3.2901763916015625e-05
+GRASP,65.12301683739044,,R1,R112,1.0,success,4.651732683181763
+VND,,'RandomizedInsertion' object has no attribute 'construct',R1,R112,,failed,2.0742416381835938e-05
+ILS,,'IteratedLocalSearch' object has no attribute 'search',R1,R112,,failed,5.9604644775390625e-05

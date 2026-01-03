@@ -1,0 +1,16 @@
+{
+  "experiment_id": "vrptw_experiments_QUICK_02-01-26_21-22-12",
+  "mode": "QUICK",
+  "timestamp": "2026-01-02T21:24:22.805841",
+  "families": [
+    "R1"
+  ],
+  "algorithms": [
+    "GAA_Algorithm_1",
+    "GAA_Algorithm_2",
+    "GAA_Algorithm_3"
+  ],
+  "total_experiments": 36,
+  "results_location": "output\\vrptw_experiments_QUICK_02-01-26_21-22-12\\results",
+  "seed": 42
+}

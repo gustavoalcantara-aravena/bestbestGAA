@@ -1,0 +1,96 @@
+================================================================================
+EXPERIMENT RESULTS SUMMARY
+================================================================================
+
+[GENERAL STATISTICS]
+  Total experiments: 168
+  Algorithms: GAA_Algorithm_1, GAA_Algorithm_2, GAA_Algorithm_3
+  Families: C1, C2, R1, R2, RC1, RC2
+
+[ALGORITHM PERFORMANCE]
+
+  GAA_Algorithm_1:
+    Instances: 56
+    Avg Distance: 1536.86
+    Min Distance: 1212.66
+    Max Distance: 1893.69
+    Std Dev:      194.60
+    Avg Time:     3.75s
+
+  GAA_Algorithm_2:
+    Instances: 56
+    Avg Distance: 1182.19
+    Min Distance: 1103.20
+    Max Distance: 1257.72
+    Std Dev:      53.71
+    Avg Time:     0.17s
+
+  GAA_Algorithm_3:
+    Instances: 56
+    Avg Distance: 1408.04
+    Min Distance: 979.44
+    Max Distance: 2181.38
+    Std Dev:      323.59
+    Avg Time:     0.74s
+
+[FAMILY PERFORMANCE]
+
+  C1:
+    Instances: 27
+    Avg Distance: 1435.36
+    Min Distance: 1103.20
+    Max Distance: 1868.27
+    Std Dev:      270.52
+
+  C2:
+    Instances: 24
+    Avg Distance: 1342.66
+    Min Distance: 1134.35
+    Max Distance: 1822.68
+    Std Dev:      254.25
+
+  R1:
+    Instances: 36
+    Avg Distance: 1348.49
+    Min Distance: 1172.18
+    Max Distance: 1918.97
+    Std Dev:      195.40
+
+  R2:
+    Instances: 33
+    Avg Distance: 1189.25
+    Min Distance: 979.44
+    Max Distance: 1500.31
+    Std Dev:      137.69
+
+  RC1:
+    Instances: 24
+    Avg Distance: 1620.34
+    Min Distance: 1257.72
+    Max Distance: 2181.38
+    Std Dev:      301.18
+
+  RC2:
+    Instances: 24
+    Avg Distance: 1394.17
+    Min Distance: 1124.52
+    Max Distance: 1884.86
+    Std Dev:      251.18
+
+[BEST & WORST RESULTS]
+
+  Best 5 Solutions:
+    GAA_Algorithm_3      R210       Distance:   979.44
+    GAA_Algorithm_3      R211       Distance:   979.44
+    GAA_Algorithm_3      R208       Distance:  1003.71
+    GAA_Algorithm_3      R204       Distance:  1018.21
+    GAA_Algorithm_3      R207       Distance:  1021.56
+
+  Worst 5 Solutions:
+    GAA_Algorithm_3      R102       Distance:  1896.35
+    GAA_Algorithm_3      R101       Distance:  1918.97
+    GAA_Algorithm_3      RC102      Distance:  2046.38
+    GAA_Algorithm_3      RC105      Distance:  2050.83
+    GAA_Algorithm_3      RC101      Distance:  2181.38
+
+================================================================================

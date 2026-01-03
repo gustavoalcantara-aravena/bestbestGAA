@@ -1,0 +1,53 @@
+2026-01-02 23:57:44 - INFO - [GAA-ALGO] Name: GAA_Algorithm_1 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-02 23:57:44 - INFO - [GAA-ALGO] Name: GAA_Algorithm_2 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-02 23:57:44 - INFO - [GAA-ALGO] Name: GAA_Algorithm_3 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-02 23:57:44 - INFO - ================================================================================
+2026-01-02 23:57:44 - INFO - STARTING EXPERIMENTS - MODE: QUICK
+2026-01-02 23:57:44 - INFO - Total exp: 36 (3 GAA algorithms × 12 instances × 1 repetition)
+2026-01-02 23:57:44 - INFO - Timestamp: 2026-01-02T23:57:44.084358
+2026-01-02 23:57:44 - INFO - ================================================================================
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R101    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R101    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R101    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R102    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R102    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R102    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R103    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R103    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R103    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R104    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R104    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R104    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R105    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R105    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R105    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R106    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R106    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R106    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R107    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R107    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R107    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R108    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R108    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R108    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R109    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R109    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R109    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R110    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R110    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R110    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R111    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R111    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R111    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_1 | R112    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_2 | R112    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - ERROR - [ERROR] GAA_Algorithm_3 | R112    (R1) | Error: While.__init__() got an unexpected keyword argument 'condition'
+2026-01-02 23:57:44 - INFO - ================================================================================
+2026-01-02 23:57:44 - INFO - EXECUTION COMPLETED
+2026-01-02 23:57:44 - INFO - Experiments completed: 0/36
+2026-01-02 23:57:44 - INFO - Total time:     0.02s (0.00 minutes)
+2026-01-02 23:57:44 - INFO - ================================================================================
+2026-01-02 23:57:44 - INFO - Algorithm specifications saved: output\vrptw_experiments_QUICK_02-01-26_23-57-44\logs\algorithm_specifications.json
+2026-01-02 23:57:44 - INFO - Results saved: output\vrptw_experiments_QUICK_02-01-26_23-57-44\results\raw_results_detailed.csv
+2026-01-02 23:57:44 - INFO - Performance summary saved: output\vrptw_experiments_QUICK_02-01-26_23-57-44\logs\performance_summary.txt
+2026-01-02 23:57:44 - INFO - Best algorithm report saved: output\vrptw_experiments_QUICK_02-01-26_23-57-44\logs\best_algorithm_report.txt

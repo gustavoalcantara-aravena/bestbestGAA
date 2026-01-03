@@ -1,0 +1,38 @@
+================================================================================
+SELECCIÓN DEL MEJOR ALGORITMO
+================================================================================
+
+Fecha: 2026-01-02T23:32:49.676654
+
+SCORES POR ALGORITMO:
+--------------------------------------------------------------------------------
+
+1. ILS
+   Instancias probadas:  12
+   K promedio:           8.67 ± 1.15
+   D promedio:           851.39
+   Tiempo promedio:      11.025s
+
+2. VND
+   Instancias probadas:  12
+   K promedio:           13.50 ± 2.78
+   D promedio:           1190.10
+   Tiempo promedio:      9.933s
+
+3. GRASP
+   Instancias probadas:  12
+   K promedio:           13.50 ± 2.78
+   D promedio:           1190.10
+   Tiempo promedio:      9.840s
+
+================================================================================
+ALGORITMO SELECCIONADO: ILS
+================================================================================
+
+Justificación:
+  • Menor K promedio: 8.67 vehículos
+  • Varianza K: 1.15 (consistencia)
+  • D promedio: 851.39
+  • Tiempo promedio: 11.025s
+
+================================================================================

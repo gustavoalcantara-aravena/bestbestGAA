@@ -1,0 +1,21 @@
+{
+  "experiment_id": "vrptw_experiments_FULL_03-01-26_03-25-54",
+  "mode": "FULL",
+  "timestamp": "2026-01-03T03:30:18.245830",
+  "families": [
+    "C1",
+    "C2",
+    "R1",
+    "R2",
+    "RC1",
+    "RC2"
+  ],
+  "algorithms": [
+    "GAA_Algorithm_1",
+    "GAA_Algorithm_2",
+    "GAA_Algorithm_3"
+  ],
+  "total_experiments": 168,
+  "results_location": "output\\vrptw_experiments_FULL_03-01-26_03-25-54\\results",
+  "seed": 42
+}

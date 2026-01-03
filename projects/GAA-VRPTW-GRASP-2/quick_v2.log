@@ -1,0 +1,274 @@
+
+======================================================================
+  QUICK EXPERIMENT: R1 family (12 instances)
+  Algoritmos: GRASP, VND, ILS con DATASETS REALES
+======================================================================
+[INFO] Cargando datasets REALES de Solomon...
+[OK] 56/56 instancias cargadas
+
+======================================================================
+[GAA] Generando 3 algoritmos automáticamente con estructura AST
+======================================================================
+[OK] 3 algoritmos GAA generados
+  - GAA_Algorithm_1: patrón=iterative-simple, depth=3, size=4
+  - GAA_Algorithm_2: patrón=iterative-simple, depth=3, size=4
+  - GAA_Algorithm_3: patrón=iterative-simple, depth=3, size=4
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R101: K=8, D=1502.195928477025
+  [OK] GAA_Algorithm_1    R101    - K= 8, D=  1502.2, t= 3.39s  [1/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R101: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R101    - K= 8, D=  1172.2, t= 0.18s  [2/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R101: K=20, D=1918.9730412476035
+  [OK] GAA_Algorithm_3    R101    - K=20, D=  1919.0, t= 0.49s  [3/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R102: K=8, D=1322.5517629919175
+  [OK] GAA_Algorithm_1    R102    - K= 8, D=  1322.6, t= 3.35s  [4/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R102: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R102    - K= 8, D=  1172.2, t= 0.17s  [5/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R102: K=19, D=1896.3451530965842
+  [OK] GAA_Algorithm_3    R102    - K=19, D=  1896.3, t= 0.65s  [6/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R103: K=8, D=1274.513462902278
+  [OK] GAA_Algorithm_1    R103    - K= 8, D=  1274.5, t= 4.35s  [7/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R103: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R103    - K= 8, D=  1172.2, t= 0.17s  [8/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R103: K=15, D=1583.53454367954
+  [OK] GAA_Algorithm_3    R103    - K=15, D=  1583.5, t= 0.68s  [9/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R104: K=8, D=1436.3647446545858
+  [OK] GAA_Algorithm_1    R104    - K= 8, D=  1436.4, t= 3.64s  [10/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R104: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R104    - K= 8, D=  1172.2, t= 0.17s  [11/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R104: K=11, D=1239.4339893445847
+  [OK] GAA_Algorithm_3    R104    - K=11, D=  1239.4, t= 0.78s  [12/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R105: K=8, D=1507.6608267705956
+  [OK] GAA_Algorithm_1    R105    - K= 8, D=  1507.7, t= 3.62s  [13/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R105: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R105    - K= 8, D=  1172.2, t= 0.17s  [14/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R105: K=16, D=1606.2052147348402
+  [OK] GAA_Algorithm_3    R105    - K=16, D=  1606.2, t= 0.58s  [15/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R106: K=8, D=1427.2451188248494
+  [OK] GAA_Algorithm_1    R106    - K= 8, D=  1427.2, t= 3.47s  [16/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R106: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R106    - K= 8, D=  1172.2, t= 0.18s  [17/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R106: K=16, D=1658.1193202808224
+  [OK] GAA_Algorithm_3    R106    - K=16, D=  1658.1, t= 0.64s  [18/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R107: K=8, D=1371.344643352995
+  [OK] GAA_Algorithm_1    R107    - K= 8, D=  1371.3, t= 2.52s  [19/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R107: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R107    - K= 8, D=  1172.2, t= 0.18s  [20/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R107: K=14, D=1472.1475144689014
+  [OK] GAA_Algorithm_3    R107    - K=14, D=  1472.1, t= 0.72s  [21/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R108: K=8, D=1398.536370392606
+  [OK] GAA_Algorithm_1    R108    - K= 8, D=  1398.5, t= 2.81s  [22/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R108: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R108    - K= 8, D=  1172.2, t= 0.17s  [23/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R108: K=11, D=1286.6958070262056
+  [OK] GAA_Algorithm_3    R108    - K=11, D=  1286.7, t= 0.80s  [24/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R109: K=8, D=1321.8460266452073
+  [OK] GAA_Algorithm_1    R109    - K= 8, D=  1321.8, t= 3.45s  [25/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R109: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R109    - K= 8, D=  1172.2, t= 0.17s  [26/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R109: K=14, D=1465.5156044052171
+  [OK] GAA_Algorithm_3    R109    - K=14, D=  1465.5, t= 0.65s  [27/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R110: K=8, D=1412.3933888830386
+  [OK] GAA_Algorithm_1    R110    - K= 8, D=  1412.4, t= 2.92s  [28/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R110: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R110    - K= 8, D=  1172.2, t= 0.18s  [29/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R110: K=12, D=1367.8203693554192
+  [OK] GAA_Algorithm_3    R110    - K=12, D=  1367.8, t= 0.70s  [30/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R111: K=8, D=1322.5107066669314
+  [OK] GAA_Algorithm_1    R111    - K= 8, D=  1322.5, t= 3.11s  [31/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R111: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R111    - K= 8, D=  1172.2, t= 0.18s  [32/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R111: K=13, D=1328.948291065708
+  [OK] GAA_Algorithm_3    R111    - K=13, D=  1328.9, t= 0.73s  [33/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_1 on R112: K=8, D=1400.8985781045903
+  [OK] GAA_Algorithm_1    R112    - K= 8, D=  1400.9, t= 3.76s  [34/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_2 on R112: K=8, D=1172.1800291715338
+  [OK] GAA_Algorithm_2    R112    - K= 8, D=  1172.2, t= 0.18s  [35/36]
+[WARNING] INFEASIBLE solution for GAA_Algorithm_3 on R112: K=11, D=1228.2957939133044
+  [OK] GAA_Algorithm_3    R112    - K=11, D=  1228.3, t= 0.75s  [36/36]
+
+[INFO] Guardando resultados...
+
+================================================================================
+PERFORMANCE SUMMARY - COMPARATIVE ANALYSIS
+================================================================================
+
+Timestamp: 2026-01-03T01:21:50.210497
+Total executions: 36
+Successful executions: 36
+
+--------------------------------------------------------------------------------
+PERFORMANCE BY ALGORITHM
+--------------------------------------------------------------------------------
+
+GAA_Algorithm_1
+  Executions:      12
+  K (vehicles):    avg=8.00, min=8, max=8
+  D (distance):    avg=1391.51, min=1274.51, max=1507.66
+  Time:            avg=3.364s, total=40.4s
+
+GAA_Algorithm_2
+  Executions:      12
+  K (vehicles):    avg=8.00, min=8, max=8
+  D (distance):    avg=1172.18, min=1172.18, max=1172.18
+  Time:            avg=0.175s, total=2.1s
+
+GAA_Algorithm_3
+  Executions:      12
+  K (vehicles):    avg=14.33, min=11, max=20
+  D (distance):    avg=1504.34, min=1228.30, max=1918.97
+  Time:            avg=0.680s, total=8.2s
+
+--------------------------------------------------------------------------------
+PERFORMANCE BY FAMILY
+--------------------------------------------------------------------------------
+
+R1
+  Instances:       36
+  Avg K:           10.11
+  Avg D:           1356.01
+
+--------------------------------------------------------------------------------
+BEST SOLUTIONS
+--------------------------------------------------------------------------------
+
+Best K (fewest vehicles):
+  Algorithm:  GAA_Algorithm_1
+  Instance:   R101 (R1)
+  K:          8
+  D:          1502.20
+  Time:       3.387s
+
+Best D (with K = 8):
+  Algorithm:  GAA_Algorithm_2
+  Instance:   R101 (R1)
+  K:          8
+  D:          1172.18
+  Time:       0.184s
+
+Most efficient (best K/time ratio):
+  Algorithm:  GAA_Algorithm_1
+  Instance:   R103 (R1)
+  K/time:     1.84
+
+================================================================================
+
+================================================================================
+BEST ALGORITHM SELECTION
+================================================================================
+
+Timestamp: 2026-01-03T01:21:50.210709
+
+SCORES BY ALGORITHM:
+--------------------------------------------------------------------------------
+
+1. GAA_Algorithm_1
+   Instances tested:     12
+   Avg K:                8.00 ± 0.00
+   Avg D:                1391.51
+   Avg time:             3.364s
+
+2. GAA_Algorithm_2
+   Instances tested:     12
+   Avg K:                8.00 ± 0.00
+   Avg D:                1172.18
+   Avg time:             0.175s
+
+3. GAA_Algorithm_3
+   Instances tested:     12
+   Avg K:                14.33 ± 3.03
+   Avg D:                1504.34
+   Avg time:             0.680s
+
+================================================================================
+SELECTED ALGORITHM: GAA_Algorithm_1
+================================================================================
+
+Justification:
+  • Lowest avg K: 8.00 vehicles
+  • K variance: 0.00 (consistency)
+  • Avg D: 1391.51
+  • Avg time: 3.364s
+
+================================================================================
+[INFO] Generando visualizaciones...
+[INFO] Loaded 36 results from CSV
+[INFO] Generating visualizations in output\vrptw_experiments_QUICK_03-01-26_01-20-59\plots...
+  [OK] Saved: 01_performance_comparison.png
+  [OK] Saved: 02_distance_by_instance.png
+  [OK] Saved: 03_distance_by_family.png
+  [OK] Saved: 04_execution_time.png
+  [SKIP] Gap analysis: No instances with matching K and BKS
+  [OK] Saved: 06_algorithms_boxplot.png
+  [OK] Saved: 07_family_algorithm_heatmap.png
+  [OK] Saved: 08_k_vs_d_pareto.png
+  [OK] Saved: 09_robustness_by_instance.png
+  [OK] Saved: 10_k_feasibility_analysis.png
+  [OK] Saved: 11_algorithm_radar_comparison.png
+[INFO] Visualization complete! (11 canonical plots generated)
+[INFO] Gráficos guardados en: output\vrptw_experiments_QUICK_03-01-26_01-20-59\plots
+[INFO] Generando resumen de resultados...
+================================================================================
+EXPERIMENT RESULTS SUMMARY
+================================================================================
+
+[GENERAL STATISTICS]
+  Total experiments: 36
+  Algorithms: GAA_Algorithm_1, GAA_Algorithm_2, GAA_Algorithm_3
+  Families: R1
+
+[ALGORITHM PERFORMANCE]
+
+  GAA_Algorithm_1:
+    Instances: 12
+    Avg Distance: 1391.51
+    Min Distance: 1274.51
+    Max Distance: 1507.66
+    Std Dev:      72.66
+    Avg Time:     3.36s
+
+  GAA_Algorithm_2:
+    Instances: 12
+    Avg Distance: 1172.18
+    Min Distance: 1172.18
+    Max Distance: 1172.18
+    Std Dev:      0.00
+    Avg Time:     0.18s
+
+  GAA_Algorithm_3:
+    Instances: 12
+    Avg Distance: 1504.34
+    Min Distance: 1228.30
+    Max Distance: 1918.97
+    Std Dev:      235.79
+    Avg Time:     0.68s
+
+[FAMILY PERFORMANCE]
+
+  R1:
+    Instances: 36
+    Avg Distance: 1356.01
+    Min Distance: 1172.18
+    Max Distance: 1918.97
+    Std Dev:      196.71
+
+[BEST & WORST RESULTS]
+
+  Best 5 Solutions:
+    GAA_Algorithm_2      R101       Distance:  1172.18
+    GAA_Algorithm_2      R102       Distance:  1172.18
+    GAA_Algorithm_2      R103       Distance:  1172.18
+    GAA_Algorithm_2      R104       Distance:  1172.18
+    GAA_Algorithm_2      R105       Distance:  1172.18
+
+  Worst 5 Solutions:
+    GAA_Algorithm_3      R103       Distance:  1583.53
+    GAA_Algorithm_3      R105       Distance:  1606.21
+    GAA_Algorithm_3      R106       Distance:  1658.12
+    GAA_Algorithm_3      R102       Distance:  1896.35
+    GAA_Algorithm_3      R101       Distance:  1918.97
+
+================================================================================
+
+[SUMMARY] 36/36 completados
+[RESULTS] output\vrptw_experiments_QUICK_03-01-26_01-20-59\results
+

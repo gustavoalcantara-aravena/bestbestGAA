@@ -1,0 +1,53 @@
+2026-01-02 23:40:35 - INFO - [GAA-ALGO] Name: GAA_Algorithm_1 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-02 23:40:35 - INFO - [GAA-ALGO] Name: GAA_Algorithm_2 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-02 23:40:35 - INFO - [GAA-ALGO] Name: GAA_Algorithm_3 | Pattern: iterative-simple | Depth: 3, Size: 4
+2026-01-02 23:40:35 - INFO - ================================================================================
+2026-01-02 23:40:35 - INFO - STARTING EXPERIMENTS - MODE: QUICK
+2026-01-02 23:40:35 - INFO - Total exp: 36 (3 GAA algorithms × 12 instances × 1 repetition)
+2026-01-02 23:40:35 - INFO - Timestamp: 2026-01-02T23:40:35.359359
+2026-01-02 23:40:35 - INFO - ================================================================================
+2026-01-02 23:40:47 - INFO - [OK] GRASP    | R101    (R1) | K=19, D=  1491.7, t= 12.56s
+2026-01-02 23:41:00 - INFO - [OK] VND      | R101    (R1) | K=19, D=  1491.7, t= 12.59s
+2026-01-02 23:41:14 - INFO - [OK] ILS      | R101    (R1) | K= 7, D=   791.5, t= 14.00s
+2026-01-02 23:41:27 - INFO - [OK] GRASP    | R102    (R1) | K=18, D=  1464.7, t= 13.02s
+2026-01-02 23:41:40 - INFO - [OK] VND      | R102    (R1) | K=18, D=  1464.7, t= 13.10s
+2026-01-02 23:41:49 - INFO - [OK] ILS      | R102    (R1) | K= 8, D=   809.7, t=  8.93s
+2026-01-02 23:41:57 - INFO - [OK] GRASP    | R103    (R1) | K=14, D=  1255.8, t=  8.19s
+2026-01-02 23:42:05 - INFO - [OK] VND      | R103    (R1) | K=14, D=  1255.8, t=  8.23s
+2026-01-02 23:42:20 - INFO - [OK] ILS      | R103    (R1) | K= 8, D=   843.4, t= 14.99s
+2026-01-02 23:42:35 - INFO - [OK] GRASP    | R104    (R1) | K=11, D=   992.0, t= 14.58s
+2026-01-02 23:42:50 - INFO - [OK] VND      | R104    (R1) | K=11, D=   992.0, t= 14.47s
+2026-01-02 23:43:03 - INFO - [OK] ILS      | R104    (R1) | K= 9, D=   854.2, t= 13.70s
+2026-01-02 23:43:11 - INFO - [OK] GRASP    | R105    (R1) | K=15, D=  1277.8, t=  7.38s
+2026-01-02 23:43:18 - INFO - [OK] VND      | R105    (R1) | K=15, D=  1277.8, t=  7.51s
+2026-01-02 23:43:26 - INFO - [OK] ILS      | R105    (R1) | K=11, D=   951.2, t=  8.06s
+2026-01-02 23:43:32 - INFO - [OK] GRASP    | R106    (R1) | K=14, D=  1199.0, t=  6.14s
+2026-01-02 23:43:38 - INFO - [OK] VND      | R106    (R1) | K=14, D=  1199.0, t=  6.18s
+2026-01-02 23:43:46 - INFO - [OK] ILS      | R106    (R1) | K=10, D=   905.1, t=  7.90s
+2026-01-02 23:43:53 - INFO - [OK] GRASP    | R107    (R1) | K=12, D=  1081.7, t=  6.86s
+2026-01-02 23:44:00 - INFO - [OK] VND      | R107    (R1) | K=12, D=  1081.7, t=  6.95s
+2026-01-02 23:44:09 - INFO - [OK] ILS      | R107    (R1) | K= 8, D=   828.9, t=  9.27s
+2026-01-02 23:44:16 - INFO - [OK] GRASP    | R108    (R1) | K=10, D=  1003.4, t=  6.05s
+2026-01-02 23:44:22 - INFO - [OK] VND      | R108    (R1) | K=10, D=  1003.4, t=  6.08s
+2026-01-02 23:44:35 - INFO - [OK] ILS      | R108    (R1) | K= 8, D=   824.5, t= 12.94s
+2026-01-02 23:44:43 - INFO - [OK] GRASP    | R109    (R1) | K=14, D=  1196.6, t=  8.17s
+2026-01-02 23:44:50 - INFO - [OK] VND      | R109    (R1) | K=14, D=  1196.6, t=  7.68s
+2026-01-02 23:44:59 - INFO - [OK] ILS      | R109    (R1) | K=10, D=   894.5, t=  8.25s
+2026-01-02 23:45:12 - INFO - [OK] GRASP    | R110    (R1) | K=12, D=  1175.8, t= 13.70s
+2026-01-02 23:45:26 - INFO - [OK] VND      | R110    (R1) | K=12, D=  1175.8, t= 13.83s
+2026-01-02 23:45:34 - INFO - [OK] ILS      | R110    (R1) | K= 9, D=   863.4, t=  8.31s
+2026-01-02 23:45:40 - INFO - [OK] GRASP    | R111    (R1) | K=12, D=  1116.1, t=  5.44s
+2026-01-02 23:45:45 - INFO - [OK] VND      | R111    (R1) | K=12, D=  1116.1, t=  5.52s
+2026-01-02 23:46:00 - INFO - [OK] ILS      | R111    (R1) | K= 8, D=   821.4, t= 14.09s
+2026-01-02 23:46:18 - INFO - [OK] GRASP    | R112    (R1) | K=11, D=  1026.6, t= 18.67s
+2026-01-02 23:46:37 - INFO - [OK] VND      | R112    (R1) | K=11, D=  1026.6, t= 18.68s
+2026-01-02 23:46:51 - INFO - [OK] ILS      | R112    (R1) | K= 8, D=   828.9, t= 14.13s
+2026-01-02 23:46:51 - INFO - ================================================================================
+2026-01-02 23:46:51 - INFO - EXECUTION COMPLETED
+2026-01-02 23:46:51 - INFO - Experiments completed: 36/36
+2026-01-02 23:46:51 - INFO - Total time:   376.17s (6.27 minutes)
+2026-01-02 23:46:51 - INFO - ================================================================================
+2026-01-02 23:46:51 - INFO - Algorithm specifications saved: output\vrptw_experiments_QUICK_02-01-26_23-40-35\logs\algorithm_specifications.json
+2026-01-02 23:46:51 - INFO - Results saved: output\vrptw_experiments_QUICK_02-01-26_23-40-35\results\raw_results_detailed.csv
+2026-01-02 23:46:51 - INFO - Performance summary saved: output\vrptw_experiments_QUICK_02-01-26_23-40-35\logs\performance_summary.txt
+2026-01-02 23:46:51 - INFO - Best algorithm report saved: output\vrptw_experiments_QUICK_02-01-26_23-40-35\logs\best_algorithm_report.txt

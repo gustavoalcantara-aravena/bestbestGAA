@@ -1,0 +1,20 @@
+================================================================================
+TIMING REPORT
+================================================================================
+Mode: QUICK
+Start: 2026-01-03T01:23:19.071429
+Total Experiments: 36
+  - Algorithms: 3
+  - Instances: 12
+  - Repetitions: 1
+================================================================================
+
+[OK] GAA_Algorithm_1 | R101    (R1) | K= 8, D=  1502.2, t=  3.27s
+[OK] GAA_Algorithm_2 | R101    (R1) | K= 8, D=  1172.2, t=  0.18s
+[OK] GAA_Algorithm_3 | R101    (R1) | K=20, D=  1919.0, t=  0.49s
+[OK] GAA_Algorithm_1 | R102    (R1) | K= 8, D=  1322.6, t=  3.33s
+[OK] GAA_Algorithm_2 | R102    (R1) | K= 8, D=  1172.2, t=  0.17s
+[OK] GAA_Algorithm_3 | R102    (R1) | K=19, D=  1896.3, t=  0.65s
+[OK] GAA_Algorithm_1 | R103    (R1) | K= 8, D=  1274.5, t=  4.39s
+[OK] GAA_Algorithm_2 | R103    (R1) | K= 8, D=  1172.2, t=  0.18s
+[OK] GAA_Algorithm_3 | R103    (R1) | K=15, D=  1583.5, t=  0.68s

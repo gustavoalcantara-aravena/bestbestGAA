@@ -1,0 +1,26 @@
+================================================================================
+TIMING REPORT
+================================================================================
+Mode: FULL
+Start: 2026-01-03T03:25:08.091457
+Total Experiments: 168
+  - Algorithms: 3
+  - Instances: 56
+  - Repetitions: 1
+================================================================================
+
+[OK] GAA_Algorithm_1 | C101    (C1) | K=10, D=  1522.0, t=  5.58s
+[OK] GAA_Algorithm_2 | C101    (C1) | K=10, D=  1103.2, t=  0.19s
+[OK] GAA_Algorithm_3 | C101    (C1) | K=15, D=  1835.9, t=  0.55s
+[OK] GAA_Algorithm_1 | C102    (C1) | K=10, D=  1461.4, t=  5.52s
+[OK] GAA_Algorithm_2 | C102    (C1) | K=10, D=  1103.2, t=  0.19s
+[OK] GAA_Algorithm_3 | C102    (C1) | K=14, D=  1868.3, t=  0.66s
+[OK] GAA_Algorithm_1 | C103    (C1) | K=10, D=  1504.5, t=  4.86s
+[OK] GAA_Algorithm_2 | C103    (C1) | K=10, D=  1103.2, t=  0.20s
+[OK] GAA_Algorithm_3 | C103    (C1) | K=11, D=  1629.0, t=  0.80s
+[OK] GAA_Algorithm_1 | C104    (C1) | K=10, D=  1491.2, t=  5.08s
+[OK] GAA_Algorithm_2 | C104    (C1) | K=10, D=  1103.2, t=  0.18s
+[OK] GAA_Algorithm_3 | C104    (C1) | K=12, D=  1451.5, t=  0.76s
+[OK] GAA_Algorithm_1 | C105    (C1) | K=10, D=  1466.7, t=  5.14s
+[OK] GAA_Algorithm_2 | C105    (C1) | K=10, D=  1103.2, t=  0.19s
+[OK] GAA_Algorithm_3 | C105    (C1) | K=14, D=  1813.3, t=  0.54s

@@ -1,0 +1,15 @@
+
+======================================================================
+  QUICK EXPERIMENT: R1 family (12 instances)
+  Algoritmos: GRASP, VND, ILS con DATASETS REALES
+======================================================================
+[INFO] Cargando datasets REALES de Solomon...
+[OK] 56/56 instancias cargadas
+
+======================================================================
+[GAA] Generando 3 algoritmos automáticamente con estructura AST
+======================================================================
+[OK] 3 algoritmos GAA generados
+  - GAA_Algorithm_1: patrón=iterative-simple, depth=3, size=4
+  - GAA_Algorithm_2: patrón=iterative-simple, depth=3, size=4
+  - GAA_Algorithm_3: patrón=iterative-simple, depth=3, size=4
