@@ -269,6 +269,30 @@ class ResultProcessor:
         
         return avg_gap_k, avg_gap_d, score
 
+    @staticmethod
+    def print_instance_results(results: Dict[str, Dict[str, float]]) -> None:
+        """Imprime resultados detallados por instancia"""
+        print(f"║     📊 Resultados por Dataset:                                              ║")
+        print(f"║     {'-'*72} ║")
+        print(f"║     {'Dataset':<12} {'K':<6} {'D':<9} {'GAP_K':<10} {'GAP_D':<10} {'Score':<10} ║")
+        print(f"║     {'-'*72} ║")
+        
+        instance_scores = []
+        
+        for instance_id in sorted(results.keys()):
+            data = results[instance_id]
+            k = data.get('k', 0)
+            d = data.get('d', 0)
+            gap_k, gap_d = ResultProcessor.calculate_gaps(instance_id, k, d)
+            inst_score = gap_k + gap_d
+            instance_scores.append(inst_score)
+            
+            # Color based on gaps
+            gap_k_color = "🟢" if gap_k <= 0 else "🟡" if gap_k <= 5 else "🔴"
+            gap_d_color = "🟢" if gap_d <= 0 else "🟡" if gap_d <= 5 else "🔴"
+            
+            print(f"║     {instance_id:<12} {k:<6.0f} {d:<9.2f} {gap_k_color}{gap_k:>+7.2f}% {gap_d_color}{gap_d:>+7.2f}% {inst_score:>8.3f} ║")
+
 
 class Orchestrator:
     """Orquesta la búsqueda de parámetros"""
@@ -394,11 +418,17 @@ class Orchestrator:
             )
             self.results.append(combo_result)
             
-            # Mostrar resultados
+            # Mostrar resultados detallados
             print(f"╠═══════════════════════════════════════════════════════════════════════════════╣")
-            print(f"║ 📊 RESULTADOS:                                                                  ║")
+            print(f"║ 📊 RESULTADOS POR INSTANCIA:                                                    ║")
+            print(f"║ {'-'*76} ║")
             
-            # Color based on performance
+            # Mostrar cada dataset
+            ResultProcessor.print_instance_results(exp_results)
+            
+            print(f"║ {'-'*76} ║")
+            
+            # Mostrar resumen
             if score < 0.5:
                 emoji = "🏆"
                 quality = "EXCELENTE"
@@ -412,10 +442,11 @@ class Orchestrator:
                 emoji = "○"
                 quality = "REGULAR"
             
+            print(f"║ 🎯 RESUMEN CONSOLIDADO:                                                         ║")
             print(f"║    {emoji} Score (GAP_K + GAP_D):    {score:>8.6f}  [{quality}]                   ║")
-            print(f"║       └─ Gap Vehículos:        {avg_gap_k:>+7.2f}%  (vs BKS: 10 vehículos)     ║")
-            print(f"║       └─ Gap Distancia:        {avg_gap_d:>+7.2f}%  (vs BKS: 828.93 km)        ║")
-            print(f"║       └─ Tiempo ejecución:     {elapsed:>7.1f}s                                  ║")
+            print(f"║       └─ Gap Promedio Vehículos:  {avg_gap_k:>+7.2f}%  (vs BKS: 10)          ║")
+            print(f"║       └─ Gap Promedio Distancia:  {avg_gap_d:>+7.2f}%  (vs BKS: 828.93 km)   ║")
+            print(f"║       └─ Tiempo ejecución:        {elapsed:>7.1f}s                               ║")
             print(f"╚═══════════════════════════════════════════════════════════════════════════════╝")
     
     def _rank_results(self):
