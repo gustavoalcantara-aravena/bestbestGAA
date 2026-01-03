@@ -605,6 +605,18 @@ class QuickExperiment:
         except Exception as e:
             print(f"[WARNING] Error generando reporte: {e}")
         
+        # Generate GAP data JSON
+        print("[INFO] Generando datos de GAP en JSON...")
+        try:
+            from gap_data_generator import generate_gap_data_json
+            json_output = executor.results_dir / "gap_data.json"
+            generate_gap_data_json(
+                str(executor.results_dir / "raw_results.csv"),
+                str(json_output)
+            )
+        except Exception as e:
+            print(f"[WARNING] Error generando JSON de GAP: {e}")
+        
         # Generate GAP comparison visualizations automatically
         print("\n[INFO] Generando gráficas de comparación GAP...")
         try:
@@ -830,6 +842,18 @@ class FullExperiment:
             )
         except Exception as e:
             print(f"[WARNING] Error generando reporte: {e}")
+        
+        # Generate GAP data JSON
+        print("[INFO] Generando datos de GAP en JSON...")
+        try:
+            from gap_data_generator import generate_gap_data_json
+            json_output = executor.results_dir / "gap_data.json"
+            generate_gap_data_json(
+                str(executor.results_dir / "raw_results.csv"),
+                str(json_output)
+            )
+        except Exception as e:
+            print(f"[WARNING] Error generando JSON de GAP: {e}")
         
         # Generate GAP comparison visualizations automatically
         print("\n[INFO] Generando gráficas de comparación GAP...")
