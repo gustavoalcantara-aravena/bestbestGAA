@@ -81,28 +81,27 @@ class AlgorithmGenerator:
         
         return tree
     
-    def generate_three_algorithms(self, seed: int = 42, iteration: str = 'ITER-3') -> List[ASTNode]:
+    def generate_three_algorithms(self, seed: int = 42) -> List[ASTNode]:
         """
         Generate three complementary algorithms optimizing GRASP principles:
         
-        ALGORITMO 1: GRASP PURO (construcción aleatoria + mejora intensiva)
-        - Múltiples iteraciones de construcción con alpha variable
-        - Mejora agresiva con TwoOpt/OrOpt
-        - Rápida convergencia a soluciones sólidas
+        ALGORITMO 2: ALGORITMO DE CONTROL (ITER-3 - NO MODIFICAR)
+        - GANADOR: D=1172.18, t=0.18s, K=0 (perfecto)
+        - NearestNeighbor constructor + ILS perturbation
+        - DoubleBridge(strength=3) + While(80) iteraciones
         
-        ALGORITMO 2: GRASP + PERTURBACIÓN (ILS: Iterated Local Search)
-        - Construcción + mejora + perturbación iterada
-        - Equilibrio exploración/explotación
-        - Mejor calidad que GRASP puro
+        ALGORITMO 1: GRASP PURO (A OPTIMIZAR)
+        - Múltiples iteraciones de construcción
+        - Mejora intensiva con TwoOpt/OrOpt
+        - Actualmente: D=1391.51, t=3.41s
         
-        ALGORITMO 3: GRASP ADAPTATIVO (VND-like: múltiples operadores)
-        - Secuencia de operadores de mejora complementarios
-        - Criterio de parada adaptativo (no mejora)
-        - Máxima diversidad de búsqueda local
+        ALGORITMO 3: GRASP ADAPTATIVO (A OPTIMIZAR)
+        - Secuencia de operadores complementarios
+        - Criterio adaptativo de parada
+        - Actualmente: D=1504.34, t=0.69s
         
         Args:
             seed: Seed para reproducibilidad
-            iteration: 'ITER-3' (configuración ganadora) o 'ITER-4' (mejorada para C2)
         
         Returns:
             Lista de 3 algoritmos ASTNode optimizados
@@ -111,13 +110,12 @@ class AlgorithmGenerator:
         algorithms = []
         
         # ========================================================================
-        # ALGORITMO 1: GRASP Puro (Múltiples construcciones + mejora)
+        # ALGORITMO 1: GRASP Puro (A OPTIMIZAR)
         # ========================================================================
-        # ITERACIÓN 3: Algoritmo 1 sin ThreeOpt, más TwoOpt/OrOpt puro
         algo1 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
-                max_iterations=75,  # Más iteraciones, menos costosas
+                max_iterations=75,  
                 body=Seq(body=[
                     LocalSearch(operator='TwoOpt', max_iterations=52),
                     LocalSearch(operator='OrOpt', max_iterations=28),
@@ -130,193 +128,26 @@ class AlgorithmGenerator:
         algorithms.append(algo1)
         
         # ========================================================================
-        # ALGORITMO 2: GRASP + Perturbación (ILS: Iterated Local Search)
+        # ALGORITMO 2: GRASP + Perturbación (CONTROL - NO CAMBIAR)
         # ========================================================================
-        # ITER-3 vs ITER-4: Cambios para mejorar desempeño en familias clustered (C2)
-        
-        if iteration == 'ITER-4':
-            # ITER-4: MÁS FUERTE - Mayor exploración para escapar mínimos locales en C2
-            algo2 = Seq(body=[
-                # CONSTRUCCIÓN: NearestNeighbor (rápido, determinista, buena calidad)
-                GreedyConstruct(heuristic='NearestNeighbor'),
-                # MEJORA ITERADA CON PERTURBACIÓN - VERSIÓN AGRESIVA
-                While(
-                    max_iterations=120,  # +50% (80→120) más exploración
-                    body=Seq(body=[
-                        # Mejora más agresiva después de construcción
-                        LocalSearch(
-                            operator='TwoOpt',
-                            max_iterations=60  # +20% (50→60)
-                        ),
-                        # Perturbación MÁS FUERTE para escapar mínimos locales
-                        Perturbation(
-                            operator='DoubleBridge',
-                            strength=5  # +67% (3→5) ← CLAVE: escape más agresivo
-                        ),
-                        # Re-mejora más fuerte después de perturbar
-                        LocalSearch(
-                            operator='TwoOpt',
-                            max_iterations=40  # +14% (35→40)
-                        ),
-                        # Operador complementario más fuerte
-                        LocalSearch(
-                            operator='Relocate',
-                            max_iterations=25  # +25% (20→25)
-                        )
-                    ])
-                )
-            ])
-        else:
-            # ITER-3: CONFIGURACIÓN GANADORA (no cambiar)
-            algo2 = Seq(body=[
-                # CONSTRUCCIÓN: NearestNeighbor (rápido, determinista, buena calidad)
-                GreedyConstruct(heuristic='NearestNeighbor'),
-                # MEJORA ITERADA CON PERTURBACIÓN (estructura probada exitosa)
-                While(
-                    max_iterations=80,  # Iteraciones controladas
-                    body=Seq(body=[
-                        # Mejora agresiva
-                        LocalSearch(
-                            operator='TwoOpt',
-                            max_iterations=50
-                        ),
-                        # Perturbación: escapa óptimos locales
-                        Perturbation(
-                            operator='DoubleBridge',
-                            strength=3  # Moderada
-                        ),
-                        # Re-mejora después de perturbar
-                        LocalSearch(
-                            operator='TwoOpt',
-                            max_iterations=35
-                        ),
-                        # Operador complementario
-                        LocalSearch(
-                            operator='Relocate',
-                            max_iterations=20
-                        )
-                    ])
-                )
-            ])
-        
-        algorithms.append(algo2)
-        
-        # ITERACIÓN 3: Algoritmo 3 con perturbación muy controlada
-        algo3 = Seq(body=[
-            GreedyConstruct(heuristic='NearestNeighbor'),
-            While(
-                max_iterations=68,
-                body=Seq(body=[
-                    LocalSearch(operator='TwoOpt', max_iterations=50),
-                    LocalSearch(operator='OrOpt', max_iterations=20),
-                    Perturbation(operator='DoubleBridge', strength=1),  # MUY leve
-                    LocalSearch(operator='TwoOpt', max_iterations=35),
-                    LocalSearch(operator='Relocate', max_iterations=15)
-                ])
-            )
-        ])
-        algorithms.append(algo3)
-        
-        return algorithms
-        """
-        Generate three complementary algorithms optimizing GRASP principles:
-        
-        ALGORITMO 1: GRASP PURO (construcción aleatoria + mejora intensiva)
-        - Múltiples iteraciones de construcción con alpha variable
-        - Mejora agresiva con TwoOpt/OrOpt
-        - Rápida convergencia a soluciones sólidas
-        
-        ALGORITMO 2: GRASP + PERTURBACIÓN (ILS-like: escape óptimos locales)
-        - Construcción + mejora + perturbación iterada
-        - Equilibrio exploración/explotación
-        - Mejor calidad que GRASP puro
-        
-        ALGORITMO 3: GRASP ADAPTATIVO (VND-like: múltiples operadores)
-        - Secuencia de operadores de mejora complementarios
-        - Criterio de parada adaptativo (no mejora)
-        - Máxima diversidad de búsqueda local
-        
-        Args:
-            seed: Seed para reproducibilidad
-            iteration: 'ITER-3' (constructor uniforme) o 'ITER-4' (constructor adaptativo)
-        
-        Returns:
-            Lista de 3 algoritmos ASTNode optimizados
-        """
-        random.seed(seed)
-        algorithms = []
-        
-        # ========================================================================
-        # ALGORITMO 1: GRASP Puro (Múltiples construcciones + mejora)
-        # ========================================================================
-        # ITERACIÓN 3: Algoritmo 1 sin ThreeOpt, más TwoOpt/OrOpt puro
-        algo1 = Seq(body=[
-            GreedyConstruct(heuristic='NearestNeighbor'),
-            While(
-                max_iterations=75,  # Más iteraciones, menos costosas
-                body=Seq(body=[
-                    LocalSearch(operator='TwoOpt', max_iterations=52),
-                    LocalSearch(operator='OrOpt', max_iterations=28),
-                    Perturbation(operator='DoubleBridge', strength=2.0),
-                    LocalSearch(operator='TwoOpt', max_iterations=32),
-                    LocalSearch(operator='Relocate', max_iterations=18)
-                ])
-            )
-        ])
-        algorithms.append(algo1)
-        
-        # ========================================================================
-        # ALGORITMO 2: GRASP + Perturbación (ILS: Iterated Local Search)
-        # ========================================================================
-        # Estrategia: Mejora local → perturba → mejora local → repite (LA ESTRUCTURA GANADORA)
-        # Constructor determinista rápido + perturbación moderada + re-mejora
-        
-        # ITER-4: Constructor adaptativo por familia de instancia
-        if iteration == 'ITER-4':
-            constructor = GreedyConstruct(
-                heuristic='AdaptiveConstructor',
-                metadata={
-                    'default': 'NearestNeighbor',  # Para R, R2, RC1, RC2
-                    'clustered': 'RandomizedInsertion',  # Para C1, C2
-                    'randomness': 0.25  # 25% de aleatoriedad en RandomizedInsertion
-                }
-            )
-        else:  # ITER-3: Constructor uniforme
-            constructor = GreedyConstruct(heuristic='NearestNeighbor')
-        
+        # ITER-3: CONFIGURACIÓN GANADORA COMPROBADA
         algo2 = Seq(body=[
-            # CONSTRUCCIÓN: Adaptativa (ITER-4) o NearestNeighbor (ITER-3)
-            constructor,
-            # MEJORA ITERADA CON PERTURBACIÓN (estructura probada exitosa)
+            GreedyConstruct(heuristic='NearestNeighbor'),
             While(
-                max_iterations=80 if iteration != 'ITER-4' else 100,  # +20 iteraciones en ITER-4
+                max_iterations=80,
                 body=Seq(body=[
-                    # Mejora agresiva
-                    LocalSearch(
-                        operator='TwoOpt',
-                        max_iterations=50 if iteration != 'ITER-4' else 60  # +10 en ITER-4
-                    ),
-                    # Perturbación: escapa óptimos locales
-                    Perturbation(
-                        operator='DoubleBridge',
-                        strength=3  # Moderada
-                    ),
-                    # Re-mejora después de perturbar
-                    LocalSearch(
-                        operator='TwoOpt',
-                        max_iterations=35
-                    ),
-                    # Operador complementario
-                    LocalSearch(
-                        operator='Relocate',
-                        max_iterations=20
-                    )
+                    LocalSearch(operator='TwoOpt', max_iterations=50),
+                    Perturbation(operator='DoubleBridge', strength=3),
+                    LocalSearch(operator='TwoOpt', max_iterations=35),
+                    LocalSearch(operator='Relocate', max_iterations=20)
                 ])
             )
         ])
         algorithms.append(algo2)
         
-        # ITERACIÓN 3: Algoritmo 3 con perturbación muy controlada
+        # ========================================================================
+        # ALGORITMO 3: GRASP ADAPTATIVO (A OPTIMIZAR)
+        # ========================================================================
         algo3 = Seq(body=[
             GreedyConstruct(heuristic='NearestNeighbor'),
             While(
@@ -324,7 +155,7 @@ class AlgorithmGenerator:
                 body=Seq(body=[
                     LocalSearch(operator='TwoOpt', max_iterations=50),
                     LocalSearch(operator='OrOpt', max_iterations=20),
-                    Perturbation(operator='DoubleBridge', strength=1),  # MUY leve
+                    Perturbation(operator='DoubleBridge', strength=1),
                     LocalSearch(operator='TwoOpt', max_iterations=35),
                     LocalSearch(operator='Relocate', max_iterations=15)
                 ])
@@ -335,115 +166,6 @@ class AlgorithmGenerator:
         return algorithms
     
     def _generate_tree(self, node_type: str, depth: int, method: str) -> ASTNode:
-        """
-        Recursively generate AST node.
-        
-        Args:
-            node_type: Type of node to generate ('algorithm', 'phase', etc.)
-            depth: Remaining depth budget
-            method: 'grow' or 'full'
-        
-        Returns:
-            Generated ASTNode
-        """
-        # Decide whether to generate terminal or non-terminal
-        at_max_depth = (depth <= 0)
-        
-        if method == 'grow':
-            use_terminal = at_max_depth or random.random() < self.terminal_probability
-        else:  # full
-            use_terminal = at_max_depth
-        
-        if node_type == 'algorithm':
-            # Algorithm = Construction + Phase
-            construction = GreedyConstruct(heuristic=random.choice(
-                list(self.grammar.get_all_constructors())
-            ))
-            phase = self._generate_phase(depth - 1, method)
-            return Seq(body=[construction, phase])
-        
-        elif node_type == 'phase':
-            if depth <= 0:
-                # Must have local search
-                return LocalSearch(
-                    operator=random.choice(list(self.grammar.get_all_local_search())),
-                    max_iterations=random.randint(20, 100)
-                )
-            
-            # Generate phase: local search + control structure
-            local_search = LocalSearch(
-                operator=random.choice(list(self.grammar.get_all_local_search())),
-                max_iterations=random.randint(20, 100)
-            )
-            
-            if use_terminal:
-                return local_search
-            
-            # Random control structure
-            control_type = random.choice(['while', 'for', 'apply_until', 'sequence'])
-            
-            if control_type == 'while':
-                return While(
-                    max_iterations=random.randint(50, 150),
-                    body=local_search
-                )
-            elif control_type == 'for':
-                return For(
-                    iterations=random.randint(3, 10),
-                    body=Seq(body=[
-                        local_search,
-                        self._generate_phase(depth - 2, method)
-                    ])
-                )
-            elif control_type == 'apply_until':
-                return ApplyUntilNoImprove(
-                    max_no_improve=random.randint(10, 30),
-                    body=local_search
-                )
-            else:  # sequence
-                phase2 = self._generate_phase(depth - 1, method)
-                return Seq(body=[local_search, phase2])
-        
-        elif node_type == 'intensification':
-            # Intensification: multiple operators in sequence or VND-like
-            if use_terminal or depth <= 0:
-                return LocalSearch(
-                    operator=random.choice(list(self.grammar.get_all_local_search())),
-                    max_iterations=random.randint(20, 50)
-                )
-            
-            # Sequence of local searches
-            ops = random.sample(list(self.grammar.get_all_local_search()), k=2)
-            body = [LocalSearch(operator=op, max_iterations=random.randint(10, 30)) 
-                   for op in ops]
-            
-            return While(
-                max_iterations=random.randint(50, 100),
-                body=Seq(body=body) if len(body) > 1 else body[0]
-            )
-        
-        else:
-            raise ValueError(f"Unknown node_type: {node_type}")
-    
-    def _generate_phase(self, depth: int, method: str) -> ASTNode:
-        """Generate a phase (local search + control)."""
-        return self._generate_tree('phase', depth, method)
-    
-    def _generate_intensification(self, depth: int, method: str) -> ASTNode:
-        """Generate intensification phase."""
-        return self._generate_tree('intensification', depth, method)
-
-
-class AlgorithmValidator:
-    """
-    Validates generated algorithms for correctness and efficiency.
-    """
-    
-    def __init__(self):
-        self.grammar = VRPTWGrammar()
-        self.constraint_validator = ConstraintValidator()
-    
-    def validate_all(self, algorithm: ASTNode) -> tuple:
         """
         Validate algorithm against all constraints.
         
