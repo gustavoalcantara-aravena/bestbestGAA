@@ -67,11 +67,11 @@ def setup_style():
     """Configurar estilo visual"""
     plt.style.use('seaborn-v0_8-darkgrid')
     sns.set_palette("husl")
-    colors = ['#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#1f77b4']
+    colors = ['#ff6b6b', '#66c2a5', '#ffeb84', '#9467bd', '#1f77b4']
     return colors
 
-# Colores para 5 algoritmos
-COLORS_5 = ['#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#1f77b4']
+# Colores para 5 algoritmos - Coinciden con imagen de referencia
+COLORS_5 = ['#ff6b6b', '#66c2a5', '#ffeb84', '#9467bd', '#1f77b4']  # Rojo, Turquesa, Amarillo, Púrpura, Azul
 ALGO_NAMES = ['Algoritmo 0', 'Algoritmo 1', 'Algoritmo 2', 'Algoritmo 3', 'Algoritmo 4']
 
 def create_visualizations(results_file, output_dir):
