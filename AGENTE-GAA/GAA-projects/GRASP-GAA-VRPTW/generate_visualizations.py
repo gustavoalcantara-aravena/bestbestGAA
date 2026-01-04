@@ -55,8 +55,6 @@ def generate_canary_visualizations(results_file, output_dir):
     
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    
-    # Extract data
     vehicles = [r["vehicles"] for r in feasible]
     distances = [r["distance"] for r in feasible]
     algorithms = [r["algorithm_id"] for r in feasible]
@@ -99,9 +97,9 @@ def generate_canary_visualizations(results_file, output_dir):
     ax2.grid(True, alpha=0.3)
     
     # 3. Vehicles histogram
-    ax3 = fig.add_subplot(gs[1, 0])COLORS_5[0], alpha=0.7, edgecolor='black')
-    ax3.axvline(statistics.mean(vehicles), color=COLORS_5[1]a=0.7, edgecolor='black')
-    ax3.axvline(statistics.mean(vehicles), color='red', linestyle='--', linewidth=2, label=f'Mean: {statistics.mean(vehicles):.1f}')
+    ax3 = fig.add_subplot(gs[1, 0])
+    ax3.hist(vehicles, bins=5, color=COLORS_5[0], alpha=0.7, edgecolor='black')
+    ax3.axvline(statistics.mean(vehicles), color=COLORS_5[1], linestyle='--', linewidth=2, label=f'Mean: {statistics.mean(vehicles):.1f}')
     ax3.set_xlabel('Number of Vehicles')
     ax3.set_ylabel('Frequency')
     ax3.set_title('Vehicles Distribution')

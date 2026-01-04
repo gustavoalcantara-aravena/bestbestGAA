@@ -73,21 +73,21 @@ def generate_algorithm_performance(results, output_dir):
     axes[0, 1].grid(True, alpha=0.3)
     
     # Subplot 3: Average Vehicles Ranking
+    avg_vehicles = [np.mean(vehicles_by_alg[alg]) for alg in algorithms]
+    sorted_indices = np.argsort(avg_vehicles)
     colors_rank = [COLORS_5[i % len(COLORS_5)] for i in sorted_indices]
     axes[1, 0].barh([f'Alg{algorithms[i]}' for i in sorted_indices], 
-                     [avg_vehicles[i] for i in sorted_indices], color=colors_rank
-    axes[1, 0].barh([f'Alg{algorithms[i]}' for i in sorted_indices], 
-                     [avg_vehicles[i] for i in sorted_indices], color='steelblue')
+                     [avg_vehicles[i] for i in sorted_indices], color=colors_rank)
     axes[1, 0].set_title('Average Vehicles Ranking (Lower is Better)')
     axes[1, 0].set_xlabel('Average Vehicles')
     axes[1, 0].grid(True, alpha=0.3, axis='x')
     
     # Subplot 4: Average Distance Ranking
     avg_distances = [np.mean(distances_by_alg[alg]) for alg in algorithms]
-    colors_rank = [COLORS_5[i % len(COLORS_5)] for i in sorted_indices]
-    axes[1, 1].barh([f'Alg{algorithms[i]}' for i in sorted_indices], 
-                     [avg_distances[i] for i in sorted_indices], color=colors_rank
-                     [avg_distances[i] for i in sorted_indices], color='coral')
+    sorted_indices_dist = np.argsort(avg_distances)
+    colors_rank_dist = [COLORS_5[i % len(COLORS_5)] for i in sorted_indices_dist]
+    axes[1, 1].barh([f'Alg{algorithms[i]}' for i in sorted_indices_dist], 
+                     [avg_distances[i] for i in sorted_indices_dist], color=colors_rank_dist)
     axes[1, 1].set_title('Average Distance Ranking (Lower is Better)')
     axes[1, 1].set_xlabel('Average Distance (km)')
     axes[1, 1].grid(True, alpha=0.3, axis='x')
