@@ -21,6 +21,9 @@ except ImportError:
 
 sns.set_style("whitegrid")
 
+# Standard color palette - Verde, Rojo, Azul, Turquesa, Naranja
+COLORS_5 = ['#2ecc71', '#e74c3c', '#3498db', '#1abc9c', '#f39c12']
+
 def load_results(results_file):
     """Load results from JSON"""
     with open(results_file) as f:
@@ -53,21 +56,26 @@ def generate_algorithm_performance(results, output_dir):
     
     # Subplot 1: Vehicles by Algorithm (Boxplot)
     veh_data = [vehicles_by_alg[alg] for alg in algorithms]
-    axes[0, 0].boxplot(veh_data, labels=[f'Alg{alg}' for alg in algorithms])
+    bp1 = axes[0, 0].boxplot(veh_data, labels=[f'Alg{alg}' for alg in algorithms], patch_artist=True)
+    for patch, color in zip(bp1['boxes'], [COLORS_5[i % len(COLORS_5)] for i in range(len(algorithms))]):
+        patch.set_facecolor(color)
     axes[0, 0].set_title('Vehicle Performance by Algorithm')
     axes[0, 0].set_ylabel('Number of Vehicles')
     axes[0, 0].grid(True, alpha=0.3)
     
     # Subplot 2: Distance by Algorithm (Boxplot)
     dist_data = [distances_by_alg[alg] for alg in algorithms]
-    axes[0, 1].boxplot(dist_data, labels=[f'Alg{alg}' for alg in algorithms])
+    bp2 = axes[0, 1].boxplot(dist_data, labels=[f'Alg{alg}' for alg in algorithms], patch_artist=True)
+    for patch, color in zip(bp2['boxes'], [COLORS_5[i % len(COLORS_5)] for i in range(len(algorithms))]):
+        patch.set_facecolor(color)
     axes[0, 1].set_title('Distance Performance by Algorithm')
     axes[0, 1].set_ylabel('Distance (km)')
     axes[0, 1].grid(True, alpha=0.3)
     
     # Subplot 3: Average Vehicles Ranking
-    avg_vehicles = [np.mean(vehicles_by_alg[alg]) for alg in algorithms]
-    sorted_indices = np.argsort(avg_vehicles)
+    colors_rank = [COLORS_5[i % len(COLORS_5)] for i in sorted_indices]
+    axes[1, 0].barh([f'Alg{algorithms[i]}' for i in sorted_indices], 
+                     [avg_vehicles[i] for i in sorted_indices], color=colors_rank
     axes[1, 0].barh([f'Alg{algorithms[i]}' for i in sorted_indices], 
                      [avg_vehicles[i] for i in sorted_indices], color='steelblue')
     axes[1, 0].set_title('Average Vehicles Ranking (Lower is Better)')
@@ -76,15 +84,16 @@ def generate_algorithm_performance(results, output_dir):
     
     # Subplot 4: Average Distance Ranking
     avg_distances = [np.mean(distances_by_alg[alg]) for alg in algorithms]
-    sorted_indices = np.argsort(avg_distances)
+    colors_rank = [COLORS_5[i % len(COLORS_5)] for i in sorted_indices]
     axes[1, 1].barh([f'Alg{algorithms[i]}' for i in sorted_indices], 
+                     [avg_distances[i] for i in sorted_indices], color=colors_rank
                      [avg_distances[i] for i in sorted_indices], color='coral')
     axes[1, 1].set_title('Average Distance Ranking (Lower is Better)')
     axes[1, 1].set_xlabel('Average Distance (km)')
     axes[1, 1].grid(True, alpha=0.3, axis='x')
     
     plt.tight_layout()
-    output_file = output_dir / 'algorithm_performance.png'
+    output_file = output_dir / '19-algorithm_performance.png'
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
     print(f"  [OK] Saved: algorithm_performance.png")
     plt.close()

@@ -70,8 +70,9 @@ def setup_style():
     colors = ['#ff6b6b', '#66c2a5', '#ffeb84', '#9467bd', '#1f77b4']
     return colors
 
-# Colores para 5 algoritmos - Coinciden con imagen de referencia
-COLORS_5 = ['#ff6b6b', '#66c2a5', '#ffeb84', '#9467bd', '#1f77b4']  # Rojo, Turquesa, Amarillo, Púrpura, Azul
+# Colores para 5 algoritmos - Estilo similar a imagen de referencia
+# Verde (similar a GAA_Algorithm_1), Rojo, Azul (similar a GAA_Algorithm_3), Turquesa, Naranja
+COLORS_5 = ['#2ecc71', '#e74c3c', '#3498db', '#1abc9c', '#f39c12']  # Verde, Rojo, Azul, Turquesa, Naranja
 ALGO_NAMES = ['Algoritmo 0', 'Algoritmo 1', 'Algoritmo 2', 'Algoritmo 3', 'Algoritmo 4']
 
 def create_visualizations(results_file, output_dir):
@@ -148,7 +149,7 @@ def create_visualizations(results_file, output_dir):
     
     # 03 - Distancia por Instancia (Líneas)
     print("03 - Distancia por Instancia...")
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(14, 7))
     
     markers = ['o', 's', '^', 'D', 'v']
     for algo in range(5):
@@ -161,15 +162,15 @@ def create_visualizations(results_file, output_dir):
                 dist_values.append(np.nan)
         
         ax.plot(range(len(instances)), dist_values, marker=markers[algo], 
-                color=COLORS_5[algo], label=ALGO_NAMES[algo], linewidth=2, markersize=8)
+                color=COLORS_5[algo], label=ALGO_NAMES[algo], linewidth=2.5, markersize=10, markeredgewidth=0.5, markeredgecolor='white')
     
-    ax.set_xlabel('Instancia', fontsize=11, fontweight='bold')
-    ax.set_ylabel('Distancia', fontsize=11, fontweight='bold')
-    ax.set_title('03 - Distance per Instance by Algorithm', fontsize=13, fontweight='bold')
+    ax.set_xlabel('Instance Index', fontsize=12, fontweight='bold')
+    ax.set_ylabel('Distance', fontsize=12, fontweight='bold')
+    ax.set_title('Distance per Instance by Algorithm', fontsize=14, fontweight='bold')
     ax.set_xticks(range(len(instances)))
-    ax.set_xticklabels(instances, rotation=45, ha='right')
-    ax.legend(fontsize=9)
-    ax.grid(True, alpha=0.3)
+    ax.set_xticklabels(range(len(instances)))
+    ax.legend(fontsize=10, loc='upper right')
+    ax.grid(True, alpha=0.3, linestyle='--')
     plt.tight_layout()
     plt.savefig(output_path / '03-distance_by_instance.png', dpi=300, bbox_inches='tight')
     plt.close()

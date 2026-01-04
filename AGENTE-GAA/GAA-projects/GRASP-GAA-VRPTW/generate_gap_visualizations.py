@@ -22,6 +22,9 @@ except ImportError:
 
 sns.set_style("whitegrid")
 
+# Standard color palette - Verde, Rojo, Azul, Turquesa, Naranja
+COLORS_5 = ['#2ecc71', '#e74c3c', '#3498db', '#1abc9c', '#f39c12']
+
 def load_results(results_file):
     """Load results from JSON"""
     with open(results_file) as f:
@@ -49,8 +52,8 @@ def generate_gap_distribution(results, output_dir):
     fig.suptitle("GAP Distribution Analysis", fontsize=16, fontweight='bold')
     
     # Vehicles GAP histogram
-    axes[0, 0].hist(gap_veh, bins=15, edgecolor='black', alpha=0.7, color='steelblue')
-    axes[0, 0].axvline(np.mean(gap_veh), color='red', linestyle='--', linewidth=2, label=f'Mean: {np.mean(gap_veh):.2f}%')
+    axes[0, 0].hist(gap_veh, bins=15, edgecolor='black', alpha=0.7, color=COLORS_5[0])
+    axes[0, 0].axvline(np.mean(gap_veh), color=COLORS_5[1], linestyle='--', linewidth=2, label=f'Mean: {np.mean(gap_veh):.2f}%')
     axes[0, 0].set_title('GAP Distribution - Vehicles')
     axes[0, 0].set_xlabel('GAP %')
     axes[0, 0].set_ylabel('Frequency')
@@ -58,8 +61,8 @@ def generate_gap_distribution(results, output_dir):
     axes[0, 0].grid(True, alpha=0.3)
     
     # Distance GAP histogram
-    axes[0, 1].hist(gap_dist, bins=15, edgecolor='black', alpha=0.7, color='coral')
-    axes[0, 1].axvline(np.mean(gap_dist), color='red', linestyle='--', linewidth=2, label=f'Mean: {np.mean(gap_dist):.2f}%')
+    axes[0, 1].hist(gap_dist, bins=15, edgecolor='black', alpha=0.7, color=COLORS_5[2])
+    axes[0, 1].axvline(np.mean(gap_dist), color=COLORS_5[1], linestyle='--', linewidth=2, label=f'Mean: {np.mean(gap_dist):.2f}%')
     axes[0, 1].set_title('GAP Distribution - Distance')
     axes[0, 1].set_xlabel('GAP %')
     axes[0, 1].set_ylabel('Frequency')
@@ -79,7 +82,7 @@ def generate_gap_distribution(results, output_dir):
     axes[1, 1].grid(True, alpha=0.3)
     
     plt.tight_layout()
-    output_file = output_dir / 'gap_distribution.png'
+    output_file = output_dir / '21-gap_distribution.png'
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
     print(f"  [OK] Saved: gap_distribution.png")
     plt.close()

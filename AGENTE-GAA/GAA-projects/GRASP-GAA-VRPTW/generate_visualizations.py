@@ -29,6 +29,9 @@ sns.set_style("whitegrid")
 plt.rcParams['figure.figsize'] = (16, 12)
 plt.rcParams['font.size'] = 10
 
+# Standard color palette - Verde, Rojo, Azul, Turquesa, Naranja
+COLORS_5 = ['#2ecc71', '#e74c3c', '#3498db', '#1abc9c', '#f39c12']
+
 def load_results(results_file):
     """Load JSON results"""
     with open(results_file) as f:
@@ -64,7 +67,8 @@ def generate_canary_visualizations(results_file, output_dir):
     
     # 1. Vehicles by Algorithm
     ax1 = fig.add_subplot(gs[0, 0])
-    colors = plt.cm.Set3(range(len(set(algorithms))))
+    unique_algs = sorted(set(algorithms))
+    colors = [COLORS_5[i % len(COLORS_5)] for i in range(len(unique_algs))]
     alg_vehicles = defaultdict(list)
     for alg, veh in zip(algorithms, vehicles):
         alg_vehicles[alg].append(veh)
@@ -95,8 +99,8 @@ def generate_canary_visualizations(results_file, output_dir):
     ax2.grid(True, alpha=0.3)
     
     # 3. Vehicles histogram
-    ax3 = fig.add_subplot(gs[1, 0])
-    ax3.hist(vehicles, bins=5, color='steelblue', alpha=0.7, edgecolor='black')
+    ax3 = fig.add_subplot(gs[1, 0])COLORS_5[0], alpha=0.7, edgecolor='black')
+    ax3.axvline(statistics.mean(vehicles), color=COLORS_5[1]a=0.7, edgecolor='black')
     ax3.axvline(statistics.mean(vehicles), color='red', linestyle='--', linewidth=2, label=f'Mean: {statistics.mean(vehicles):.1f}')
     ax3.set_xlabel('Number of Vehicles')
     ax3.set_ylabel('Frequency')
@@ -106,8 +110,8 @@ def generate_canary_visualizations(results_file, output_dir):
     
     # 4. Distance histogram
     ax4 = fig.add_subplot(gs[1, 1])
-    ax4.hist(distances, bins=5, color='coral', alpha=0.7, edgecolor='black')
-    ax4.axvline(statistics.mean(distances), color='red', linestyle='--', linewidth=2, label=f'Mean: {statistics.mean(distances):.1f} km')
+    ax4.hist(distances, bins=5, color=COLORS_5[2], alpha=0.7, edgecolor='black')
+    ax4.axvline(statistics.mean(distances), color=COLORS_5[1], linestyle='--', linewidth=2, label=f'Mean: {statistics.mean(distances):.1f} km')
     ax4.set_xlabel('Distance (km)')
     ax4.set_ylabel('Frequency')
     ax4.set_title('Distance Distribution')
@@ -116,7 +120,7 @@ def generate_canary_visualizations(results_file, output_dir):
     
     plt.suptitle('Canary Run Results - C101 Instance', fontsize=16, fontweight='bold')
     
-    output_file = output_dir / 'canary_visualizations.png'
+    output_file = output_dir / '20-canary_visualizations.png'
     plt.savefig(output_file, dpi=150, bbox_inches='tight')
     print(f"  ✓ Saved: {output_file}")
     plt.close()
