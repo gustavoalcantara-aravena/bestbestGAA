@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 from collections import defaultdict
+import sys
+import warnings
+warnings.filterwarnings('ignore')
 
 def load_results(results_file):
     """Cargar resultados de experimento"""
@@ -118,7 +121,7 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '01-gap_comparison.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 01-gap_comparison.png")
+    print("[OK] 01-gap_comparison.png")
     
     # 02 - Distancia Promedio por Algoritmo
     print("02 - Performance: Distancia Promedio...")
@@ -141,7 +144,7 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '02-avg_distance.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 02-avg_distance.png")
+    print("[OK] 02-avg_distance.png")
     
     # 03 - Distancia por Instancia (Líneas)
     print("03 - Distancia por Instancia...")
@@ -170,7 +173,7 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '03-distance_by_instance.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 03-distance_by_instance.png")
+    print("[OK] 03-distance_by_instance.png")
     
     # 04 - Evolución de GAP por Instancia
     print("04 - Evolución de GAP...")
@@ -202,7 +205,7 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '04-gap_evolution.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 04-gap_evolution.png")
+    print("[OK] 04-gap_evolution.png")
     
     # 05 - Performance por Familia
     print("05 - Performance por Familia...")
@@ -231,7 +234,7 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '05-performance_by_family.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 05-performance_by_family.png")
+    print("[OK] 05-performance_by_family.png")
     
     # 06 - Distribución de GAP (Boxplot)
     print("06 - Distribución de GAP (Boxplot)...")
@@ -265,7 +268,7 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '06-gap_distribution.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 06-gap_distribution.png")
+    print("[OK] 06-gap_distribution.png")
     
     # 07 - Cantidad de Vehículos Promedio
     print("07 - Vehículos Promedio...")
@@ -286,7 +289,7 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '07-avg_vehicles.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 07-avg_vehicles.png")
+    print("[OK] 07-avg_vehicles.png")
     
     # 08 - Heatmap: GAP por Algoritmo vs Instancia
     print("08 - Heatmap de GAP...")
@@ -313,7 +316,7 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '08-gap_heatmap.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 08-gap_heatmap.png")
+    print("[OK] 08-gap_heatmap.png")
     
     # 09 - Distribución de Distancias (Boxplot)
     print("09 - Distribución de Distancias...")
@@ -331,7 +334,7 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '09-distance_distribution.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 09-distance_distribution.png")
+    print("[OK] 09-distance_distribution.png")
     
     # 10 - Calidad Total (Scatter: Vehículos vs Distancia)
     print("10 - Análisis Pareto...")
@@ -353,9 +356,9 @@ def create_visualizations(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '10-pareto_analysis.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 10-pareto_analysis.png")
+    print("[OK] 10-pareto_analysis.png")
     
-    print("\n✓ Todas las visualizaciones generadas exitosamente!")
+    print("\n[OK] Todas las visualizaciones generadas exitosamente!")
     print(f"Ubicación: {output_path}")
 
 if __name__ == '__main__':

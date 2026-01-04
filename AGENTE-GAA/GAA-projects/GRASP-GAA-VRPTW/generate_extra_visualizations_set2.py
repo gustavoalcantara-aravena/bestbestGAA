@@ -83,7 +83,7 @@ def create_visualizations_set2(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '11-vehicles_comparison.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 11-vehicles_comparison.png")
+    print("[OK] 11-vehicles_comparison.png")
     
     # 12 - Comparación: Distancia BKS vs Lograda
     print("12 - Comparación Distancia BKS vs Lograda...")
@@ -113,7 +113,7 @@ def create_visualizations_set2(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '12-distance_comparison.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 12-distance_comparison.png")
+    print("[OK] 12-distance_comparison.png")
     
     # 13 - Performance Heatmap: Distancia promedio por Familia y Algoritmo
     print("13 - Performance Heatmap...")
@@ -146,7 +146,7 @@ def create_visualizations_set2(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '13-performance_heatmap.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 13-performance_heatmap.png")
+    print("[OK] 13-performance_heatmap.png")
     
     # 14 - Multi-Objective Analysis: K vs D
     print("14 - Multi-Objective Analysis (Pareto)...")
@@ -169,7 +169,7 @@ def create_visualizations_set2(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '14-pareto_multiobjective.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 14-pareto_multiobjective.png")
+    print("[OK] 14-pareto_multiobjective.png")
     
     # 15 - Robustness Analysis: Distribución por Instancia
     print("15 - Robustness Analysis...")
@@ -212,7 +212,7 @@ def create_visualizations_set2(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '15-robustness_analysis.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 15-robustness_analysis.png")
+    print("[OK] 15-robustness_analysis.png")
     
     # 16 - K_BKS Feasibility Rate
     print("16 - K_BKS Feasibility Rate...")
@@ -247,7 +247,7 @@ def create_visualizations_set2(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '16-feasibility_rate.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 16-feasibility_rate.png")
+    print("[OK] 16-feasibility_rate.png")
     
     # 17 - Solved vs Unsolved Instances
     print("17 - Solved vs Unsolved...")
@@ -287,7 +287,7 @@ def create_visualizations_set2(results_file, output_dir):
     plt.tight_layout()
     plt.savefig(output_path / '17-solved_unsolved.png', dpi=300, bbox_inches='tight')
     plt.close()
-    print("✓ 17-solved_unsolved.png")
+    print("[OK] 17-solved_unsolved.png")
     
     # 18 - Radar Chart (Multi-Dimensional)
     print("18 - Radar Chart...")
@@ -341,9 +341,9 @@ def create_visualizations_set2(results_file, output_dir):
         plt.tight_layout()
         plt.savefig(output_path / '18-radar_chart.png', dpi=300, bbox_inches='tight')
         plt.close()
-        print("✓ 18-radar_chart.png")
+        print("[OK] 18-radar_chart.png")
     
-    print("\n✓ Todas las visualizaciones set 2 generadas exitosamente!")
+    print("\n[OK] Todas las visualizaciones set 2 generadas exitosamente!")
     print(f"Ubicación: {output_path}")
 
 if __name__ == '__main__':
