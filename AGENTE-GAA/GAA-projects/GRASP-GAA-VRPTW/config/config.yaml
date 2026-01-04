@@ -1,0 +1,176 @@
+# ============================================================
+# CONFIGURATION FILE
+# GRASP + GAA for VRPTW (Solomon Benchmarks)
+# ============================================================
+
+project:
+  name: "GRASP-GAA-VRPTW"
+  version: "1.0"
+  description: "Automatic Algorithm Generation using GRASP for VRPTW Solomon instances"
+
+# ------------------------------------------------------------
+# Reproducibility
+# ------------------------------------------------------------
+random:
+  global_seed: 42
+  deterministic: true
+
+# ------------------------------------------------------------
+# Dataset configuration
+# ------------------------------------------------------------
+dataset:
+  type: "solomon_vrptw"
+
+  root_dir: "/c:/Users/gustavo_windows/Desktop/bestbestGAA/AGENTE-GAA/GAA-projects/GRASP-GAA-VRPTW/03-data/Solomon-VRPTW-Dataset/"
+
+  families:
+    C1:
+      enabled: true
+      instances: ["C101","C102","C103","C104","C105","C106","C107","C108","C109"]
+    C2:
+      enabled: true
+      instances: ["C201","C202","C203","C204","C205","C206","C207","C208"]
+    R1:
+      enabled: true
+      instances: ["R101","R102","R103","R104","R105","R106","R107","R108","R109","R110","R111","R112"]
+    R2:
+      enabled: true
+      instances: ["R201","R202","R203","R204","R205","R206","R207","R208","R209","R210","R211"]
+    RC1:
+      enabled: true
+      instances: ["RC101","RC102","RC103","RC104","RC105","RC106","RC107","RC108"]
+    RC2:
+      enabled: true
+      instances: ["RC201","RC202","RC203","RC204","RC205","RC206","RC207","RC208"]
+
+# ------------------------------------------------------------
+# Best Known Solutions (BKS)
+# ------------------------------------------------------------
+bks:
+  file: "data/bks_solomon.csv"
+  format: "csv"
+  fields:
+    instance_id: "instance_id"
+    vehicles: "k_bks"
+    distance: "d_bks"
+
+# ------------------------------------------------------------
+# Algorithm Generation (GAA)
+# ------------------------------------------------------------
+gaa:
+  algorithms_to_generate: 3
+
+  ast:
+    max_depth: 3
+    max_function_nodes: 2
+    allow_recursion: false
+
+  terminals:
+    static:
+      - distance
+      - demand
+      - ready_time
+      - due_date
+      - service_time
+    dynamic:
+      - current_time
+      - remaining_capacity
+      - route_length
+    derived:
+      - slack_forward
+      - slack_backward
+      - waiting_time
+
+  functions:
+    - min
+    - max
+    - add
+    - subtract
+    - multiply
+    - if_then_else
+
+# ------------------------------------------------------------
+# GRASP configuration
+# ------------------------------------------------------------
+grasp:
+  max_iterations: 100
+  alpha: 0.3
+  construction:
+    rcl_size: 5
+    allow_infeasible: true
+  local_search:
+    enabled: true
+    max_no_improve: 20
+
+    operators:
+      relocate:
+        enabled: true
+        intra: true
+        inter: true
+      swap:
+        enabled: true
+      two_opt:
+        enabled: true
+      or_opt:
+        enabled: true
+
+# ------------------------------------------------------------
+# Evaluation & Fitness
+# ------------------------------------------------------------
+evaluation:
+  objective:
+    type: "lexicographic"
+    primary: "vehicles"
+    secondary: "distance"
+
+  penalties:
+    capacity_violation: 1000.0
+    time_window_violation: 10000.0
+
+  fitness:
+    alpha: 100000.0    # weight for vehicles
+    beta: 1.0          # weight for distance
+    gamma: 10000.0     # penalty weight
+
+# ------------------------------------------------------------
+# Solution Pool
+# ------------------------------------------------------------
+solution_pool:
+  max_size: 50
+  keep_only_feasible: true
+  store_best_per_instance: true
+  diversity_metric: "distance"
+
+# ------------------------------------------------------------
+# Experiment setup
+# ------------------------------------------------------------
+experiment:
+  runs: 10
+  time_limit_seconds: null
+  stop_on_first_infeasible: false
+
+# ------------------------------------------------------------
+# Logging & Output
+# ------------------------------------------------------------
+logging:
+  level: "INFO"
+  log_dir: "logs/"
+  log_solutions: true
+  log_frequency: "per_solution"
+  formats:
+    - "csv"
+    - "json"
+
+results:
+  output_dir: "results/"
+  save_solutions: true
+  save_ast: true
+  save_summary: true
+
+# ------------------------------------------------------------
+# Debug & Development
+# ------------------------------------------------------------
+debug:
+  enabled: false
+  check_constraints: true
+  verbose_solution_check: false
