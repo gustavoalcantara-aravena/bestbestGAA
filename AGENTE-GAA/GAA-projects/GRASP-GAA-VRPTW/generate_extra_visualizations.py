@@ -94,7 +94,7 @@ def create_visualizations(results_file, output_dir):
     
     instances = sorted([inst for inst in bks_data.keys() if inst in [r['instance_id'] for r in results]])
     x = np.arange(len(instances))
-    width = 0.15
+    width = 0.16
     
     for algo in range(5):
         gap_values = []

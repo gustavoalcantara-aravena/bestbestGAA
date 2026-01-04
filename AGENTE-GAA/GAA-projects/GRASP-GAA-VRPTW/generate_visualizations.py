@@ -362,27 +362,21 @@ if __name__ == "__main__":
     parser.add_argument("--type", type=str, choices=["canary", "full"], help="Type of results (canary or full)")
     args = parser.parse_args()
     
-    if args.results_file and args.output_dir and args.type:
-        # Generate based on provided paths
-        results_file = Path(args.results_file)
-        output_dir = args.output_dir
-        
-        if not results_file.exists():
-            print(f"Results file not found: {results_file}")
-        elif args.type == "canary":
-            print("[1] Generating canary run visualizations...")
-            try:
+    try:
+        if args.results_file and args.output_dir and args.type:
+            # Generate based on provided paths
+            results_file = Path(args.results_file)
+            output_dir = args.output_dir
+            
+            if not results_file.exists():
+                print(f"Results file not found: {results_file}")
+            elif args.type == "canary":
                 generate_canary_visualizations(results_file, output_dir)
-                print("  ✓ Success")
-            except Exception as e:
-                print(f"  ✗ Error: {e}")
-        elif args.type == "full":
-            print("[2] Generating full experiment visualizations...")
-            try:
+            elif args.type == "full":
                 generate_full_experiment_visualizations(results_file, output_dir)
-                print("  ✓ Success")
-            except Exception as e:
-                print(f"  ✗ Error: {e}")
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
     else:
         # Default behavior: analyze canary run
         # Canary run
