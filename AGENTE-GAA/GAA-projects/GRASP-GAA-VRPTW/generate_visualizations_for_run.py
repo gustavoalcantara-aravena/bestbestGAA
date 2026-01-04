@@ -46,6 +46,7 @@ def generate_visualizations_for_run(run_dir):
         ("generate_algorithm_comparison.py", ["--results-file", str(results_file), "--output-dir", str(vis_dir)]),
         ("generate_reports.py", ["--results-file", str(results_file), "--output-file", str(report_file), "--title", "Canary Run Results"]),
         ("generate_extra_visualizations.py", [str(run_dir)]),
+        ("generate_extra_visualizations_set2.py", [str(run_dir)]),
     ]
     
     for script_name, args in scripts:
