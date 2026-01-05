@@ -1,0 +1,111 @@
+{
+  "experiment": "family",
+  "family": "REG",
+  "instances": 14,
+  "timestamp": "2025-12-30T22:11:57.355362",
+  "instances_detail": {
+    "fpsol2.i.1": {
+      "value": 65,
+      "type": "\u00d3PTIMO",
+      "value_str": "65",
+      "nodes": 496,
+      "edges": 11654
+    },
+    "fpsol2.i.2": {
+      "value": 30,
+      "type": "\u00d3PTIMO",
+      "value_str": "30",
+      "nodes": 451,
+      "edges": 8691
+    },
+    "fpsol2.i.3": {
+      "value": 30,
+      "type": "\u00d3PTIMO",
+      "value_str": "30",
+      "nodes": 425,
+      "edges": 8688
+    },
+    "inithx.i.1": {
+      "value": 54,
+      "type": "\u00d3PTIMO",
+      "value_str": "54",
+      "nodes": 864,
+      "edges": 18707
+    },
+    "inithx.i.2": {
+      "value": 31,
+      "type": "\u00d3PTIMO",
+      "value_str": "31",
+      "nodes": 645,
+      "edges": 13979
+    },
+    "inithx.i.3": {
+      "value": 31,
+      "type": "\u00d3PTIMO",
+      "value_str": "31",
+      "nodes": 621,
+      "edges": 13969
+    },
+    "mulsol.i.1": {
+      "value": 49,
+      "type": "\u00d3PTIMO",
+      "value_str": "49",
+      "nodes": 197,
+      "edges": 3925
+    },
+    "mulsol.i.2": {
+      "value": 31,
+      "type": "\u00d3PTIMO",
+      "value_str": "31",
+      "nodes": 188,
+      "edges": 3885
+    },
+    "mulsol.i.3": {
+      "value": 31,
+      "type": "\u00d3PTIMO",
+      "value_str": "31",
+      "nodes": 184,
+      "edges": 3916
+    },
+    "mulsol.i.4": {
+      "value": 31,
+      "type": "\u00d3PTIMO",
+      "value_str": "31",
+      "nodes": 185,
+      "edges": 3946
+    },
+    "mulsol.i.5": {
+      "value": 31,
+      "type": "\u00d3PTIMO",
+      "value_str": "31",
+      "nodes": 186,
+      "edges": 3973
+    },
+    "zeroin.i.1": {
+      "value": 49,
+      "type": "\u00d3PTIMO",
+      "value_str": "49",
+      "nodes": 211,
+      "edges": 4100
+    },
+    "zeroin.i.2": {
+      "value": 30,
+      "type": "\u00d3PTIMO",
+      "value_str": "30",
+      "nodes": 211,
+      "edges": 3541
+    },
+    "zeroin.i.3": {
+      "value": 30,
+      "type": "\u00d3PTIMO",
+      "value_str": "30",
+      "nodes": 206,
+      "edges": 3540
+    }
+  },
+  "summary": {
+    "with_optimal": 14,
+    "with_bks": 0,
+    "open": 0
+  }
+}

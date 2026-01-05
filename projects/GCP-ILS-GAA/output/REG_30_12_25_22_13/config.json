@@ -1,0 +1,12 @@
+{
+  "experiment": "single_instance",
+  "family": "REG",
+  "instance": "fpsol2.i.1",
+  "timestamp": "2025-12-30T22:13:17.987450",
+  "reference": {
+    "value": 65,
+    "type": "\u00d3PTIMO",
+    "nodes": 496,
+    "edges": 11654
+  }
+}

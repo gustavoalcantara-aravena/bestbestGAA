@@ -1,0 +1,118 @@
+{
+  "experiment": "family",
+  "family": "DSJ",
+  "instances": 15,
+  "timestamp": "2025-12-30T22:19:12.732649",
+  "instances_detail": {
+    "DSJC125.1": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 125,
+      "edges": 1472
+    },
+    "DSJC125.5": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 125,
+      "edges": 7782
+    },
+    "DSJC125.9": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 125,
+      "edges": 13922
+    },
+    "DSJC250.1": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 250,
+      "edges": 6436
+    },
+    "DSJC250.5": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 250,
+      "edges": 31366
+    },
+    "DSJC250.9": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 250,
+      "edges": 55794
+    },
+    "DSJC500.1": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 500,
+      "edges": 24916
+    },
+    "DSJC500.5": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 500,
+      "edges": 125249
+    },
+    "DSJC500.9": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 500,
+      "edges": 224874
+    },
+    "DSJC1000.1": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 1000,
+      "edges": 99258
+    },
+    "DSJC1000.5": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 1000,
+      "edges": 499652
+    },
+    "DSJC1000.9": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 1000,
+      "edges": 898898
+    },
+    "DSJR500.1": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 500,
+      "edges": 7110
+    },
+    "DSJR500.1c": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 500,
+      "edges": 242550
+    },
+    "DSJR500.5": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 500,
+      "edges": 117724
+    }
+  },
+  "summary": {
+    "with_optimal": 0,
+    "with_bks": 0,
+    "open": 15
+  }
+}

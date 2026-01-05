@@ -1,0 +1,12 @@
+{
+  "experiment": "single_instance",
+  "family": "LEI",
+  "instance": "le450_5a",
+  "timestamp": "2025-12-30T22:13:23.012473",
+  "reference": {
+    "value": 5,
+    "type": "\u00d3PTIMO (Garantizado)",
+    "nodes": 450,
+    "edges": 5714
+  }
+}

@@ -1,0 +1,6 @@
+Instance,Vertices,Edges,Colors,Conflicts,Feasible,Time,Gap
+myciel3,11,20,4,0,True,0.00s,N/A
+myciel4,23,71,5,0,True,0.03s,N/A
+myciel5,47,236,6,0,True,0.24s,N/A
+myciel6,95,755,7,0,True,1.94s,N/A
+myciel7,191,2360,8,0,True,22.74s,N/A

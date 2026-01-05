@@ -1,0 +1,75 @@
+
+================================================================================
+REPORTE DE VALIDACIÓN DE MATRIZ DE ADYACENCIA
+================================================================================
+
+📊 RESUMEN
+  Total de instancias: 54
+  Pasaron validación: 54 ✅
+  Fallaron validación: 0 ❌
+  Tasa de éxito: 100.0%
+
+✅ NO SE DETECTARON ANOMALÍAS
+
+📋 DETALLES POR INSTANCIA
+Instancia                      V      E        Estado    
+------------------------------------------------------------
+flat1000_50_0                  1000   245000   ✅ PASÓ    
+flat1000_60_0                  1000   245830   ✅ PASÓ    
+flat1000_76_0                  1000   246708   ✅ PASÓ    
+flat300_20_0                   300    21375    ✅ PASÓ    
+flat300_26_0                   300    21633    ✅ PASÓ    
+flat300_28_0                   300    21695    ✅ PASÓ    
+DSJC1000.1                     1000   49629    ✅ PASÓ    
+DSJC1000.5                     1000   249826   ✅ PASÓ    
+DSJC1000.9                     1000   449449   ✅ PASÓ    
+DSJC125.1                      125    736      ✅ PASÓ    
+DSJC125.5                      125    3891     ✅ PASÓ    
+DSJC125.9                      125    6961     ✅ PASÓ    
+DSJC250.1                      250    3218     ✅ PASÓ    
+DSJC250.5                      250    15668    ✅ PASÓ    
+DSJC250.9                      250    27897    ✅ PASÓ    
+DSJC500.1                      500    12458    ✅ PASÓ    
+DSJC500.5                      500    62624    ✅ PASÓ    
+DSJC500.9                      500    112437   ✅ PASÓ    
+DSJR500.1                      500    3555     ✅ PASÓ    
+DSJR500.1c                     500    121275   ✅ PASÓ    
+DSJR500.5                      500    58862    ✅ PASÓ    
+le450_15a                      450    8168     ✅ PASÓ    
+le450_15b                      450    8169     ✅ PASÓ    
+le450_15c                      450    16680    ✅ PASÓ    
+le450_15d                      450    16750    ✅ PASÓ    
+le450_25a                      450    8260     ✅ PASÓ    
+le450_25b                      450    8263     ✅ PASÓ    
+le450_25c                      450    17343    ✅ PASÓ    
+le450_25d                      450    17425    ✅ PASÓ    
+le450_5a                       450    5714     ✅ PASÓ    
+le450_5b                       450    5734     ✅ PASÓ    
+le450_5c                       450    9803     ✅ PASÓ    
+le450_5d                       450    9757     ✅ PASÓ    
+myciel3                        11     20       ✅ PASÓ    
+myciel4                        23     71       ✅ PASÓ    
+myciel5                        47     236      ✅ PASÓ    
+myciel6                        95     755      ✅ PASÓ    
+myciel7                        191    2360     ✅ PASÓ    
+fpsol2.i.1                     496    11654    ✅ PASÓ    
+fpsol2.i.2                     451    8691     ✅ PASÓ    
+fpsol2.i.3                     425    8688     ✅ PASÓ    
+inithx.i.1                     864    18707    ✅ PASÓ    
+inithx.i.2                     645    13979    ✅ PASÓ    
+inithx.i.3                     621    13969    ✅ PASÓ    
+mulsol.i.1                     197    3925     ✅ PASÓ    
+mulsol.i.2                     188    3885     ✅ PASÓ    
+mulsol.i.3                     184    3916     ✅ PASÓ    
+mulsol.i.4                     185    3946     ✅ PASÓ    
+mulsol.i.5                     186    3973     ✅ PASÓ    
+zeroin.i.1                     211    4100     ✅ PASÓ    
+zeroin.i.2                     211    3541     ✅ PASÓ    
+zeroin.i.3                     206    3540     ✅ PASÓ    
+school1                        385    19095    ✅ PASÓ    
+school1_nsh                    352    14612    ✅ PASÓ    
+
+================================================================================
+✅ CONCLUSIÓN: Todas las matrices de adyacencia son matemáticamente correctas
+   y pueden ser incluidas en publicaciones científicas con confianza.
+================================================================================

@@ -1,0 +1,48 @@
+{
+  "experiment": "family",
+  "family": "MYC",
+  "instances": 6,
+  "timestamp": "2025-12-30T22:11:56.876210",
+  "instances_detail": {
+    "myciel3": {
+      "value": 4,
+      "type": "\u00d3PTIMO",
+      "value_str": "4",
+      "nodes": 11,
+      "edges": 20
+    },
+    "myciel4": {
+      "value": 5,
+      "type": "\u00d3PTIMO",
+      "value_str": "5",
+      "nodes": 23,
+      "edges": 71
+    },
+    "myciel5": {
+      "value": 6,
+      "type": "\u00d3PTIMO",
+      "value_str": "6",
+      "nodes": 47,
+      "edges": 236
+    },
+    "myciel6": {
+      "value": 7,
+      "type": "\u00d3PTIMO",
+      "value_str": "7",
+      "nodes": 95,
+      "edges": 755
+    },
+    "myciel7": {
+      "value": 8,
+      "type": "\u00d3PTIMO",
+      "value_str": "8",
+      "nodes": 191,
+      "edges": 2360
+    }
+  },
+  "summary": {
+    "with_optimal": 5,
+    "with_bks": 0,
+    "open": 0
+  }
+}

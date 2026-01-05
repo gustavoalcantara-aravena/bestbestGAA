@@ -1,0 +1,3 @@
+Family,Instance,Vertices,Edges,Fitness,Iterations,Time_s,Status
+SCH,school1,385,19095,0.9000,50,0.000010,simulated
+SCH,school1_nsh,352,14612,0.9000,50,0.000010,simulated

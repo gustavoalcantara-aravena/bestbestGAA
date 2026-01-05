@@ -1,0 +1,12 @@
+{
+  "experiment": "single_instance",
+  "family": "CUL",
+  "instance": "flat1000_50_0",
+  "timestamp": "2025-12-30T22:01:52.606522",
+  "reference": {
+    "value": 50,
+    "type": "\u00d3PTIMO",
+    "nodes": 1000,
+    "edges": 245000
+  }
+}

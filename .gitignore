@@ -39,7 +39,7 @@ env/
 .DS_Store
 
 # Outputs experimentales
-output/
+# output/
 *.png
 *.jpg
 *.jpeg

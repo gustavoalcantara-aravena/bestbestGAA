@@ -1,0 +1,15 @@
+REPORTE DE GAPS
+================================================================================
+
+NOTA: Los datasets del test rápido no tienen BKS (Best Known Solution) definido.
+Por lo tanto, los gaps no pueden ser calculados.
+
+Para análisis de gaps, usar datasets con BKS conocido:
+- myciel3.col (BKS=4)
+- myciel4.col (BKS=5)
+- myciel5.col (BKS=6)
+- le450_5a.col (BKS=5)
+- le450_5b.col (BKS=5)
+
+Ejecutar: python scripts/analyze_gaps.py
+================================================================================

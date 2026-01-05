@@ -1,0 +1,15 @@
+Family,Instance,Vertices,Edges,Fitness,Iterations,Time_s,Status
+REG,fpsol2.i.1,496,11654,0.9000,50,0.000010,simulated
+REG,fpsol2.i.2,451,8691,0.9000,50,0.000010,simulated
+REG,fpsol2.i.3,425,8688,0.9000,50,0.000010,simulated
+REG,inithx.i.1,864,18707,0.9000,50,0.000010,simulated
+REG,inithx.i.2,645,13979,0.9000,50,0.000010,simulated
+REG,inithx.i.3,621,13969,0.9000,50,0.000010,simulated
+REG,mulsol.i.1,197,3925,0.9000,50,0.000010,simulated
+REG,mulsol.i.2,188,3885,0.9000,50,0.000010,simulated
+REG,mulsol.i.3,184,3916,0.9000,50,0.000010,simulated
+REG,mulsol.i.4,185,3946,0.9000,50,0.000010,simulated
+REG,mulsol.i.5,186,3973,0.9000,50,0.000010,simulated
+REG,zeroin.i.1,211,4100,0.9000,50,0.000010,simulated
+REG,zeroin.i.2,211,3541,0.9000,50,0.000010,simulated
+REG,zeroin.i.3,206,3540,0.9000,50,0.000010,simulated

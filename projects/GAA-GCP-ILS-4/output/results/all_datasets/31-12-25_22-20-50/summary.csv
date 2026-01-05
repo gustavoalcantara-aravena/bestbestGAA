@@ -1,0 +1,4 @@
+Instance,Vertices,Edges,Colors,Conflicts,Feasible,Time
+myciel3,11,20,4,0,True,0.00s
+myciel4,23,71,5,0,True,0.03s
+le450_5a,450,5714,10,0,True,48.84s

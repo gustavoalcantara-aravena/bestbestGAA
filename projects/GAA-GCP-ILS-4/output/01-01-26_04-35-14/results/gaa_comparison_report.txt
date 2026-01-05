@@ -1,0 +1,64 @@
+================================================================================
+REPORTE DE COMPARACIÓN ESTADÍSTICA DE ALGORITMOS GAA
+================================================================================
+
+ESTADÍSTICAS DESCRIPTIVAS
+--------------------------------------------------------------------------------
+
+GAA_Algorithm_1:
+  Media: 6.0000 ± 1.4142
+  Rango: [4.0000, 8.0000]
+  Mediana: 6.0000
+  IQR: 2.0000
+
+GAA_Algorithm_2:
+  Media: inf ± nan
+  Rango: [inf, inf]
+  Mediana: inf
+  IQR: nan
+
+GAA_Algorithm_3:
+  Media: inf ± nan
+  Rango: [inf, inf]
+  Mediana: inf
+  IQR: nan
+
+================================================================================
+TEST GLOBAL (Friedman/Kruskal-Wallis)
+================================================================================
+Test: Friedman
+Estadístico: 10.0000
+p-value: 0.0067
+Significativo: True
+Interpretación: Hay diferencias significativas entre algoritmos (p=0.0067 < 0.05)
+
+Rankings Promedio (menor = mejor):
+  3.00  GAA_Algorithm_1
+  3.00  GAA_Algorithm_2
+  3.00  GAA_Algorithm_3
+
+🏆 Mejor algoritmo: GAA_Algorithm_1
+
+================================================================================
+COMPARACIONES PAREADAS (Wilcoxon + Cohen's d)
+================================================================================
+
+GAA_Algorithm_1_vs_GAA_Algorithm_2:
+  Wilcoxon p-value: 0.0625
+  Significativo: False
+  Interpretación: No hay diferencia significativa (p=0.0625 >= 0.05)
+  Cohen's d: nan (efecto muy grande)
+
+GAA_Algorithm_1_vs_GAA_Algorithm_3:
+  Wilcoxon p-value: 0.0625
+  Significativo: False
+  Interpretación: No hay diferencia significativa (p=0.0625 >= 0.05)
+  Cohen's d: nan (efecto muy grande)
+
+GAA_Algorithm_2_vs_GAA_Algorithm_3:
+  Wilcoxon p-value: 1.0000
+  Significativo: False
+  Interpretación: No hay diferencia significativa (p=1.0000 >= 0.05)
+  Cohen's d: nan (efecto muy grande)
+
+================================================================================

@@ -1,0 +1,97 @@
+{
+  "experiment": "family",
+  "family": "LEI",
+  "instances": 12,
+  "timestamp": "2025-12-30T22:11:56.349315",
+  "instances_detail": {
+    "le450_5a": {
+      "value": 5,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "5",
+      "nodes": 450,
+      "edges": 5714
+    },
+    "le450_5b": {
+      "value": 5,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "5",
+      "nodes": 450,
+      "edges": 5734
+    },
+    "le450_5c": {
+      "value": 5,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "5",
+      "nodes": 450,
+      "edges": 9803
+    },
+    "le450_5d": {
+      "value": 5,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "5",
+      "nodes": 450,
+      "edges": 9757
+    },
+    "le450_15a": {
+      "value": 15,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "15",
+      "nodes": 450,
+      "edges": 8168
+    },
+    "le450_15b": {
+      "value": 15,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "15",
+      "nodes": 450,
+      "edges": 8169
+    },
+    "le450_15c": {
+      "value": 15,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "15",
+      "nodes": 450,
+      "edges": 16680
+    },
+    "le450_15d": {
+      "value": 15,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "15",
+      "nodes": 450,
+      "edges": 16750
+    },
+    "le450_25a": {
+      "value": 25,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "25",
+      "nodes": 450,
+      "edges": 8260
+    },
+    "le450_25b": {
+      "value": 25,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "25",
+      "nodes": 450,
+      "edges": 8263
+    },
+    "le450_25c": {
+      "value": 25,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "25",
+      "nodes": 450,
+      "edges": 17343
+    },
+    "le450_25d": {
+      "value": 25,
+      "type": "\u00d3PTIMO (Garantizado)",
+      "value_str": "25",
+      "nodes": 450,
+      "edges": 17425
+    }
+  },
+  "summary": {
+    "with_optimal": 0,
+    "with_bks": 0,
+    "open": 0
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "experiment": "single_instance",
+  "family": "MYC",
+  "instance": "myciel3",
+  "timestamp": "2025-12-30T22:13:27.678192",
+  "reference": {
+    "value": 4,
+    "type": "\u00d3PTIMO",
+    "nodes": 11,
+    "edges": 20
+  }
+}

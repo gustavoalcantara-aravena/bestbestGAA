@@ -1,0 +1,27 @@
+{
+  "experiment": "family",
+  "family": "SCH",
+  "instances": 2,
+  "timestamp": "2025-12-30T22:18:29.829354",
+  "instances_detail": {
+    "school1": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 385,
+      "edges": 19095
+    },
+    "school1_nsh": {
+      "value": null,
+      "type": "ABIERTA",
+      "value_str": "?",
+      "nodes": 352,
+      "edges": 14612
+    }
+  },
+  "summary": {
+    "with_optimal": 0,
+    "with_bks": 0,
+    "open": 2
+  }
+}

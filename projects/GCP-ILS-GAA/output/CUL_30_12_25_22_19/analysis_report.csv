@@ -1,0 +1,7 @@
+Family,Instance,Vertices,Edges,Fitness,Iterations,Time_s,Status
+CUL,flat1000_50_0,1000,245000,172.0000,50,0.000010,simulated
+CUL,flat1000_60_0,1000,245830,173.0000,50,0.000010,simulated
+CUL,flat1000_76_0,1000,246708,173.0000,50,0.000010,simulated
+CUL,flat300_20_0,300,21375,51.0000,50,0.000010,simulated
+CUL,flat300_26_0,300,21633,51.0000,50,0.000010,simulated
+CUL,flat300_28_0,300,21695,51.0000,50,0.000010,simulated

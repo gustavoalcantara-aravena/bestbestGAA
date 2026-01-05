@@ -1,0 +1,7 @@
+Family,Instance,Vertices,Edges,Fitness,Iterations,Time_s,Status
+MYC,myciel2,0,0,0.9000,50,0.000399,completed
+MYC,myciel3,11,20,0.9000,50,0.000297,completed
+MYC,myciel4,23,71,0.9000,50,0.000190,completed
+MYC,myciel5,47,236,0.9000,50,0.000275,completed
+MYC,myciel6,95,755,0.9000,50,0.000242,completed
+MYC,myciel7,191,2360,0.9000,50,0.000536,completed

@@ -1,0 +1,55 @@
+{
+  "experiment": "family",
+  "family": "CUL",
+  "instances": 6,
+  "timestamp": "2025-12-30T22:18:27.052270",
+  "instances_detail": {
+    "flat300_20_0": {
+      "value": 20,
+      "type": "\u00d3PTIMO",
+      "value_str": "20",
+      "nodes": 300,
+      "edges": 21375
+    },
+    "flat300_26_0": {
+      "value": 26,
+      "type": "\u00d3PTIMO",
+      "value_str": "26",
+      "nodes": 300,
+      "edges": 21633
+    },
+    "flat300_28_0": {
+      "value": 28,
+      "type": "\u00d3PTIMO",
+      "value_str": "28",
+      "nodes": 300,
+      "edges": 21695
+    },
+    "flat1000_50_0": {
+      "value": 50,
+      "type": "\u00d3PTIMO",
+      "value_str": "50",
+      "nodes": 1000,
+      "edges": 245000
+    },
+    "flat1000_60_0": {
+      "value": 60,
+      "type": "\u00d3PTIMO",
+      "value_str": "60",
+      "nodes": 1000,
+      "edges": 245830
+    },
+    "flat1000_76_0": {
+      "value": 76,
+      "type": "\u00d3PTIMO",
+      "value_str": "76",
+      "nodes": 1000,
+      "edges": 246708
+    }
+  },
+  "summary": {
+    "with_optimal": 6,
+    "with_bks": 0,
+    "open": 0
+  }
+}

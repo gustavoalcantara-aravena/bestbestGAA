@@ -1,0 +1,12 @@
+{
+  "experiment": "single_instance",
+  "family": "DSJ",
+  "instance": "DSJC125.1",
+  "timestamp": "2025-12-30T22:13:31.813290",
+  "reference": {
+    "value": null,
+    "type": "ABIERTA",
+    "nodes": 125,
+    "edges": 1472
+  }
+}

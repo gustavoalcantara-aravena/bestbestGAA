@@ -1,0 +1,7 @@
+Instance,Reference_Value,Reference_Type,GAA_Value,GAP_Absolute,GAP_Percent,Is_Optimal,Iterations,Time_s,Vertices,Edges
+myciel2,,UNKNOWN,2.0000,N/A,N/A,NO,50,0.000059,0,0
+myciel3,4,ÓPTIMO,2.0000,-2.0000,-50.00,NO,50,0.000062,11,20
+myciel4,5,ÓPTIMO,3.0000,-2.0000,-40.00,NO,50,0.000061,23,71
+myciel5,6,ÓPTIMO,4.0000,-2.0000,-33.33,NO,50,0.000059,47,236
+myciel6,7,ÓPTIMO,7.0000,0.0000,0.00,YES,50,0.000066,95,755
+myciel7,8,ÓPTIMO,9.0000,1.0000,12.50,NO,50,0.000072,191,2360
